@@ -1,0 +1,942 @@
+{
+  "employees": [
+    {
+      "employeeId": "1",
+      "name": "Alice Smith",
+      "email": "alicesmith@mycompany.com",
+      "designation": "Software Engineer",
+      "department": {
+        "departmentId": "1",
+        "department": "Development"
+      },
+      "skills": [
+        {
+          "skill": "JavaScript",
+          "skillId": "1"
+        },
+        {
+          "skill": "React",
+          "skillId": "2"
+        }
+      ],
+      "salary": 80000,
+      "joiningDate": "2012-11-20",
+      "dateOfBirth": "1970-11-01"
+    },
+    {
+      "employeeId": "2",
+      "name": "Bob Johnson",
+      "email": "bobjohnson@mycompany.com",
+      "designation": "UI/UX Designer",
+      "department": {
+        "departmentId": "2",
+        "department": "Design"
+      },
+      "skills": [
+        {
+          "skill": "UI/UX Design",
+          "skillId": "4"
+        },
+        {
+          "skill": "Graphic Design",
+          "skillId": "5"
+        }
+      ],
+      "salary": 75000,
+      "joiningDate": "2017-01-26",
+      "dateOfBirth": "1970-03-20"
+    },
+    {
+      "employeeId": "3",
+      "name": "Charlie Brown",
+      "email": "charliebrown@mycompany.com",
+      "designation": "HR Manager",
+      "department": {
+        "departmentId": "3",
+        "department": "Human Resources"
+      },
+      "skills": [
+        {
+          "skill": "Recruitment",
+          "skillId": "26"
+        },
+        {
+          "skill": "Onboarding",
+          "skillId": "27"
+        },
+        {
+          "skill": "Employee Relations",
+          "skillId": "28"
+        }
+      ],
+      "salary": 90000,
+      "joiningDate": "2020-07-12",
+      "dateOfBirth": "1975-04-22"
+    },
+    {
+      "employeeId": "4",
+      "name": "David Lee",
+      "email": "davidlee@mycompany.com",
+      "designation": "Sales Manager",
+      "department": {
+        "departmentId": "4",
+        "department": "Sales"
+      },
+      "skills": [
+        {
+          "skill": "Lead Generation",
+          "skillId": "36"
+        },
+        {
+          "skill": "Sales Pipeline Management",
+          "skillId": "37"
+        },
+        {
+          "skill": "Account Management",
+          "skillId": "38"
+        }
+      ],
+      "salary": 95000,
+      "joiningDate": "2021-05-28",
+      "dateOfBirth": "1980-01-07"
+    },
+    {
+      "employeeId": "5",
+      "name": "Emma Davis",
+      "email": "emmadavis@mycompany.com",
+      "designation": "Financial Analyst",
+      "department": {
+        "departmentId": "5",
+        "department": "Finance"
+      },
+      "skills": [
+        {
+          "skill": "Financial Analysis",
+          "skillId": "46"
+        },
+        {
+          "skill": "Financial Reporting",
+          "skillId": "47"
+        },
+        {
+          "skill": "Budgeting and Forecasting",
+          "skillId": "48"
+        }
+      ],
+      "salary": 85000,
+      "joiningDate": "2014-05-17",
+      "dateOfBirth": "1956-05-16"
+    },
+    {
+      "employeeId": "6",
+      "name": "Frank Wilson",
+      "email": "frankwilson@mycompany.com",
+      "designation": "Software Engineer",
+      "department": {
+        "departmentId": "1",
+        "department": "Development"
+      },
+      "skills": [
+        {
+          "skill": "JavaScript",
+          "skillId": "1"
+        },
+        {
+          "skill": "React",
+          "skillId": "2"
+        },
+        {
+          "skill": "Node.js",
+          "skillId": "3"
+        }
+      ],
+      "salary": 90000,
+      "joiningDate": "2019-02-24",
+      "dateOfBirth": "1960-01-02"
+    },
+    {
+      "employeeId": "7",
+      "name": "Grace Kim",
+      "email": "gracekim@mycompany.com",
+      "designation": "UI/UX Designer",
+      "department": {
+        "departmentId": "2",
+        "department": "Design"
+      },
+      "skills": [
+        {
+          "skill": "UI/UX Design",
+          "skillId": "4"
+        },
+        {
+          "skill": "Graphic Design",
+          "skillId": "5"
+        },
+        {
+          "skill": "Adobe Photoshop",
+          "skillId": "16"
+        }
+      ],
+      "salary": 80000,
+      "joiningDate": "2021-05-26",
+      "dateOfBirth": "1980-07-04"
+    },
+    {
+      "employeeId": "8",
+      "name": "Henry Lee",
+      "email": "henrylee@mycompany.com",
+      "designation": "HR Generalist",
+      "department": {
+        "departmentId": "3",
+        "department": "Human Resources"
+      },
+      "skills": [
+        {
+          "skill": "Recruitment",
+          "skillId": "26"
+        },
+        {
+          "skill": "Onboarding",
+          "skillId": "27"
+        },
+        {
+          "skill": "Employee Relations",
+          "skillId": "28"
+        },
+        {
+          "skill": "Performance Management",
+          "skillId": "29"
+        }
+      ],
+      "salary": 85000,
+      "joiningDate": "2018-09-03",
+      "dateOfBirth": "1964-11-19"
+    },
+    {
+      "employeeId": "9",
+      "name": "Isabella Brown",
+      "email": "isabellabrown@mycompany.com",
+      "designation": "Sales Representative",
+      "department": {
+        "departmentId": "4",
+        "department": "Sales"
+      },
+      "skills": [
+        {
+          "skill": "Lead Generation",
+          "skillId": "36"
+        },
+        {
+          "skill": "Sales Pipeline Management",
+          "skillId": "37"
+        },
+        {
+          "skill": "Account Management",
+          "skillId": "38"
+        },
+        {
+          "skill": "Sales Forecasting",
+          "skillId": "39"
+        }
+      ],
+      "salary": 70000,
+      "joiningDate": "2015-11-18",
+      "dateOfBirth": "1961-04-16"
+    },
+    {
+      "employeeId": "10",
+      "name": "Jack Davis",
+      "email": "jackdavis@mycompany.com",
+      "designation": "Software Engineer",
+      "department": {
+        "departmentId": "1",
+        "department": "Development"
+      },
+      "skills": [
+        {
+          "skill": "JavaScript",
+          "skillId": "1"
+        },
+        {
+          "skill": "React",
+          "skillId": "2"
+        },
+        {
+          "skill": "Node.js",
+          "skillId": "3"
+        },
+        {
+          "skill": "Angular",
+          "skillId": "6"
+        }
+      ],
+      "salary": 95000,
+      "joiningDate": "2020-08-01",
+      "dateOfBirth": "1996-04-06"
+    },
+    {
+      "employeeId": "11",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "designation": "Software Engineer",
+      "department": {
+        "departmentId": "1",
+        "department": "Development"
+      },
+      "skills": [
+        {
+          "skill": "JavaScript",
+          "skillId": "1"
+        },
+        {
+          "skill": "React",
+          "skillId": "2"
+        },
+        {
+          "skill": "Node.js",
+          "skillId": "3"
+        }
+      ],
+      "salary": 85000,
+      "joiningDate": "2020-12-23",
+      "dateOfBirth": "1978-04-14"
+    },
+    {
+      "employeeId": "12",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "designation": "Software Engineer",
+      "department": {
+        "departmentId": "1",
+        "department": "Development"
+      },
+      "skills": [
+        {
+          "skill": "JavaScript",
+          "skillId": "1"
+        },
+        {
+          "skill": "React",
+          "skillId": "2"
+        },
+        {
+          "skill": "Node.js",
+          "skillId": "3"
+        },
+        {
+          "skill": "Angular",
+          "skillId": "6"
+        }
+      ],
+      "salary": 90000,
+      "joiningDate": "2011-12-15",
+      "dateOfBirth": "1971-07-28"
+    },
+    {
+      "employeeId": "13",
+      "name": "Samantha Lee",
+      "email": "samantha.lee@example.com",
+      "designation": "Software Engineer",
+      "department": {
+        "departmentId": "1",
+        "department": "Development"
+      },
+      "skills": [
+        {
+          "skill": "JavaScript",
+          "skillId": "1"
+        },
+        {
+          "skill": "React",
+          "skillId": "2"
+        },
+        {
+          "skill": "Node.js",
+          "skillId": "3"
+        },
+        {
+          "skill": "Vue.js",
+          "skillId": "7"
+        }
+      ],
+      "salary": 95000,
+      "joiningDate": "2020-04-09",
+      "dateOfBirth": "1993-05-21"
+    },
+    {
+      "employeeId": "14",
+      "name": "David Kim",
+      "email": "david.kim@example.com",
+      "designation": "Software Engineer",
+      "department": {
+        "departmentId": "1",
+        "department": "Development"
+      },
+      "skills": [
+        {
+          "skill": "JavaScript",
+          "skillId": "1"
+        },
+        {
+          "skill": "React",
+          "skillId": "2"
+        },
+        {
+          "skill": "Node.js",
+          "skillId": "3"
+        },
+        {
+          "skill": "TypeScript",
+          "skillId": "8"
+        }
+      ],
+      "salary": 100000,
+      "joiningDate": "2016-06-04",
+      "dateOfBirth": "1955-05-01"
+    },
+    {
+      "employeeId": "15",
+      "name": "Emily Chen",
+      "email": "emily.chen@example.com",
+      "designation": "Software Engineer",
+      "department": {
+        "departmentId": "1",
+        "department": "Development"
+      },
+      "skills": [
+        {
+          "skill": "JavaScript",
+          "skillId": "1"
+        },
+        {
+          "skill": "React",
+          "skillId": "2"
+        },
+        {
+          "skill": "Node.js",
+          "skillId": "3"
+        },
+        {
+          "skill": "Python",
+          "skillId": "9"
+        }
+      ],
+      "salary": 90000,
+      "joiningDate": "2022-02-17",
+      "dateOfBirth": "1953-03-13"
+    },
+    {
+      "employeeId": "16",
+      "name": "Oliver Wang",
+      "email": "oliver.wang@example.com",
+      "designation": "UI/UX Designer",
+      "department": {
+        "departmentId": "2",
+        "department": "Design"
+      },
+      "skills": [
+        {
+          "skill": "UI/UX Design",
+          "skillId": "4"
+        },
+        {
+          "skill": "Graphic Design",
+          "skillId": "5"
+        },
+        {
+          "skill": "Sketch",
+          "skillId": "17"
+        }
+      ],
+      "salary": 80000,
+      "joiningDate": "2011-01-03",
+      "dateOfBirth": "1976-12-05"
+    },
+    {
+      "employeeId": "17",
+      "name": "Sophia Lee",
+      "email": "sophia.lee@example.com",
+      "designation": "UI/UX Designer",
+      "department": {
+        "departmentId": "2",
+        "department": "Design"
+      },
+      "skills": [
+        {
+          "skill": "UI/UX Design",
+          "skillId": "4"
+        },
+        {
+          "skill": "Graphic Design",
+          "skillId": "5"
+        },
+        {
+          "skill": "Figma",
+          "skillId": "18"
+        }
+      ],
+      "salary": 85000,
+      "joiningDate": "2011-01-22",
+      "dateOfBirth": "1958-07-08"
+    },
+    {
+      "employeeId": "18",
+      "name": "William Chen",
+      "email": "william.chen@example.com",
+      "designation": "HR Coordinator",
+      "department": {
+        "departmentId": "3",
+        "department": "Human Resources"
+      },
+      "skills": [
+        {
+          "skill": "Recruitment",
+          "skillId": "26"
+        },
+        {
+          "skill": "Onboarding",
+          "skillId": "27"
+        },
+        {
+          "skill": "Employee Relations",
+          "skillId": "28"
+        },
+        {
+          "skill": "Performance Management",
+          "skillId": "29"
+        },
+        {
+          "skill": "Compensation and Benefits",
+          "skillId": "30"
+        }
+      ],
+      "salary": 65000,
+      "joiningDate": "2017-12-18",
+      "dateOfBirth": "1974-07-06"
+    },
+    {
+      "employeeId": "19",
+      "name": "Ethan Kim",
+      "email": "ethan.kim@example.com",
+      "designation": "Sales Representative",
+      "department": {
+        "departmentId": "4",
+        "department": "Sales"
+      },
+      "skills": [
+        {
+          "skill": "Lead Generation",
+          "skillId": "36"
+        },
+        {
+          "skill": "Sales Pipeline Management",
+          "skillId": "37"
+        },
+        {
+          "skill": "Account Management",
+          "skillId": "38"
+        },
+        {
+          "skill": "Sales Forecasting",
+          "skillId": "39"
+        },
+        {
+          "skill": "Negotiation",
+          "skillId": "40"
+        }
+      ],
+      "salary": 70000,
+      "joiningDate": "2017-07-18",
+      "dateOfBirth": "1959-11-02"
+    },
+    {
+      "employeeId": "20",
+      "name": "Ava Davis",
+      "email": "ava.davis@example.com",
+      "designation": "Financial Analyst",
+      "department": {
+        "departmentId": "5",
+        "department": "Finance"
+      },
+      "skills": [
+        {
+          "skill": "Financial Analysis",
+          "skillId": "46"
+        },
+        {
+          "skill": "Financial Reporting",
+          "skillId": "47"
+        },
+        {
+          "skill": "Budgeting and Forecasting",
+          "skillId": "48"
+        },
+        {
+          "skill": "Taxation",
+          "skillId": "49"
+        }
+      ],
+      "salary": 80000,
+      "joiningDate": "2021-07-17",
+      "dateOfBirth": "1953-05-18"
+    }
+  ],
+  "skills": [
+    {
+      "skillId": "1",
+      "skill": "JavaScript",
+      "departmentId": "1"
+    },
+    {
+      "skillId": "2",
+      "skill": "React",
+      "departmentId": "1"
+    },
+    {
+      "skillId": "3",
+      "skill": "Node.js",
+      "departmentId": "1"
+    },
+    {
+      "skillId": "4",
+      "skill": "UI/UX Design",
+      "departmentId": "2"
+    },
+    {
+      "skillId": "5",
+      "skill": "Graphic Design",
+      "departmentId": "2"
+    },
+    {
+      "skillId": "6",
+      "skill": "Angular",
+      "departmentId": "1"
+    },
+    {
+      "skillId": "7",
+      "skill": "Vue.js",
+      "departmentId": "1"
+    },
+    {
+      "skillId": "8",
+      "skill": "TypeScript",
+      "departmentId": "1"
+    },
+    {
+      "skillId": "9",
+      "skill": "Python",
+      "departmentId": "1"
+    },
+    {
+      "skillId": "10",
+      "skill": "Django",
+      "departmentId": "1"
+    },
+    {
+      "skillId": "11",
+      "skill": "Flask",
+      "departmentId": "1"
+    },
+    {
+      "skillId": "12",
+      "skill": "Ruby on Rails",
+      "departmentId": "1"
+    },
+    {
+      "skillId": "13",
+      "skill": "Java",
+      "departmentId": "1"
+    },
+    {
+      "skillId": "14",
+      "skill": "Spring Boot",
+      "departmentId": "1"
+    },
+    {
+      "skillId": "15",
+      "skill": "PHP",
+      "departmentId": "1"
+    },
+    {
+      "skillId": "16",
+      "skill": "Adobe Photoshop",
+      "departmentId": "2"
+    },
+    {
+      "skillId": "17",
+      "skill": "Adobe Illustrator",
+      "departmentId": "2"
+    },
+    {
+      "skillId": "18",
+      "skill": "Sketch",
+      "departmentId": "2"
+    },
+    {
+      "skillId": "19",
+      "skill": "Figma",
+      "departmentId": "2"
+    },
+    {
+      "skillId": "20",
+      "skill": "InVision",
+      "departmentId": "2"
+    },
+    {
+      "skillId": "21",
+      "skill": "User Research",
+      "departmentId": "2"
+    },
+    {
+      "skillId": "22",
+      "skill": "Wireframing",
+      "departmentId": "2"
+    },
+    {
+      "skillId": "23",
+      "skill": "Prototyping",
+      "departmentId": "2"
+    },
+    {
+      "skillId": "24",
+      "skill": "Interaction Design",
+      "departmentId": "2"
+    },
+    {
+      "skillId": "25",
+      "skill": "Design Thinking",
+      "departmentId": "2"
+    },
+    {
+      "skillId": "26",
+      "skill": "Recruitment",
+      "departmentId": "3"
+    },
+    {
+      "skillId": "27",
+      "skill": "Onboarding",
+      "departmentId": "3"
+    },
+    {
+      "skillId": "28",
+      "skill": "Employee Relations",
+      "departmentId": "3"
+    },
+    {
+      "skillId": "29",
+      "skill": "Performance Management",
+      "departmentId": "3"
+    },
+    {
+      "skillId": "30",
+      "skill": "Compensation and Benefits",
+      "departmentId": "3"
+    },
+    {
+      "skillId": "31",
+      "skill": "Training and Development",
+      "departmentId": "3"
+    },
+    {
+      "skillId": "32",
+      "skill": "HR Analytics",
+      "departmentId": "3"
+    },
+    {
+      "skillId": "33",
+      "skill": "HR Information Systems",
+      "departmentId": "3"
+    },
+    {
+      "skillId": "34",
+      "skill": "Diversity and Inclusion",
+      "departmentId": "3"
+    },
+    {
+      "skillId": "35",
+      "skill": "Employee Engagement",
+      "departmentId": "3"
+    },
+    {
+      "skillId": "36",
+      "skill": "Lead Generation",
+      "departmentId": "4"
+    },
+    {
+      "skillId": "37",
+      "skill": "Sales Pipeline Management",
+      "departmentId": "4"
+    },
+    {
+      "skillId": "38",
+      "skill": "Account Management",
+      "departmentId": "4"
+    },
+    {
+      "skillId": "39",
+      "skill": "Sales Forecasting",
+      "departmentId": "4"
+    },
+    {
+      "skillId": "40",
+      "skill": "Sales Analytics",
+      "departmentId": "4"
+    },
+    {
+      "skillId": "41",
+      "skill": "Negotiation",
+      "departmentId": "4"
+    },
+    {
+      "skillId": "42",
+      "skill": "Customer Relationship Management (CRM)",
+      "departmentId": "4"
+    },
+    {
+      "skillId": "43",
+      "skill": "Sales Enablement",
+      "departmentId": "4"
+    },
+    {
+      "skillId": "44",
+      "skill": "Sales Operations",
+      "departmentId": "4"
+    },
+    {
+      "skillId": "45",
+      "skill": "Sales Training",
+      "departmentId": "4"
+    },
+    {
+      "skillId": "46",
+      "skill": "Financial Analysis",
+      "departmentId": "5"
+    },
+    {
+      "skillId": "47",
+      "skill": "Financial Reporting",
+      "departmentId": "5"
+    },
+    {
+      "skillId": "48",
+      "skill": "Budgeting and Forecasting",
+      "departmentId": "5"
+    },
+    {
+      "skillId": "49",
+      "skill": "Taxation",
+      "departmentId": "5"
+    },
+    {
+      "skillId": "50",
+      "skill": "Auditing",
+      "departmentId": "5"
+    },
+    {
+      "skillId": "51",
+      "skill": "Risk Management",
+      "departmentId": "5"
+    },
+    {
+      "skillId": "52",
+      "skill": "Treasury Management",
+      "departmentId": "5"
+    },
+    {
+      "skillId": "53",
+      "skill": "Financial Planning and Strategy",
+      "departmentId": "5"
+    },
+    {
+      "skillId": "54",
+      "skill": "Cost Accounting",
+      "departmentId": "5"
+    },
+    {
+      "skillId": "55",
+      "skill": "Financial Modelling",
+      "departmentId": "5"
+    },
+    {
+      "skillId": "56",
+      "skill": "Test Planning",
+      "departmentId": "6"
+    },
+    {
+      "skillId": "57",
+      "skill": "Test Automation",
+      "departmentId": "6"
+    },
+    {
+      "skillId": "58",
+      "skill": "Manual Testing",
+      "departmentId": "6"
+    },
+    {
+      "skillId": "59",
+      "skill": "Regression Testing",
+      "departmentId": "6"
+    },
+    {
+      "skillId": "60",
+      "skill": "Performance Testing",
+      "departmentId": "6"
+    },
+    {
+      "skillId": "61",
+      "skill": "User Acceptance Testing (UAT)",
+      "departmentId": "6"
+    },
+    {
+      "skillId": "62",
+      "skill": "Test Case Design",
+      "departmentId": "6"
+    },
+    {
+      "skillId": "63",
+      "skill": "Defect Tracking",
+      "departmentId": "6"
+    },
+    {
+      "skillId": "64",
+      "skill": "Test Reporting",
+      "departmentId": "6"
+    },
+    {
+      "skillId": "65",
+      "skill": "Continuous Integration (CI)",
+      "departmentId": "6"
+    },
+    {
+      "skillId": "66",
+      "skill": "HTML",
+      "departmentId": "1"
+    }
+  ],
+  "departments": [
+    {
+      "departmentId": "1",
+      "department": "Development"
+    },
+    {
+      "departmentId": "2",
+      "department": "Design"
+    },
+    {
+      "departmentId": "3",
+      "department": "Human Resources"
+    },
+    {
+      "departmentId": "4",
+      "department": "Sales"
+    },
+    {
+      "departmentId": "5",
+      "department": "Finance"
+    },
+    {
+      "departmentId": "6",
+      "department": "Quality Analysis"
+    }
+  ]
+}
