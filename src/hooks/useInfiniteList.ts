@@ -1,53 +1,81 @@
 import { useState, useEffect } from "react";
 
-export interface InfiniteListProps<T> {
+export interface FetchDataProps<T> {
+  offset: number;
+  limit: number;
+  sortBy: keyof T;
+  sortDir: "asc" | "desc";
+}
+
+export interface FetchDataReturn<T> {
   data: T[];
+  total: number;
+}
+
+export interface InfiniteListProps<T> {
+  fetchData: (
+    props: FetchDataProps<T>
+  ) => Promise<FetchDataReturn<T>> | FetchDataReturn<T>;
   searchFunction: (data: T[], term: string) => T[];
   filterFunction: (data: T[]) => T[];
-  sortFunction: (data: T[], key: keyof T, order: "asc" | "desc") => T[];
   id: keyof T;
 }
 
 export default function useInfiniteList<T>(props: InfiniteListProps<T>) {
-  const PER_PAGE = 10;
-  const { data, searchFunction, sortFunction, filterFunction, id } = props;
+  const { searchFunction, filterFunction, id, fetchData } = props;
   const [searchTerm, setSearchTerm] = useState("");
   const [sort, setSort] = useState<{ key: keyof T; order: "asc" | "desc" }>({
     key: id,
     order: "desc",
   });
-  const [page, setPage] = useState(1);
-  const [filteredData, setFilteredData] = useState<T[]>([]);
+  const [data, setData] = useState<T[]>([]);
+  const [total, setTotal] = useState(0);
   const [displayData, setDisplayData] = useState<T[]>([]);
-  const totalPages = Math.ceil(filteredData.length / PER_PAGE);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let filtered = searchFunction(data, searchTerm);
     filtered = filterFunction(filtered);
-    filtered = sortFunction(
-      filtered,
-      sort.key,
-      sort.order === "asc" ? "asc" : "desc"
-    );
-    setFilteredData(filtered);
-    setPage(1);
-  }, [searchTerm, data, sort, searchFunction, sortFunction, filterFunction]);
+    setDisplayData(filtered);
+  }, [searchTerm, data, searchFunction, filterFunction]);
 
   useEffect(() => {
-    const start = (page - 1) * 10;
-    const end = start + 10;
-    setDisplayData(filteredData.slice(start, end));
-  }, [page, filteredData]);
+    const loadNewData = async () => {
+      setLoading(true);
+      const { data: newData, total: newTotal } = await fetchData({
+        offset: 0,
+        limit: 10,
+        sortBy: sort.key,
+        sortDir: sort.order,
+      });
+      setData(newData);
+      setTotal(newTotal);
+      setLoading(false);
+    };
+    loadNewData();
+  }, [sort, fetchData]);
+
+  async function loadMoreData() {
+    setLoading(true);
+    const { data: newData, total: newTotal } = await fetchData({
+      offset: data.length,
+      limit: 10,
+      sortBy: sort.key,
+      sortDir: sort.order,
+    });
+    setData([...data, ...newData]);
+    setTotal(newTotal);
+    setLoading(false);
+  }
 
   return {
     searchTerm,
     setSearchTerm,
     sort,
     setSort,
-    page,
-    setPage,
-    filteredData,
     displayData,
-    totalPages,
+    loadMoreData,
+    total,
+    loading,
   };
 }
