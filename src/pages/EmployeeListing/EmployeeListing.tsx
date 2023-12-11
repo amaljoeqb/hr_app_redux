@@ -11,6 +11,7 @@ import { useQuery } from "../../hooks";
 import { Footer, Header } from "../../layout";
 import { StyledEmployeeListing } from "./EmployeeListing.style";
 import { columnIds } from "../../config";
+import { EmployeeCardsList } from "./components/EmployeeCardsList/EmployeeCardsList";
 
 export function EmployeeListing() {
   const navigate = useNavigate();
@@ -71,28 +72,11 @@ export function EmployeeListing() {
             </HoverButton>
           </div>
         </div>
-
-        <EmployeeTable
+        <EmployeeCardsList
           employees={displayData}
-          prevEmployees={prevEmployees}
           searchTerm={searchTerm}
           sort={sort}
-          onChangeSort={(sort) => {
-            setSort(sort);
-          }}
-          columns={columns}
-          setColumns={setColumns}
-          onShowModifiedField={onShowModifiedField}
         />
-        {totalPages > 1 && (
-          <PaginationControl
-            current={page}
-            total={totalPages}
-            onChange={(page) => {
-              setPage(page);
-            }}
-          />
-        )}
       </main>
       {deleteEmployeeId && (
         <EmployeeDeletePopup
