@@ -16,7 +16,7 @@ export function EmployeeCardsList(props: EmployeeCardsListProps) {
   return (
     <StyledEmployeeCardsList>
       {props.employees.map((employee) => {
-        return <EmployeeCard />;
+        return <EmployeeCard employee={employee} />;
       })}
     </StyledEmployeeCardsList>
   );
