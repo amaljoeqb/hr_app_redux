@@ -15,10 +15,16 @@ export const StyledEmployeeForm = styled.div`
   }
   form .profile-upload > label {
     display: block;
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
     overflow: clip;
+    cursor: pointer;
+  }
+  form .profile-upload > label:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
   }
   form .profile-upload > label > img {
     display: block;

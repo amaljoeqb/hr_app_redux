@@ -4,9 +4,9 @@ import { Formik, Form, FormikProps } from "formik";
 import { HoverButton, SelectInput, SubmitButton } from "../../../components";
 import { employeeSchema } from "../../../config";
 import useEmployeeForm from "../hooks/useEmployeeForm";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StyledEmployeeForm } from "./EmployeeForm.style";
-import defaultImg from "../../../assets/img/person1.jpeg";
+import defaultAddEmpImg from "../../../assets/img/add_emp_logo.svg";
 
 export interface EmployeeFormProps {
   employee: Employee | undefined;
@@ -28,6 +28,7 @@ export default function EmployeeForm(props: EmployeeFormProps) {
     onClickEdit,
     isCreate,
   } = useEmployeeForm(props);
+  const [profileImg, setprofileImg] = useState(defaultAddEmpImg);
 
   const formik = useRef<FormikProps<Employee>>(null);
 
@@ -49,12 +50,19 @@ export default function EmployeeForm(props: EmployeeFormProps) {
         <Form id="emp-form" noValidate>
           <div className="profile-upload">
             <label htmlFor="imageUpload" tabIndex={0}>
-              <img src={defaultImg} alt="employee profile" />
+              <img src={profileImg} alt="employee profile" />
               <input
                 id="imageUpload"
                 style={{ display: "none" }}
                 type="file"
                 name="employee profile"
+                onChange={(e) =>
+                  setprofileImg(
+                    e.target.files
+                      ? URL.createObjectURL(e.target.files[0])
+                      : profileImg
+                  )
+                }
                 accept="image/*"
               />
             </label>
