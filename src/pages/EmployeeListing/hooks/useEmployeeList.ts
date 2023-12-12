@@ -1,12 +1,16 @@
-import { useCallback, useEffect, useState } from "react";
-import { useTable } from "../../../hooks";
-import { Employee } from "../../../models";
-import { useAppContext } from "../../../store/app.context";
+import { useState, useCallback } from "react";
 import { columnIds } from "../../../config";
-import { sortEmployees, filterEmployees, searchEmployees } from "../../../services/employee.helpers";
+import { useApi, useInfiniteList } from "../../../hooks";
+import { Employee } from "../../../models";
+import {
+  filterEmployees,
+  searchEmployees,
+} from "../../../services/employee.helpers";
+import { useAppContext } from "../../../store/app.context";
 
-export default function useEmployeeTable() {
+export function useEmployeeList() {
   const appContext = useAppContext();
+  const api = useApi();
   const { employees, skills, prevEmployees } = appContext.state;
   const [columns, setColumns] = useState(columnIds.large);
 
@@ -21,39 +25,30 @@ export default function useEmployeeTable() {
     },
     [columns]
   );
-  const sortFunction = sortEmployees;
+
   const filterFunction = useCallback(
     (data: Employee[]) => filterEmployees(data, selectedSkills),
     [selectedSkills]
   );
 
-  const employeeTable = useTable<Employee>({
-    data: employees,
+  const employeeList = useInfiniteList<Employee>({
     searchFunction,
-    sortFunction,
     filterFunction,
     id: "employeeId",
+    fetchData: async ({ offset, limit, sortBy, sortDir }) => {
+      const data: Employee[] = [];
+      const total = 0;
+      return { data, total };
+    },
   });
 
-  function onShowModifiedField(id: string, field: keyof Employee) {
-    let prevEmployee = prevEmployees.get(id);
-    if (prevEmployee) {
-      delete prevEmployee[field];
-      appContext.dispatch({
-        type: "SET_PREV_EMPLOYEE",
-        payload: { id, employee: prevEmployee },
-      });
-    }
-  }
-
   return {
-    ...employeeTable,
+    ...employeeList,
     selectedSkills,
     setSelectedSkills,
     skills,
     employees,
     prevEmployees,
-    onShowModifiedField,
     columns,
     setColumns,
   };

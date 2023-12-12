@@ -21,7 +21,7 @@ export interface InfiniteListProps<T> {
   id: keyof T;
 }
 
-export default function useInfiniteList<T>(props: InfiniteListProps<T>) {
+export function useInfiniteList<T>(props: InfiniteListProps<T>) {
   const { searchFunction, filterFunction, id, fetchData } = props;
   const [searchTerm, setSearchTerm] = useState("");
   const [sort, setSort] = useState<{ key: keyof T; order: "asc" | "desc" }>({
