@@ -26,7 +26,8 @@ export function EmployeeListing() {
     setSort,
     employees,
     skills,
-    total
+    total,
+    hasMore,
   } = useEmployeeList();
   const urlParams = useQuery();
   const deleteEmployeeId = urlParams.get("delete");

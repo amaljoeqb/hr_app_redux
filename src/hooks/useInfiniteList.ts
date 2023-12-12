@@ -32,6 +32,7 @@ export function useInfiniteList<T>(props: InfiniteListProps<T>) {
   const [total, setTotal] = useState(0);
   const [displayData, setDisplayData] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
+  const hasMore = data.length < total;
 
   useEffect(() => {
     let filtered = searchFunction(data, searchTerm);
@@ -77,5 +78,6 @@ export function useInfiniteList<T>(props: InfiniteListProps<T>) {
     loadMoreData,
     total,
     loading,
+    hasMore,
   };
 }
