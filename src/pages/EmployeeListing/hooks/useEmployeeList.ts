@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { columnIds } from "../../../config";
 import { useApi, useInfiniteList } from "../../../hooks";
 import { Employee } from "../../../models";
@@ -13,20 +13,20 @@ export function useEmployeeList() {
   const { employees, skills, prevEmployees } = appContext.state;
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
-  const searchFunction = useCallback((data: Employee[], searchTerm: string) => {
+  const searchFunction = (data: Employee[], searchTerm: string) => {
     return searchEmployees(data, searchTerm, [
       "employeeId",
       "name",
       "department",
     ]);
-  }, []);
+  };
 
   const filterFunction = useCallback(
     (data: Employee[]) => filterEmployees(data, selectedSkills),
     [selectedSkills]
   );
 
-  const employeeList = useInfiniteList<Employee>({
+  const { loadMoreData, ...employeeList } = useInfiniteList<Employee>({
     searchFunction,
     filterFunction,
     id: "employeeId",
@@ -36,6 +36,19 @@ export function useEmployeeList() {
       return { data, total };
     },
   });
+
+  useEffect(() => {
+    function handleScroll() {
+      const bottom =
+        Math.ceil(window.innerHeight + window.scrollY) >=
+        document.documentElement.scrollHeight;
+      if (bottom) {
+        loadMoreData();
+      }
+    }
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loadMoreData]);
 
   return {
     ...employeeList,
