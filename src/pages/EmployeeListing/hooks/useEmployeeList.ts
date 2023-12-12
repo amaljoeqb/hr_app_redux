@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { columnIds } from "../../../config";
 import { useApi, useInfiniteList } from "../../../hooks";
-import { Employee } from "../../../models";
+import { Employee, FetchDataProps } from "../../../models";
 import {
   filterEmployees,
   searchEmployees,
@@ -10,31 +10,39 @@ import { useAppContext } from "../../../store/app.context";
 
 export function useEmployeeList() {
   const appContext = useAppContext();
+  const {getEmployees} = useApi();
   const { employees, skills, prevEmployees } = appContext.state;
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
-  const searchFunction = (data: Employee[], searchTerm: string) => {
+  const searchFunction = useCallback((data: Employee[], searchTerm: string) => {
     return searchEmployees(data, searchTerm, [
       "employeeId",
       "name",
       "department",
     ]);
-  };
+  }, []);
 
   const filterFunction = useCallback(
     (data: Employee[]) => filterEmployees(data, selectedSkills),
     [selectedSkills]
   );
 
+  const fetchData = useCallback(async (props: FetchDataProps<Employee>) => {
+    console.log("fetchData");
+    const response = await getEmployees(props);
+    return (
+      response || {
+        data: [],
+        total: 0,
+      }
+    );
+  }, []);
+
   const { loadMoreData, ...employeeList } = useInfiniteList<Employee>({
     searchFunction,
     filterFunction,
     id: "employeeId",
-    fetchData: async ({ offset, limit, sortBy, sortDir }) => {
-      const data: Employee[] = [];
-      const total = 0;
-      return { data, total };
-    },
+    fetchData,
   });
 
   useEffect(() => {
