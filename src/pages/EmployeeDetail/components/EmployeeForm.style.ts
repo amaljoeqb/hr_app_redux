@@ -9,6 +9,24 @@ export const StyledEmployeeForm = styled.div`
     max-width: 600px;
   }
 
+  form .profile-upload {
+    align-self: center;
+    margin-bottom: 50px;
+  }
+  form .profile-upload > label {
+    display: block;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: clip;
+  }
+  form .profile-upload > label > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   form .field {
     display: flex;
     flex-direction: column;

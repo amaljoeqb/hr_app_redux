@@ -1,4 +1,3 @@
-import { ColumnKey } from "../../../../components/ui/Table/Table";
 import { Employee } from "../../../../models";
 import { EmployeeCard } from "../EmployeeCard/EmployeeCard";
 import { StyledEmployeeCardsList } from "./EmployeeCardsList.style";
@@ -16,7 +15,7 @@ export function EmployeeCardsList(props: EmployeeCardsListProps) {
   return (
     <StyledEmployeeCardsList>
       {props.employees.map((employee) => {
-        return <EmployeeCard employee={employee} />;
+        return <EmployeeCard key={employee.employeeId} employee={employee} />;
       })}
     </StyledEmployeeCardsList>
   );

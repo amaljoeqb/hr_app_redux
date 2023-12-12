@@ -6,6 +6,7 @@ import { employeeSchema } from "../../../config";
 import useEmployeeForm from "../hooks/useEmployeeForm";
 import { useEffect, useRef } from "react";
 import { StyledEmployeeForm } from "./EmployeeForm.style";
+import defaultImg from "../../../assets/img/person1.jpeg";
 
 export interface EmployeeFormProps {
   employee: Employee | undefined;
@@ -46,6 +47,18 @@ export default function EmployeeForm(props: EmployeeFormProps) {
         innerRef={formik}
       >
         <Form id="emp-form" noValidate>
+          <div className="profile-upload">
+            <label htmlFor="imageUpload" tabIndex={0}>
+              <img src={defaultImg} alt="employee profile" />
+              <input
+                id="imageUpload"
+                style={{ display: "none" }}
+                type="file"
+                name="employee profile"
+                accept="image/*"
+              />
+            </label>
+          </div>
           <div className="row">
             <TextInput
               label="Employee ID"

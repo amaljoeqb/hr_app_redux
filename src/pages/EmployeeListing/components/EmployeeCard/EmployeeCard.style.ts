@@ -16,12 +16,22 @@ export const StyledEmployeeCard = styled.div`
     transition: transform 0.2s ease-in-out;
   }
 
+  & > button {
+    align-self: flex-end;
+    border-radius: 8px;
+  }
+
+  & > button:hover {
+    background-color: var(--grey-bg-color);
+  }
+
   & > img {
     width: 130px;
     height: 130px;
     object-fit: cover;
     display: block;
     border-radius: 50%;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
   }
   & > div {
     display: flex;
