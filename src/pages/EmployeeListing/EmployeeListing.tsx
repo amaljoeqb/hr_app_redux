@@ -12,6 +12,7 @@ import { Footer, Header } from "../../layout";
 import { StyledEmployeeListing } from "./EmployeeListing.style";
 import { columnIds } from "../../config";
 import { EmployeeCardsList } from "./components/EmployeeCardsList/EmployeeCardsList";
+import { useEmployeeList } from "./hooks/useEmployeeList";
 
 export function EmployeeListing() {
   const navigate = useNavigate();
@@ -23,17 +24,10 @@ export function EmployeeListing() {
     setSearchTerm,
     sort,
     setSort,
-    page,
-    setPage,
-    filteredData,
     employees,
     skills,
-    totalPages,
-    prevEmployees,
-    onShowModifiedField,
-    columns,
-    setColumns,
-  } = useEmployeeTable();
+    total
+  } = useEmployeeList();
   const urlParams = useQuery();
   const deleteEmployeeId = urlParams.get("delete");
 
@@ -58,7 +52,6 @@ export function EmployeeListing() {
                 selectedSkills={selectedSkills}
                 onChange={(skills) => {
                   setSelectedSkills(skills);
-                  setPage(1);
                 }}
               />
             </div>
