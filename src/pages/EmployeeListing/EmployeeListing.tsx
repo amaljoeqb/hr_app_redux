@@ -24,7 +24,6 @@ export function EmployeeListing() {
     setSearchTerm,
     sort,
     setSort,
-    employees,
     skills,
     total,
     hasMore,
@@ -49,7 +48,7 @@ export function EmployeeListing() {
             <div className="filters-section">
               <SkillsFilter
                 skills={skills}
-                employees={employees}
+                employees={displayData}
                 selectedSkills={selectedSkills}
                 onChange={(skills) => {
                   setSelectedSkills(skills);

@@ -10,8 +10,8 @@ import { useAppContext } from "../../../store/app.context";
 
 export function useEmployeeList() {
   const appContext = useAppContext();
-  const {getEmployees} = useApi();
-  const { employees, skills, prevEmployees } = appContext.state;
+  const { getEmployees } = useApi();
+  const { skills, prevEmployees } = appContext.state;
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
   const searchFunction = useCallback((data: Employee[], searchTerm: string) => {
@@ -63,7 +63,6 @@ export function useEmployeeList() {
     selectedSkills,
     setSelectedSkills,
     skills,
-    employees,
     prevEmployees,
   };
 }

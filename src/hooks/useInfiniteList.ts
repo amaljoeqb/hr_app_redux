@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { FetchDataProps, FetchDataReturn } from "../models";
 
-
 export interface InfiniteListProps<T> {
   fetchData: (
     props: FetchDataProps<T>
@@ -47,6 +46,7 @@ export function useInfiniteList<T>(props: InfiniteListProps<T>) {
   }, [sort, fetchData]);
 
   async function loadMoreData() {
+    if (loading || !hasMore) return;
     setLoading(true);
     const { data: newData, total: newTotal } = await fetchData({
       offset: data.length,
