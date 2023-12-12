@@ -10,21 +10,16 @@ import { useAppContext } from "../../../store/app.context";
 
 export function useEmployeeList() {
   const appContext = useAppContext();
-  const api = useApi();
   const { employees, skills, prevEmployees } = appContext.state;
-  const [columns, setColumns] = useState(columnIds.large);
-
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
-  const searchFunction = useCallback(
-    (data: Employee[], searchTerm: string) => {
-      let fields = Array.from(columns).filter(
-        (column) => column !== "actions"
-      ) as (keyof Employee)[];
-      return searchEmployees(data, searchTerm, fields);
-    },
-    [columns]
-  );
+  const searchFunction = useCallback((data: Employee[], searchTerm: string) => {
+    return searchEmployees(data, searchTerm, [
+      "employeeId",
+      "name",
+      "department",
+    ]);
+  }, []);
 
   const filterFunction = useCallback(
     (data: Employee[]) => filterEmployees(data, selectedSkills),
@@ -49,7 +44,5 @@ export function useEmployeeList() {
     skills,
     employees,
     prevEmployees,
-    columns,
-    setColumns,
   };
 }
