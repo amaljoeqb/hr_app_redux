@@ -11,6 +11,7 @@ export function EmployeeCard({ employee }: { employee: Employee }) {
       onClick={() => {
         navigate(`/employee/${employee.employeeId}`);
       }}
+      tabIndex={0}
     >
       <div className="edit-del-button">
         <EmployeeActionMenu
