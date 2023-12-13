@@ -10,4 +10,5 @@ export interface Employee {
   salary?: number;
   joiningDate?: string;
   dateOfBirth?: string;
+  profilePic?: string;
 }

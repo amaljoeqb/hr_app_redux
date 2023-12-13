@@ -93,6 +93,7 @@ export function getEmployeeGlobalFetchParams(
       sortKey = "dob";
       break;
     case "employeeId":
+    case "profilePic":
       sortKey = "id";
       break;
     default:

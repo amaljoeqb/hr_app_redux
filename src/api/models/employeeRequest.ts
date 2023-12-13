@@ -15,5 +15,6 @@ export interface EmployeeRequest {
   department?: {
     id: number;
   };
+  moreDetails?: string;
 }
 

@@ -37,4 +37,5 @@ export interface EmployeeGlobal {
     id: number;
     department: string;
   };
+  moreDetails?: string;
 }
