@@ -28,7 +28,6 @@ export default function EmployeeForm(props: EmployeeFormProps) {
     onClickEdit,
     isCreate,
   } = useEmployeeForm(props);
-  const [profileImg, setprofileImg] = useState(defaultAddEmpImg);
 
   const formik = useRef<FormikProps<Employee>>(null);
 
@@ -48,29 +47,6 @@ export default function EmployeeForm(props: EmployeeFormProps) {
         innerRef={formik}
       >
         <Form id="emp-form" noValidate>
-          <div className="profile-upload">
-            <label
-              className={props.isView ? "is-view" : ""}
-              htmlFor="imageUpload"
-              tabIndex={0}
-            >
-              <img src={profileImg} alt="employee profile" />
-              <input
-                id="imageUpload"
-                style={{ display: "none" }}
-                type="file"
-                name="employee profile"
-                onChange={(e) =>
-                  setprofileImg(
-                    e.target.files
-                      ? URL.createObjectURL(e.target.files[0])
-                      : profileImg
-                  )
-                }
-                accept="image/*"
-              />
-            </label>
-          </div>
           <div className="row">
             <TextInput
               label="Employee ID"

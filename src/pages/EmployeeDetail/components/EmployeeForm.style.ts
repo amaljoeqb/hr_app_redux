@@ -8,34 +8,6 @@ export const StyledEmployeeForm = styled.div`
     row-gap: 16px;
     max-width: 600px;
   }
-
-  form .profile-upload {
-    align-self: center;
-    margin-bottom: 50px;
-  }
-  form .profile-upload > label {
-    display: block;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-    overflow: clip;
-    cursor: pointer;
-  }
-  form .profile-upload > label:hover {
-    transform: scale(1.05);
-    transition: transform 0.2s ease;
-  }
-  form .profile-upload > label.is-view {
-    pointer-events: none;
-  }
-  form .profile-upload > label > img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
   form .field {
     display: flex;
     flex-direction: column;

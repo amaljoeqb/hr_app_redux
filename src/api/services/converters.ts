@@ -37,11 +37,12 @@ export function getEmployeeFromEmployeeGlobal(
     salary: getSalary(),
     joiningDate: employeeGlobal.dateOfJoining,
     dateOfBirth: employeeGlobal.dob,
+    moreDetails: employeeGlobal.moreDetails,
   };
 }
 
 export function getEmployeeRequestFromEmployee(
-  employee: Employee,
+  employee: Employee
 ): EmployeeRequest {
   const firstName = employee.name.split(" ")[0];
   const lastName = employee.name.substring(firstName.length + 1);

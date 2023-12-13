@@ -1,11 +1,17 @@
 import { StyledEmployeeCard } from "./EmployeeCard.style";
 import { Employee } from "../../../../models";
-import profileImg from "../../../../assets/img/person1.jpeg";
+import profileImg from "../../../../assets/img/profile.png";
 import EmployeeActionMenu from "../EmployeeActionMenu";
 import { useNavigate } from "react-router-dom";
 
 export function EmployeeCard({ employee }: { employee: Employee }) {
   const navigate = useNavigate();
+  const moreDetailsObj = employee.moreDetails
+    ? JSON.parse(employee.moreDetails)
+    : "";
+  const profileUrl = moreDetailsObj.photoId
+    ? moreDetailsObj.photoId
+    : profileImg;
   return (
     <StyledEmployeeCard
       onClick={() => {
@@ -23,7 +29,7 @@ export function EmployeeCard({ employee }: { employee: Employee }) {
           }}
         />
       </div>
-      <img src={profileImg} alt="employee profile" />
+      <img src={profileUrl} alt="employee profile" />
       <div>
         <p className="view-emp-id">#{employee.employeeId}</p>
         <p className="view-emp-name">{employee.name}</p>
