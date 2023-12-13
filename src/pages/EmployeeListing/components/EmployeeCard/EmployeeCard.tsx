@@ -7,7 +7,11 @@ import { useNavigate } from "react-router-dom";
 export function EmployeeCard({ employee }: { employee: Employee }) {
   const navigate = useNavigate();
   return (
-    <StyledEmployeeCard>
+    <StyledEmployeeCard
+      onClick={() => {
+        navigate(`/employee/${employee.employeeId}`);
+      }}
+    >
       {/* <button>
         <span className="material-symbols-outlined"> more_horiz </span>
       </button> */}
