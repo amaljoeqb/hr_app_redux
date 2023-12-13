@@ -11,4 +11,5 @@ export interface Employee {
   joiningDate?: string;
   dateOfBirth?: string;
   profilePic?: string;
+  moreDetails?: string;
 }
