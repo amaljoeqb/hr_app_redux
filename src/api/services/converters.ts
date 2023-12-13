@@ -56,7 +56,7 @@ export function setProfilePic(
     }
   } finally {
     if (profilePic) {
-      details.profilePic = profilePic;
+      details.photoId = profilePic;
     }
     return JSON.stringify(details);
   }
@@ -65,7 +65,8 @@ export function setProfilePic(
 export function getProfilePic(moreDetails: string) {
   try {
     const details = JSON.parse(moreDetails);
-    return details.profilePic;
+    console.log(details);
+    return details.photoId;
   } catch (e) {
     return undefined;
   }
