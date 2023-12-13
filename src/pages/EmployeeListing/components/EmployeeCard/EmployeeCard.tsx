@@ -1,13 +1,26 @@
 import { StyledEmployeeCard } from "./EmployeeCard.style";
 import { Employee } from "../../../../models";
 import profileImg from "../../../../assets/img/person1.jpeg";
+import EmployeeActionMenu from "../EmployeeActionMenu";
+import { useNavigate } from "react-router-dom";
 
 export function EmployeeCard({ employee }: { employee: Employee }) {
+  const navigate = useNavigate();
   return (
     <StyledEmployeeCard>
-      <button>
+      {/* <button>
         <span className="material-symbols-outlined"> more_horiz </span>
-      </button>
+      </button> */}
+      <div className="edit-del-button">
+        <EmployeeActionMenu
+          onDelete={() => {
+            navigate(`/?delete=${employee.employeeId}`);
+          }}
+          onEdit={() => {
+            navigate(`/employee/${employee.employeeId}?edit=true`);
+          }}
+        />
+      </div>
       <img src={profileImg} alt="employee profile" />
       <div>
         <p className="view-emp-id">#{employee.employeeId}</p>

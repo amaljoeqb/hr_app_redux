@@ -18,7 +18,7 @@ export const StyledEmployeeForm = styled.div`
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     overflow: clip;
     cursor: pointer;
   }
