@@ -26,6 +26,9 @@ export const StyledEmployeeForm = styled.div`
     transform: scale(1.05);
     transition: transform 0.2s ease;
   }
+  form .profile-upload > label.is-view {
+    pointer-events: none;
+  }
   form .profile-upload > label > img {
     display: block;
     width: 100%;

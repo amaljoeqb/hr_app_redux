@@ -49,7 +49,11 @@ export default function EmployeeForm(props: EmployeeFormProps) {
       >
         <Form id="emp-form" noValidate>
           <div className="profile-upload">
-            <label htmlFor="imageUpload" tabIndex={0}>
+            <label
+              className={props.isView ? "is-view" : ""}
+              htmlFor="imageUpload"
+              tabIndex={0}
+            >
               <img src={profileImg} alt="employee profile" />
               <input
                 id="imageUpload"

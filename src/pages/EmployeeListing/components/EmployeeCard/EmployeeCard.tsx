@@ -12,9 +12,6 @@ export function EmployeeCard({ employee }: { employee: Employee }) {
         navigate(`/employee/${employee.employeeId}`);
       }}
     >
-      {/* <button>
-        <span className="material-symbols-outlined"> more_horiz </span>
-      </button> */}
       <div className="edit-del-button">
         <EmployeeActionMenu
           onDelete={() => {
