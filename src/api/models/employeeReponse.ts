@@ -39,3 +39,10 @@ export interface EmployeeGlobal {
   };
   moreDetails?: string;
 }
+
+export interface MoreDetails {
+  gender?: string;
+  location?: string;
+  photoId?: string;
+  workStatus?: string;
+}

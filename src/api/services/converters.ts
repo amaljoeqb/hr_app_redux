@@ -4,6 +4,7 @@ import {
   SkillGlobal,
   DepartmentGlobal,
   EmployeeRequest,
+  MoreDetails,
 } from "../models";
 
 export function getEmployeeFromEmployeeGlobal(
@@ -64,8 +65,10 @@ export function setProfilePic(
 
 export function getProfilePic(moreDetails: string) {
   try {
-    const details = JSON.parse(moreDetails);
-    console.log(details);
+    const details: MoreDetails = JSON.parse(moreDetails);
+    if (details.photoId === undefined || details.photoId === "") {
+      return undefined;
+    }
     return details.photoId;
   } catch (e) {
     return undefined;
