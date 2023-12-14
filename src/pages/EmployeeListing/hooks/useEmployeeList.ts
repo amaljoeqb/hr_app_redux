@@ -47,6 +47,7 @@ export function useEmployeeList() {
   });
 
   useEffect(() => {
+    const { current } = loadingIconRef;
     const handleIntersection: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -62,14 +63,14 @@ export function useEmployeeList() {
     });
 
     // Start observing the loading icon
-    if (loadingIconRef.current) {
-      observer.observe(loadingIconRef.current);
+    if (current) {
+      observer.observe(current);
     }
 
     return () => {
       // Stop observing when the component unmounts
-      if (loadingIconRef.current) {
-        observer.unobserve(loadingIconRef.current);
+      if (current) {
+        observer.unobserve(current);
       }
     };
   }, [loadMoreData]);

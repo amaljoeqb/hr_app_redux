@@ -27,6 +27,7 @@ export function EmployeeListing() {
     skills,
     total,
     hasMore,
+    loadingIconRef,
   } = useEmployeeList();
   const urlParams = useQuery();
   const deleteEmployeeId = urlParams.get("delete");
@@ -70,7 +71,7 @@ export function EmployeeListing() {
           searchTerm={searchTerm}
           sort={sort}
         />
-        {hasMore && <Loader className="listing" />}
+        {hasMore && <Loader innerRef={loadingIconRef} className="listing" />}
       </main>
       {deleteEmployeeId && (
         <EmployeeDeletePopup
