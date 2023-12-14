@@ -29,7 +29,6 @@ export function useEmployeeList() {
   );
 
   const fetchData = useCallback(async (props: FetchDataProps<Employee>) => {
-    console.log("fetchData");
     const response = await getEmployees(props);
     return (
       response || {

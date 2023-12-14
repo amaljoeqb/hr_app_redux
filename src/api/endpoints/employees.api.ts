@@ -22,7 +22,6 @@ export const getEmployees = async (props: FetchDataProps<Employee>) => {
     getEmployeeFromEmployeeGlobal(employee)
   );
   const total = response.data.count;
-  console.log(employees);
   return { data: employees, total };
 };
 
