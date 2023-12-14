@@ -6,7 +6,7 @@ import { employeeSchema } from "../../../config";
 import useEmployeeForm from "../hooks/useEmployeeForm";
 import { useEffect, useRef, useState } from "react";
 import { StyledEmployeeForm } from "./EmployeeForm.style";
-import defaultAddEmpImg from "../../../assets/img/add_emp_logo.svg";
+import defaultAddEmpImg from "../../../assets/img/profile_img_logo.svg";
 
 export interface EmployeeFormProps {
   employee: Employee | undefined;
@@ -51,7 +51,7 @@ export default function EmployeeForm(props: EmployeeFormProps) {
           <div className={"profile-upload " + (props.isView ? "is-view" : "")}>
             <label htmlFor="imageUpload" tabIndex={0}>
               <img src={profileImg} alt="employee profile" />
-              <div>
+              <div className={props.isView ? "is-view" : ""}>
                 <span className="material-symbols-outlined"> edit </span>
               </div>
               <input

@@ -4,6 +4,7 @@ import {
   SkillGlobal,
   DepartmentGlobal,
   EmployeeRequest,
+  MoreDetails,
 } from "../models";
 
 export function getEmployeeFromEmployeeGlobal(
@@ -38,7 +39,40 @@ export function getEmployeeFromEmployeeGlobal(
     joiningDate: employeeGlobal.dateOfJoining,
     dateOfBirth: employeeGlobal.dob,
     moreDetails: employeeGlobal.moreDetails,
+    profilePic:
+      employeeGlobal.moreDetails !== undefined
+        ? getProfilePic(employeeGlobal.moreDetails)
+        : undefined,
   };
+}
+
+export function setProfilePic(
+  moreDetails: string | undefined,
+  profilePic: string | undefined
+) {
+  let details: any = {};
+  try {
+    if (moreDetails) {
+      details = JSON.parse(moreDetails);
+    }
+  } finally {
+    if (profilePic) {
+      details.photoId = profilePic;
+    }
+    return JSON.stringify(details);
+  }
+}
+
+export function getProfilePic(moreDetails: string) {
+  try {
+    const details: MoreDetails = JSON.parse(moreDetails);
+    if (details.photoId === undefined || details.photoId === "") {
+      return undefined;
+    }
+    return details.photoId;
+  } catch (e) {
+    return undefined;
+  }
 }
 
 export function getEmployeeRequestFromEmployee(
@@ -60,6 +94,7 @@ export function getEmployeeRequestFromEmployee(
     salary: employee.salary?.toString(),
     dateOfJoining: employee.joiningDate,
     dob: employee.dateOfBirth,
+    moreDetails: setProfilePic(employee.moreDetails, employee.profilePic),
   };
 }
 
