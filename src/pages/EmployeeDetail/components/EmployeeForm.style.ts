@@ -8,7 +8,6 @@ export const StyledEmployeeForm = styled.div`
     row-gap: 16px;
     max-width: 600px;
   }
-
   form .field {
     display: flex;
     flex-direction: column;

@@ -4,8 +4,9 @@ import { Formik, Form, FormikProps } from "formik";
 import { HoverButton, SelectInput, SubmitButton } from "../../../components";
 import { employeeSchema } from "../../../config";
 import useEmployeeForm from "../hooks/useEmployeeForm";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StyledEmployeeForm } from "./EmployeeForm.style";
+import defaultAddEmpImg from "../../../assets/img/add_emp_logo.svg";
 
 export interface EmployeeFormProps {
   employee: Employee | undefined;
