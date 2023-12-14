@@ -135,6 +135,8 @@ export function isEmployeeEqual(employee1: Employee, employee2: Employee) {
     employee1.salary === employee2.salary &&
     employee1.joiningDate === employee2.joiningDate &&
     employee1.dateOfBirth === employee2.dateOfBirth &&
+    employee1.profilePic === employee2.profilePic &&
+    employee1.moreDetails === employee2.moreDetails &&
     isSkillsEqual(employee1.skills, employee2.skills)
   );
 }
@@ -171,5 +173,9 @@ export function getEmployeeDiff(
     diff.dateOfBirth = oldEmployee.dateOfBirth;
   if (!isSkillsEqual(oldEmployee.skills, newEmployee.skills))
     diff.skills = oldEmployee.skills;
+  if (oldEmployee.moreDetails !== newEmployee.moreDetails)
+    diff.moreDetails = oldEmployee.moreDetails;
+  if (oldEmployee.profilePic !== newEmployee.profilePic)
+    diff.profilePic = oldEmployee.profilePic;
   return diff;
 }

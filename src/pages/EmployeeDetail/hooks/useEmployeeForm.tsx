@@ -3,7 +3,8 @@ import { useAppContext } from "../../../store/app.context";
 import { getNextEmployeeId, isEmployeeEqual } from "../../../services/";
 import { Employee } from "../../../models";
 import { useApi } from "../../../hooks";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { firebaseUploadImage } from "../../../config/firebase.config";
 
 export default function useEmployeeForm({
   employee,
@@ -14,6 +15,7 @@ export default function useEmployeeForm({
   onSave,
 }: EmployeeFormProps) {
   const api = useApi();
+  const [uploadImg, setUploadImg] = useState<File | string>("");
   const appContext = useAppContext();
   const isInitialValid = employee !== undefined;
   const initialValues = useMemo(() => {
@@ -43,7 +45,9 @@ export default function useEmployeeForm({
     label: skill.skill,
   }));
 
-  function onSubmit(values: Employee) {
+  async function onSubmit(values: Employee) {
+    let imgUrl = await firebaseUploadImage(uploadImg);
+    values.profilePic = imgUrl;
     if (employee) {
       if (!isEmployeeEqual(employee, values)) {
         api.updateEmployee(values);
@@ -58,7 +62,6 @@ export default function useEmployeeForm({
     onEdit();
   }
 
-
   return {
     initialValues,
     onSubmit,
@@ -66,6 +69,7 @@ export default function useEmployeeForm({
     departmentOptions,
     skillsOptions,
     isInitialValid,
-    isCreate
+    isCreate,
+    setUploadImg,
   };
 }

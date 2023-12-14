@@ -3,6 +3,7 @@ import { ClickAwayListener } from "../../../components";
 import { Dropdown } from "../../../components/ui/Dropdown/Dropdown";
 
 export interface EmployeeActionMenuProps {
+  onClick?: (e: MouseEvent) => void;
   onDelete: () => void;
   onEdit: () => void;
 }
@@ -16,7 +17,12 @@ export default function EmployeeActionMenu(props: EmployeeActionMenuProps) {
         setIsActive(false);
       }}
     >
-      <div className={`action-container ${isActive ? "active" : ""}`}>
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        className={`action-container ${isActive ? "active" : ""}`}
+      >
         <button
           className="action-btn"
           onClick={(e) => {

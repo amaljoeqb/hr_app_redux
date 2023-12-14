@@ -27,8 +27,11 @@ export default function EmployeeForm(props: EmployeeFormProps) {
     isInitialValid,
     onClickEdit,
     isCreate,
+    setUploadImg,
   } = useEmployeeForm(props);
-  const [profileImg, setprofileImg] = useState(defaultAddEmpImg);
+  const [profileImg, setprofileImg] = useState(
+    initialValues.profilePic ? initialValues.profilePic : defaultAddEmpImg
+  );
 
   const formik = useRef<FormikProps<Employee>>(null);
 
@@ -59,13 +62,14 @@ export default function EmployeeForm(props: EmployeeFormProps) {
                 style={{ display: "none" }}
                 type="file"
                 name="employee profile"
-                onChange={(e) =>
+                onChange={(e) => {
                   setprofileImg(
                     e.target.files
                       ? URL.createObjectURL(e.target.files[0])
                       : profileImg
-                  )
-                }
+                  );
+                  setUploadImg(e.target.files ? e.target.files[0] : "");
+                }}
                 accept="image/*"
               />
             </label>
