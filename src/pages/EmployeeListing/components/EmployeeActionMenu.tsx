@@ -19,7 +19,8 @@ export default function EmployeeActionMenu(props: EmployeeActionMenuProps) {
       <div className={`action-container ${isActive ? "active" : ""}`}>
         <button
           className="action-btn"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             setIsActive(!isActive);
           }}
         >

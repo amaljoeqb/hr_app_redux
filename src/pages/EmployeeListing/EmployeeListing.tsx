@@ -1,5 +1,5 @@
 import EmployeeTable from "./components/EmployeeTable";
-import { HoverButton } from "../../components";
+import { HoverButton, Loader } from "../../components";
 import { PaginationControl } from "../../components/";
 import SearchInput from "./components/SearchInput";
 import { useAppContext } from "../../store/app.context";
@@ -12,6 +12,7 @@ import { Footer, Header } from "../../layout";
 import { StyledEmployeeListing } from "./EmployeeListing.style";
 import { columnIds } from "../../config";
 import { EmployeeCardsList } from "./components/EmployeeCardsList/EmployeeCardsList";
+import { useEmployeeList } from "./hooks/useEmployeeList";
 
 export function EmployeeListing() {
   const navigate = useNavigate();
@@ -23,17 +24,11 @@ export function EmployeeListing() {
     setSearchTerm,
     sort,
     setSort,
-    page,
-    setPage,
-    filteredData,
-    employees,
     skills,
-    totalPages,
-    prevEmployees,
-    onShowModifiedField,
-    columns,
-    setColumns,
-  } = useEmployeeTable();
+    total,
+    hasMore,
+    loadingIconRef,
+  } = useEmployeeList();
   const urlParams = useQuery();
   const deleteEmployeeId = urlParams.get("delete");
 
@@ -54,11 +49,10 @@ export function EmployeeListing() {
             <div className="filters-section">
               <SkillsFilter
                 skills={skills}
-                employees={employees}
+                employees={displayData}
                 selectedSkills={selectedSkills}
                 onChange={(skills) => {
                   setSelectedSkills(skills);
-                  setPage(1);
                 }}
               />
             </div>
@@ -77,6 +71,7 @@ export function EmployeeListing() {
           searchTerm={searchTerm}
           sort={sort}
         />
+        {hasMore && <Loader innerRef={loadingIconRef} className="listing" />}
       </main>
       {deleteEmployeeId && (
         <EmployeeDeletePopup

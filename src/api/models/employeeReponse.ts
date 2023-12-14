@@ -6,14 +6,12 @@ export interface EmployeeResponse {
   message: string;
 }
 
-
 export interface EmployeeCreateResponse {
   message: string;
   data: {
     id: number;
   };
 }
-
 
 export interface EmployeeGlobal {
   id: number;
@@ -39,4 +37,12 @@ export interface EmployeeGlobal {
     id: number;
     department: string;
   };
+  moreDetails?: string;
+}
+
+export interface MoreDetails {
+  gender?: string;
+  location?: string;
+  photoId?: string;
+  workStatus?: string;
 }

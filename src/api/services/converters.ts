@@ -1,9 +1,10 @@
-import { Employee, Skill, Department } from "../../models";
+import { Employee, Skill, Department, FetchDataProps } from "../../models";
 import {
   EmployeeGlobal,
   SkillGlobal,
   DepartmentGlobal,
   EmployeeRequest,
+  MoreDetails,
 } from "../models";
 
 export function getEmployeeFromEmployeeGlobal(
@@ -37,11 +38,45 @@ export function getEmployeeFromEmployeeGlobal(
     salary: getSalary(),
     joiningDate: employeeGlobal.dateOfJoining,
     dateOfBirth: employeeGlobal.dob,
+    moreDetails: employeeGlobal.moreDetails,
+    profilePic:
+      employeeGlobal.moreDetails !== undefined
+        ? getProfilePic(employeeGlobal.moreDetails)
+        : undefined,
   };
 }
 
+export function setProfilePic(
+  moreDetails: string | undefined,
+  profilePic: string | undefined
+) {
+  let details: any = {};
+  try {
+    if (moreDetails) {
+      details = JSON.parse(moreDetails);
+    }
+  } finally {
+    if (profilePic) {
+      details.photoId = profilePic;
+    }
+    return JSON.stringify(details);
+  }
+}
+
+export function getProfilePic(moreDetails: string) {
+  try {
+    const details: MoreDetails = JSON.parse(moreDetails);
+    if (details.photoId === undefined || details.photoId === "") {
+      return undefined;
+    }
+    return details.photoId;
+  } catch (e) {
+    return undefined;
+  }
+}
+
 export function getEmployeeRequestFromEmployee(
-  employee: Employee,
+  employee: Employee
 ): EmployeeRequest {
   const firstName = employee.name.split(" ")[0];
   const lastName = employee.name.substring(firstName.length + 1);
@@ -59,6 +94,7 @@ export function getEmployeeRequestFromEmployee(
     salary: employee.salary?.toString(),
     dateOfJoining: employee.joiningDate,
     dob: employee.dateOfBirth,
+    moreDetails: setProfilePic(employee.moreDetails, employee.profilePic),
   };
 }
 
@@ -76,4 +112,34 @@ export function getDepartmentFromDepartmentGlobal(
     departmentId: departmentGlobal.id.toString(),
     department: departmentGlobal.department,
   };
+}
+
+export function getEmployeeGlobalFetchParams(
+  props: FetchDataProps<Employee>
+): FetchDataProps<EmployeeGlobal> {
+  let sortKey: keyof EmployeeGlobal = "id";
+  switch (props.sortBy) {
+    case "name":
+      sortKey = "firstName";
+      break;
+    case "joiningDate":
+      sortKey = "dateOfJoining";
+      break;
+    case "dateOfBirth":
+      sortKey = "dob";
+      break;
+    case "employeeId":
+    case "profilePic":
+      sortKey = "id";
+      break;
+    default:
+      sortKey = props.sortBy;
+  }
+  const params: FetchDataProps<EmployeeGlobal> = {
+    limit: props.limit,
+    offset: props.offset,
+    sortDir: props.sortDir,
+    sortBy: sortKey,
+  };
+  return params;
 }
