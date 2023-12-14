@@ -10,10 +10,10 @@ export const StyledEmployeeCard = styled.div`
   flex-direction: column;
   cursor: pointer;
   gap: 20px;
+  transition: transform 0.2s ease-in-out;
 
   &:hover {
     transform: scale(1.05);
-    transition: transform 0.2s ease-in-out;
   }
 
   & > button {
