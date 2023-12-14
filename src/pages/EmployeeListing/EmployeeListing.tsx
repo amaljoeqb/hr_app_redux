@@ -1,5 +1,5 @@
 import EmployeeTable from "./components/EmployeeTable";
-import { HoverButton } from "../../components";
+import { HoverButton, Loader } from "../../components";
 import { PaginationControl } from "../../components/";
 import SearchInput from "./components/SearchInput";
 import { useAppContext } from "../../store/app.context";
@@ -70,6 +70,7 @@ export function EmployeeListing() {
           searchTerm={searchTerm}
           sort={sort}
         />
+        {hasMore && <Loader className="listing" />}
       </main>
       {deleteEmployeeId && (
         <EmployeeDeletePopup

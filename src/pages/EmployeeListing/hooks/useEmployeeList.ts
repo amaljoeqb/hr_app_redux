@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { columnIds } from "../../../config";
 import { useApi, useInfiniteList } from "../../../hooks";
 import { Employee, FetchDataProps } from "../../../models";
@@ -13,6 +13,7 @@ export function useEmployeeList() {
   const { getEmployees } = useApi();
   const { skills, prevEmployees } = appContext.state;
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const loadingIconRef = useRef(null);
 
   const searchFunction = useCallback((data: Employee[], searchTerm: string) => {
     return searchEmployees(data, searchTerm, [
@@ -46,16 +47,31 @@ export function useEmployeeList() {
   });
 
   useEffect(() => {
-    function handleScroll() {
-      const bottom =
-        Math.ceil(window.innerHeight + window.scrollY) >=
-        document.documentElement.scrollHeight;
-      if (bottom) {
-        loadMoreData();
-      }
+    const handleIntersection: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          loadMoreData();
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, {
+      root: null, // Use the viewport as the root
+      rootMargin: "0px", // No margin around the root
+      threshold: 0.1, // Trigger when 10% of the element is visible
+    });
+
+    // Start observing the loading icon
+    if (loadingIconRef.current) {
+      observer.observe(loadingIconRef.current);
     }
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      // Stop observing when the component unmounts
+      if (loadingIconRef.current) {
+        observer.unobserve(loadingIconRef.current);
+      }
+    };
   }, [loadMoreData]);
 
   return {
@@ -64,5 +80,6 @@ export function useEmployeeList() {
     setSelectedSkills,
     skills,
     prevEmployees,
+    loadingIconRef,
   };
 }

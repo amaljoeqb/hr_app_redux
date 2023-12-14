@@ -1,9 +1,10 @@
 import spinner from "../../../assets/img/spinner.svg";
+import { StyledLoader } from "./Loader.style";
 
-export default function Loader() {
+export default function Loader(props: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div id="loading">
+    <StyledLoader {...props}>
       <img id="loading-image" src={spinner} alt="Loading..." />
-    </div>
+    </StyledLoader>
   );
 }

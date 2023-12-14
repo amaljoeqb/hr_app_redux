@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div className="App">
-      {loading ? <Loader /> : <RouterProvider router={router} />}
+      {loading ? <Loader className="fullscreen" /> : <RouterProvider router={router} />}
       <ToastContainer toasts={toasts} onCloseToast={closeToast} />
     </div>
   );

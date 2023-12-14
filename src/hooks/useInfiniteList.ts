@@ -34,7 +34,7 @@ export function useInfiniteList<T>(props: InfiniteListProps<T>) {
       setLoading(true);
       const { data: newData, total: newTotal } = await fetchData({
         offset: 0,
-        limit: 10,
+        limit: 9,
         sortBy: sort.key,
         sortDir: sort.order,
       });
