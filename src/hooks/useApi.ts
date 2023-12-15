@@ -1,6 +1,6 @@
 import { useAppContext } from "../store/app.context";
 import * as API from "../api";
-import { Employee } from "../models";
+import { Employee, FetchDataProps } from "../models";
 import { errorMessages, getEmployeeDiff } from "../services/";
 import { successMessages } from "../services/successMessages";
 import { useEffect } from "react";
@@ -22,9 +22,9 @@ export default function useApi() {
     }, 3000);
   }
 
-  async function getEmployees() {
+  async function getEmployees(props: FetchDataProps<Employee>) {
     try {
-      const employees = await API.getEmployees();
+      const employees = await API.getEmployees(props);
       appContext.dispatch({ type: "SET_EMPLOYEES", payload: employees });
       return employees;
     } catch (error: any) {

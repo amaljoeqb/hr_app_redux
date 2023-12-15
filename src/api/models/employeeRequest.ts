@@ -17,3 +17,4 @@ export interface EmployeeRequest {
   };
   moreDetails?: string;
 }
+

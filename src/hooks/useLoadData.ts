@@ -6,10 +6,9 @@ export default function useLoadData() {
   const api = useApi();
 
   useEffect(() => {
-    const employees = api.getEmployees();
     const skills = api.getSkills();
     const departments = api.getDepartments();
-    Promise.all([employees, skills, departments]).then(() => {
+    Promise.all([skills, departments]).then(() => {
       setLoading(false);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
