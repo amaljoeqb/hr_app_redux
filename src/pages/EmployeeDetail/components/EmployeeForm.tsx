@@ -29,8 +29,11 @@ export default function EmployeeForm(props: EmployeeFormProps) {
     isCreate,
     setUploadImg,
   } = useEmployeeForm(props);
+  const initialProfilePic = initialValues.profilePic
+    ? initialValues.profilePic
+    : "";
   const [profileImg, setprofileImg] = useState(
-    initialValues.profilePic ? initialValues.profilePic : defaultAddEmpImg
+    initialProfilePic !== "" ? initialProfilePic : defaultAddEmpImg
   );
 
   const formik = useRef<FormikProps<Employee>>(null);
@@ -68,7 +71,9 @@ export default function EmployeeForm(props: EmployeeFormProps) {
                       ? URL.createObjectURL(e.target.files[0])
                       : profileImg
                   );
-                  setUploadImg(e.target.files ? e.target.files[0] : "");
+                  setUploadImg(
+                    e.target.files ? e.target.files[0] : initialProfilePic
+                  );
                 }}
                 accept="image/*"
               />

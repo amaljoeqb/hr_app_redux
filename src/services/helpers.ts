@@ -126,6 +126,8 @@ function isSkillsEqual(skills1: Skill[], skills2: Skill[]) {
  * @returns True if the employee objects are equal, false otherwise.
  */
 export function isEmployeeEqual(employee1: Employee, employee2: Employee) {
+  let emp1Profile = JSON.parse(employee1.moreDetails!).photoId;
+  let emp2Profile = employee2.profilePic;
   return (
     employee1.employeeId === employee2.employeeId &&
     employee1.name === employee2.name &&
@@ -135,8 +137,7 @@ export function isEmployeeEqual(employee1: Employee, employee2: Employee) {
     employee1.salary === employee2.salary &&
     employee1.joiningDate === employee2.joiningDate &&
     employee1.dateOfBirth === employee2.dateOfBirth &&
-    employee1.profilePic === employee2.profilePic &&
-    employee1.moreDetails === employee2.moreDetails &&
+    emp1Profile === emp2Profile &&
     isSkillsEqual(employee1.skills, employee2.skills)
   );
 }

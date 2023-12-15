@@ -46,12 +46,13 @@ export default function useEmployeeForm({
   }));
 
   async function onSubmit(values: Employee) {
+    console.log(uploadImg);
     let imgUrl = await firebaseUploadImage(uploadImg);
     values.profilePic = imgUrl;
     if (employee) {
       if (!isEmployeeEqual(employee, values)) {
         api.updateEmployee(values);
-      }
+      } else console.log(employee.profilePic, values.profilePic);
     } else {
       api.createEmployee(values);
     }
