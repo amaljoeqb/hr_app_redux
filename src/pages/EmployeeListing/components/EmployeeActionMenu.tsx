@@ -16,11 +16,15 @@ export default function EmployeeActionMenu(props: EmployeeActionMenuProps) {
         setIsActive(false);
       }}
     >
-      <div className={`action-container ${isActive ? "active" : ""}`}>
+      <div
+        className={`action-container ${isActive ? "active" : ""}`}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <button
           className="action-btn"
           onClick={(e) => {
-            e.stopPropagation();
             setIsActive(!isActive);
           }}
         >

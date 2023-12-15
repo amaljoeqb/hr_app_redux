@@ -25,7 +25,7 @@ export default function useApi() {
   async function getEmployees(props: FetchDataProps<Employee>) {
     try {
       const employees = await API.getEmployees(props);
-      appContext.dispatch({ type: "SET_EMPLOYEES", payload: employees });
+      appContext.dispatch({ type: "SET_EMPLOYEES", payload: employees.data });
       return employees;
     } catch (error: any) {
       appContext.showToast({
