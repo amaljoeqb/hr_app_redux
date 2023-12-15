@@ -1,6 +1,6 @@
 import { Skill, Department } from "../../models";
 
-const staticDataReducer = (
+export const staticDataReducer = (
   state: {
     skills: Skill[];
     departments: Department[];

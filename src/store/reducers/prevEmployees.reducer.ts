@@ -1,6 +1,6 @@
 import { Employee } from "../../models";
 
-const prevEmployeeReducer = (
+export const prevEmployeesReducer = (
   state: Map<String, Partial<Employee>>,
   action: {
     type: string;

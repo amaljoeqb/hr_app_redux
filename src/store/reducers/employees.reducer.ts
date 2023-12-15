@@ -1,6 +1,6 @@
 import { Employee } from "../../models";
 
-const employeeReducer = (
+export const employeesReducer = (
   state: Map<String, Employee>,
   action: {
     type: string;
