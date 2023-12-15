@@ -4,7 +4,7 @@ import { getNextEmployeeId, isEmployeeEqual } from "../../../services/";
 import { Employee } from "../../../models";
 import { useApi } from "../../../hooks";
 import { useMemo, useState } from "react";
-import { firebaseUploadImage } from "../../../config/firebase.config";
+import { firebaseUploadImage } from "../../../services/";
 
 export default function useEmployeeForm({
   employee,
@@ -15,7 +15,6 @@ export default function useEmployeeForm({
   onSave,
 }: EmployeeFormProps) {
   const api = useApi();
-  const [uploadImg, setUploadImg] = useState<File | string>("");
   const appContext = useAppContext();
   const isInitialValid = employee !== undefined;
   const initialValues = useMemo(() => {
@@ -29,10 +28,11 @@ export default function useEmployeeForm({
       skills: [],
       dateOfBirth: "",
       joiningDate: "",
+      profilePic: "",
     };
     return employee || newEmployee;
   }, [employee, appContext.state.employees]);
-
+  const [uploadImg, setUploadImg] = useState<string | File>("");
   const isCreate = !employee;
 
   const departmentOptions = departments.map((department) => ({
@@ -46,13 +46,13 @@ export default function useEmployeeForm({
   }));
 
   async function onSubmit(values: Employee) {
-    console.log(uploadImg);
     let imgUrl = await firebaseUploadImage(uploadImg);
-    values.profilePic = imgUrl;
+    const hardValue = structuredClone(values);
+    hardValue.profilePic = imgUrl;
     if (employee) {
-      if (!isEmployeeEqual(employee, values)) {
-        api.updateEmployee(values);
-      } else console.log(employee.profilePic, values.profilePic);
+      if (!isEmployeeEqual(employee, hardValue)) {
+        api.updateEmployee(hardValue);
+      }
     } else {
       api.createEmployee(values);
     }
@@ -72,5 +72,6 @@ export default function useEmployeeForm({
     isInitialValid,
     isCreate,
     setUploadImg,
+    uploadImg,
   };
 }

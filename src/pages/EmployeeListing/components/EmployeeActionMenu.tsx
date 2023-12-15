@@ -26,7 +26,6 @@ export default function EmployeeActionMenu(props: EmployeeActionMenuProps) {
         <button
           className="action-btn"
           onClick={(e) => {
-            e.stopPropagation();
             setIsActive(!isActive);
           }}
         >

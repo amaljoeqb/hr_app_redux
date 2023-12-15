@@ -1,5 +1,6 @@
 import { Employee, Skill } from "../models";
-
+import { uploadBytes, getDownloadURL, ref as strRef } from "firebase/storage";
+import { storage } from "../config/firebase.config";
 /**
  * Get data from url
  * @param {string} url url of request
@@ -126,8 +127,6 @@ function isSkillsEqual(skills1: Skill[], skills2: Skill[]) {
  * @returns True if the employee objects are equal, false otherwise.
  */
 export function isEmployeeEqual(employee1: Employee, employee2: Employee) {
-  let emp1Profile = JSON.parse(employee1.moreDetails!).photoId;
-  let emp2Profile = employee2.profilePic;
   return (
     employee1.employeeId === employee2.employeeId &&
     employee1.name === employee2.name &&
@@ -137,7 +136,7 @@ export function isEmployeeEqual(employee1: Employee, employee2: Employee) {
     employee1.salary === employee2.salary &&
     employee1.joiningDate === employee2.joiningDate &&
     employee1.dateOfBirth === employee2.dateOfBirth &&
-    emp1Profile === emp2Profile &&
+    employee1.profilePic === employee2.profilePic &&
     isSkillsEqual(employee1.skills, employee2.skills)
   );
 }
@@ -180,3 +179,18 @@ export function getEmployeeDiff(
     diff.profilePic = oldEmployee.profilePic;
   return diff;
 }
+
+export const firebaseUploadImage = async (file: any): Promise<string> => {
+  try {
+    if (!file) {
+      return "";
+    }
+    const storageRef = strRef(storage, crypto.randomUUID());
+    const snapshot = await uploadBytes(storageRef, file);
+    const ans = await getDownloadURL(snapshot.ref);
+    return ans;
+  } catch (err) {
+    console.error(err);
+    return Promise.reject("Error in uploading");
+  }
+};

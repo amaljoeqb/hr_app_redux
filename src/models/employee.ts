@@ -12,5 +12,4 @@ export interface Employee {
   dateOfBirth?: string;
   profilePic?: string;
   moreDetails?: string;
-  profilePic?: string;
 }

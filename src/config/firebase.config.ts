@@ -1,10 +1,5 @@
 import { initializeApp } from "firebase/app";
-import {
-  getStorage,
-  uploadBytes,
-  getDownloadURL,
-  ref as strRef,
-} from "firebase/storage";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDj_QMPEm3JLkPd4MUkdoJX2Ad-g9tcBU",
@@ -19,18 +14,4 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
-
-export const firebaseUploadImage = async (file: any): Promise<string> => {
-  try {
-    if (!file) {
-      return "";
-    }
-    const storageRef = strRef(storage, crypto.randomUUID());
-    const snapshot = await uploadBytes(storageRef, file);
-    return await getDownloadURL(snapshot.ref);
-  } catch (err) {
-    console.error(err);
-    return Promise.reject("Error in uploading");
-  }
-};
+export const storage = getStorage(app);
