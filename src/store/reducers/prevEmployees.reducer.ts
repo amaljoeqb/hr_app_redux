@@ -1,11 +1,10 @@
-import { Employee } from "../../models";
+import { Action, Employee } from "../../models";
+
+export type PrevEmployeesState = Map<String, Partial<Employee>>;
 
 export const prevEmployeesReducer = (
-  state: Map<String, Partial<Employee>>,
-  action: {
-    type: string;
-    payload: any;
-  }
+  state: PrevEmployeesState = new Map(),
+  action: Action
 ) => {
   switch (action.type) {
     case "SET_PREV_EMPLOYEE": {

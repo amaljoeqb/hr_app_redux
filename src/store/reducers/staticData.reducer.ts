@@ -1,14 +1,16 @@
-import { Skill, Department } from "../../models";
+import { Skill, Department, Action } from "../../models";
+
+export interface StaticDataState {
+  skills: Skill[];
+  departments: Department[];
+}
 
 export const staticDataReducer = (
-  state: {
-    skills: Skill[];
-    departments: Department[];
+  state: StaticDataState = {
+    skills: [],
+    departments: [],
   },
-  action: {
-    type: string;
-    payload: any;
-  }
+  action: Action
 ) => {
   switch (action.type) {
     case "SET_SKILLS": {
