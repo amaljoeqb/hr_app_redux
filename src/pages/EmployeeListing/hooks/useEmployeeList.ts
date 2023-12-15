@@ -1,17 +1,24 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { columnIds } from "../../../config";
 import { useApi, useInfiniteList } from "../../../hooks";
-import { Employee, FetchDataProps } from "../../../models";
+import { Employee, FetchDataProps, State } from "../../../models";
 import {
   filterEmployees,
   searchEmployees,
 } from "../../../services/employee.helpers";
 import { useAppContext } from "../../../store/app.context";
+import { useSelector } from "react-redux";
 
 export function useEmployeeList() {
   const appContext = useAppContext();
   const { getEmployees } = useApi();
-  const { skills, prevEmployees } = appContext.state;
+  const { skills, prevEmployees } = useSelector((state: State) => {
+    return {
+      employees: Array.from(state.employees.values()),
+      skills: state.staticData.skills,
+      prevEmployees: state.prevEmployees,
+    };
+  });
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const loadingIconRef = useRef(null);
 

@@ -1,16 +1,23 @@
 import { useNavigate, useParams } from "react-router-dom";
 import EmployeeForm from "./components/EmployeeForm";
 import { useAppContext } from "../../store/app.context";
-import { Employee } from "../../models";
+import { Employee, State } from "../../models";
 import { useQuery } from "../../hooks";
 import { Footer, Header } from "../../layout";
 import { StyledEmployeeDetail } from "./EmployeeDetail.style";
+import { useSelector } from "react-redux";
 
 export default function EmployeeDetail() {
   const employeeId = useParams<{ employeeId: string }>().employeeId;
   const appContext = useAppContext();
   const navigate = useNavigate();
-  const { employees, skills, departments } = appContext.state;
+  const { employees, skills, departments } = useSelector((state: State) => {
+    return {
+      employees: Array.from(state.employees.values()),
+      skills: state.staticData.skills,
+      departments: state.staticData.departments,
+    };
+  });
   let employee: Employee | undefined = undefined;
   const urlParams = useQuery();
   const isEdit = urlParams.get("edit") === "true";

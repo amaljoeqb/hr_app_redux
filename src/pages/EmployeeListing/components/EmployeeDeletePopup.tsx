@@ -14,9 +14,7 @@ export default function EmployeeDeletePopup({
   const api = useApi();
   const appContext = useAppContext();
 
-  const employee = appContext.state.employees.find(
-    (employee) => employee.employeeId === employeeId
-  );
+  const employee = api.getEmployee(employeeId);
 
   function onDelete() {
     api.deleteEmployee(employeeId);

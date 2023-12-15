@@ -3,14 +3,23 @@ import { useTable } from "../../../hooks";
 import { Employee } from "../../../models";
 import { useAppContext } from "../../../store/app.context";
 import { columnIds } from "../../../config";
-import { sortEmployees, filterEmployees, searchEmployees } from "../../../services/employee.helpers";
+import {
+  sortEmployees,
+  filterEmployees,
+  searchEmployees,
+} from "../../../services/employee.helpers";
 import { useSelector } from "react-redux";
+import { State } from "../../../models/";
 
 export default function useEmployeeTable() {
   const appContext = useAppContext();
-  const { employees, skills, prevEmployees } = useSelector(
-    (state: State) => state
-  )
+  const { employees, skills, prevEmployees } = useSelector((state: State) => {
+    return {
+      employees: Array.from(state.employees.values()),
+      skills: state.staticData.skills,
+      prevEmployees: state.prevEmployees,
+    };
+  });
   const [columns, setColumns] = useState(columnIds.large);
 
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
