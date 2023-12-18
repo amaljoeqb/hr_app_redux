@@ -1,4 +1,5 @@
 import {
+  UnknownAction,
   applyMiddleware,
   combineReducers,
   legacy_createStore as createStore,
@@ -8,7 +9,7 @@ import { default as employeesReducer } from "./slices/employees.slice";
 import { default as prevEmployeesReducer } from "./slices/prevEmployees.slice";
 import { default as staticDataReducer } from "./slices/staticData.slice";
 import { default as toastsReducer } from "./slices/toasts.slice";
-import { thunk } from "redux-thunk";
+import { ThunkAction, thunk } from "redux-thunk";
 
 export const rootReducer = combineReducers({
   employees: employeesReducer,
@@ -23,10 +24,16 @@ export const store = createStore(
   applyMiddleware(thunk)
 );
 
-export type State = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof rootReducer>;
 export type Dispatch = typeof store.dispatch;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  undefined,
+  UnknownAction
+>;
 
-export const useAppSelector = <T>(selector: (state: State) => T) => {
+export const useAppSelector = <T>(selector: (state: RootState) => T) => {
   return useSelector(selector);
 };
 

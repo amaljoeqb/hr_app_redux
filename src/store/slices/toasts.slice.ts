@@ -1,6 +1,6 @@
 import { ThunkAction } from "redux-thunk";
 import { Action, IToast, ToastType } from "../../models";
-import { Dispatch, State } from "../store";
+import { Dispatch, RootState } from "../store";
 
 export interface IShowToast {
   message: string;
@@ -34,8 +34,8 @@ const removeToast = (id: number) => ({
 export const showToast = ({
   message,
   type,
-}: IShowToast): ThunkAction<void, State, unknown, Action> => {
-  return (dispatch: Dispatch) => {
+}: IShowToast): ThunkAction<void, RootState, unknown, Action> => {
+  return (dispatch) => {
     const toast: IToast = {
       message,
       type,

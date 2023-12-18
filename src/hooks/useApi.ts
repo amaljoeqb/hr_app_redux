@@ -22,33 +22,6 @@ export default function useApi() {
     }, 3000);
   }
 
-  async function getEmployees(props: FetchDataProps<Employee>) {
-    try {
-      const employees = await API.getEmployees(props);
-      appContext.dispatch({ type: "SET_EMPLOYEES", payload: employees.data });
-      return employees;
-    } catch (error: any) {
-      appContext.showToast({
-        message: errorMessages.getEmployeesError,
-        type: "error",
-      });
-    }
-  }
-
-  async function getEmployee(id: string) {
-    try {
-      const employee = await API.getEmployee(id);
-      appContext.dispatch({ type: "SET_EMPLOYEE", payload: employee });
-      return employee;
-    } catch (error: any) {
-      appContext.showToast({
-        message: errorMessages.getEmployeeError(id),
-        type: "error",
-      });
-      return null;
-    }
-  }
-
   async function createEmployee(employee: Employee) {
     try {
       appContext.dispatch({ type: "ADD_EMPLOYEE", payload: employee });
@@ -74,35 +47,6 @@ export default function useApi() {
       appContext.dispatch({
         type: "DELETE_EMPLOYEE",
         payload: employee.employeeId,
-      });
-    }
-  }
-
-  async function updateEmployee(employee: Employee) {
-    const currentEmployee = appContext.state.employees.find(
-      (e) => e.employeeId === employee.employeeId
-    );
-    try {
-      setPrevEmployee(
-        employee.employeeId,
-        getEmployeeDiff(currentEmployee, employee)
-      );
-      appContext.dispatch({ type: "UPDATE_EMPLOYEE", payload: employee });
-      await API.updateEmployee(employee);
-      appContext.showToast({
-        message: successMessages.updateEmployeeSuccess(employee.name),
-        type: "success",
-      });
-    } catch (error: any) {
-      appContext.showToast({
-        message: errorMessages.updateEmployeeError(
-          currentEmployee?.name ?? employee.employeeId
-        ),
-        type: "error",
-      });
-      appContext.dispatch({
-        type: "UPDATE_EMPLOYEE",
-        payload: currentEmployee,
       });
     }
   }

@@ -1,8 +1,8 @@
 import { Action, Employee, FetchDataProps } from "../../models";
 import * as API from "../../api";
 import { showToast } from "./toasts.slice";
-import { errorMessages } from "../../services";
-import { Dispatch, State } from "../store";
+import { errorMessages, successMessages } from "../../services";
+import { AppThunk, Dispatch, RootState } from "../store";
 import { ThunkAction } from "redux-thunk";
 
 interface IConfig {
@@ -44,7 +44,7 @@ const employeesReducer = (
       },
     },
     loading: false,
-  },
+  } as EmployeesState,
   action: Action
 ) => {
   switch (action.type) {
@@ -125,7 +125,7 @@ const employeesReducer = (
   }
 };
 
-const setData = (employees: Employee[], total: number) => ({
+const setEmployees = (employees: Employee[], total: number) => ({
   type: SET_EMPLOYEES,
   payload: { employees, total },
 });
@@ -133,6 +133,11 @@ const setData = (employees: Employee[], total: number) => ({
 const setEmployee = (employee: Employee) => ({
   type: SET_EMPLOYEE,
   payload: employee,
+});
+
+const addEmployees = (employees: Employee[]) => ({
+  type: ADD_EMPLOYEES,
+  payload: employees,
 });
 
 export const updateEmployeeId = (oldId: string, newId: string) => ({
@@ -150,9 +155,7 @@ export const setConfig = (config: IConfig) => ({
   payload: config,
 });
 
-export const setConfigAndFetchData = (
-  config: IConfig
-): ThunkAction<void, State, undefined, Action> => {
+export const setConfigAndFetchData = (config: IConfig): AppThunk => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(setConfig(config));
@@ -163,8 +166,7 @@ export const setConfigAndFetchData = (
         sortDir: config.sort.order,
       };
       const { data, total } = await API.getEmployees(fetchDataProps);
-      dispatch(setData(data, total));
-      return { data, total };
+      dispatch(setEmployees(data, total));
     } catch (error: any) {
       dispatch(
         showToast({
@@ -176,7 +178,7 @@ export const setConfigAndFetchData = (
   };
 };
 
-export const fetchMoreData = (): ThunkAction<void, State, undefined, Action> => {
+export const fetchMoreData = (): AppThunk => {
   return async (dispatch: Dispatch, getState) => {
     try {
       const { employees } = getState();
@@ -187,9 +189,8 @@ export const fetchMoreData = (): ThunkAction<void, State, undefined, Action> => 
         sortBy: config.sort.columnId,
         sortDir: config.sort.order,
       };
-      const { data, total } = await API.getEmployees(fetchDataProps);
-      dispatch(setData(data, total));
-      return { data, total };
+      const { data } = await API.getEmployees(fetchDataProps);
+      dispatch(addEmployees(data));
     } catch (error: any) {
       dispatch(
         showToast({
@@ -200,5 +201,108 @@ export const fetchMoreData = (): ThunkAction<void, State, undefined, Action> => 
     }
   };
 };
+
+export const fetchEmployee = (employeeId: string): AppThunk => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const employee = await API.getEmployee(employeeId);
+      dispatch(setEmployee(employee));
+    } catch (error: any) {
+      dispatch(
+        showToast({
+          message: errorMessages.getEmployeeError(employeeId),
+          type: "error",
+        })
+      );
+    }
+  };
+};
+
+export const createEmployee = (employee: Employee): AppThunk => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch(setEmployee(employee));
+      const response = await API.createEmployee(employee);
+      const receivedId = response.id.toString();
+      if (receivedId !== employee.employeeId) {
+        dispatch(updateEmployeeId(employee.employeeId, receivedId));
+      }
+      dispatch(
+        showToast({
+          message: successMessages.createEmployeeSuccess(employee.name),
+          type: "success",
+        })
+      );
+    } catch (error: any) {
+      dispatch(
+        showToast({
+          message: errorMessages.createEmployeeError(employee.name),
+          type: "error",
+        })
+      );
+      dispatch(deleteEmployee(employee.employeeId));
+    }
+  };
+};
+
+export const updateEmployee = (employee: Employee): AppThunk => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch(setEmployee(employee));
+      await API.updateEmployee(employee);
+      dispatch(
+        showToast({
+          message: successMessages.updateEmployeeSuccess(employee.name),
+          type: "success",
+        })
+      );
+    } catch (error: any) {
+      dispatch(
+        showToast({
+          message: errorMessages.updateEmployeeError(employee.name),
+          type: "error",
+        })
+      );
+    }
+  };
+};
+
+export const deleteEmployeeAndFetchMore =
+  (employeeId: string): AppThunk =>
+  async (dispatch, getState) => {
+    const { employees } = getState();
+    const currentEmployee = employees.data.find(
+      (e: Employee) => e.employeeId === employeeId
+    );
+    try {
+      dispatch(deleteEmployee(employeeId));
+      const { config } = employees;
+      const fetchDataProps: FetchDataProps<Employee> = {
+        offset: config.offset + employees.data.length,
+        limit: 1,
+        sortBy: config.sort.columnId,
+        sortDir: config.sort.order,
+      };
+      const { data } = await API.getEmployees(fetchDataProps);
+      dispatch(addEmployees(data));
+      dispatch(
+        showToast({
+          message: successMessages.deleteEmployeeSuccess(
+            currentEmployee?.name ?? employeeId
+          ),
+          type: "success",
+        })
+      );
+    } catch (error: any) {
+      dispatch(
+        showToast({
+          message: errorMessages.deleteEmployeeError(
+            currentEmployee?.name ?? employeeId
+          ),
+          type: "error",
+        })
+      );
+    }
+  };
 
 export default employeesReducer;
