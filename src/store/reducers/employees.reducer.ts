@@ -1,43 +1,94 @@
 import { Action, Employee } from "../../models";
 
-type EmployeesState = Map<String, Employee>;
+interface EmployeesState {
+  data: Employee[];
+  total: number;
+  config: {
+    offset: number;
+    pageSize: number;
+    searchTerm: string;
+    sort: {
+      columnId: keyof Employee;
+      order: "asc" | "desc";
+    };
+  };
+}
 
 export const employeesReducer = (
-  state: EmployeesState = new Map(),
+  state: EmployeesState = {
+    data: [],
+    total: 0,
+    config: {
+      offset: 0,
+      pageSize: 10,
+      searchTerm: "",
+      sort: {
+        columnId: "employeeId",
+        order: "asc",
+      },
+    },
+  },
   action: Action
 ) => {
   switch (action.type) {
     case "SET_EMPLOYEES": {
-      const newState = new Map(state);
-      const employees: Employee[] = action.payload;
-      newState.forEach((employee) => {
-        state.set(employee.employeeId, employee);
-      });
-      return newState;
+      const { data, total } = action.payload;
+      return {
+        ...state,
+        data,
+        total,
+      };
+    }
+    case "ADD_EMPLOYEES": {
+      const employees = action.payload;
+      return {
+        ...state,
+        data: [...state.data, ...employees],
+      };
+    }
+    case "ADD_EMPLOYEE": {
+      const employee = action.payload;
+      return {
+        ...state,
+        data: [employee, ...state.data],
+      };
     }
     case "UPDATE_EMPLOYEE_ID": {
-      const newState = new Map(state);
-      const oldId = action.payload.oldId;
-      const newId = action.payload.newId;
-      const employee = state.get(oldId);
-      if (employee) {
-        employee.employeeId = newId;
-        newState.set(newId, employee);
-        newState.delete(oldId);
-      }
-      return newState;
+      const { oldId, newId } = action.payload;
+      const data = state.data.map((employee) => {
+        if (employee.employeeId === oldId) {
+          return {
+            ...employee,
+            employeeId: newId,
+          };
+        }
+        return employee;
+      });
+      return {
+        ...state,
+        data,
+      };
     }
     case "SET_EMPLOYEE": {
-      const newState = new Map(state);
       const employee = action.payload;
-      newState.set(employee.employeeId, employee);
-      return newState;
+      const data = state.data.map((e) => {
+        if (e.employeeId === employee.employeeId) {
+          return employee;
+        }
+        return e;
+      });
+      return {
+        ...state,
+        data,
+      };
     }
     case "DELETE_EMPLOYEE": {
-      const newState = new Map(state);
       const employeeId = action.payload;
-      state.delete(employeeId);
-      return newState;
+      const data = state.data.filter((e) => e.employeeId !== employeeId);
+      return {
+        ...state,
+        data,
+      };
     }
     default: {
       return state;
