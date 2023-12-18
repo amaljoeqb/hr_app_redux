@@ -28,17 +28,27 @@ const prevEmployeesReducer = (
   }
 };
 
-export const setPrevEmployee = (id: string, employee: Partial<Employee>) => ({
+const setPrevEmployee = (id: string, employee: Partial<Employee>) => ({
   type: SET_PREV_EMPLOYEE,
   payload: { id, employee },
 });
 
-export const deletePrevEmployee = (
-  id: string,
-  employee: Partial<Employee>
-) => ({
+const deletePrevEmployee = (id: string, employee: Partial<Employee>) => ({
   type: DELETE_PREV_EMPLOYEE,
   payload: { id, employee },
 });
+
+export const setAndDeletePrevEmployee = (
+  id: string,
+  employee: Partial<Employee>
+) => {
+  return (dispatch: any) => {
+    dispatch(setPrevEmployee(id, employee));
+    const timer = setTimeout(() => {
+      dispatch(deletePrevEmployee(id, employee));
+    }, 3000);
+    return () => clearTimeout(timer);
+  };
+};
 
 export default prevEmployeesReducer;

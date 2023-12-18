@@ -1,4 +1,3 @@
-import { Dispatch } from "redux";
 import { Action, Employee } from "../../models";
 
 interface IConfig {
