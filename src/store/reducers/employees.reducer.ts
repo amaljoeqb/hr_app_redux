@@ -1,17 +1,20 @@
+import { Dispatch } from "redux";
 import { Action, Employee } from "../../models";
+
+interface IConfig {
+  offset: number;
+  pageSize: number;
+  searchTerm: string;
+  sort: {
+    columnId: keyof Employee;
+    order: "asc" | "desc";
+  };
+}
 
 interface EmployeesState {
   data: Employee[];
   total: number;
-  config: {
-    offset: number;
-    pageSize: number;
-    searchTerm: string;
-    sort: {
-      columnId: keyof Employee;
-      order: "asc" | "desc";
-    };
-  };
+  config: IConfig;
 }
 
 export const employeesReducer = (
