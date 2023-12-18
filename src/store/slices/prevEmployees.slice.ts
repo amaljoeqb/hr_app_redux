@@ -1,4 +1,5 @@
 import { Action, Employee } from "../../models";
+import { Dispatch } from "../store";
 
 export type PrevEmployeesState = Map<String, Partial<Employee>>;
 
@@ -42,7 +43,7 @@ export const setAndDeletePrevEmployee = (
   id: string,
   employee: Partial<Employee>
 ) => {
-  return (dispatch: any) => {
+  return (dispatch: Dispatch) => {
     dispatch(setPrevEmployee(id, employee));
     const timer = setTimeout(() => {
       dispatch(deletePrevEmployee(id, employee));
