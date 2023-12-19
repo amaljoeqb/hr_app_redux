@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useInfiniteList } from "../../../hooks";
-import { Employee, } from "../../../models";
+import { Employee } from "../../../models";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
 import {
   fetchMoreData,
@@ -9,13 +9,9 @@ import {
 
 export function useEmployeeList() {
   const dispatch = useAppDispatch();
-  const { employees, skills, prevEmployees } = useAppSelector((state) => {
-    return {
-      employees: state.employees,
-      skills: state.staticData.skills,
-      prevEmployees: state.prevEmployees,
-    };
-  });
+  const employees = useAppSelector((state) => state.employees);
+  const skills = useAppSelector((state) => state.staticData.skills);
+  const prevEmployees = useAppSelector((state) => state.prevEmployees);
   const loadingIconRef = useRef(null);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 

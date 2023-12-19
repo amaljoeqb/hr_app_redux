@@ -16,4 +16,18 @@ API.interceptors.response.use(
   }
 );
 
+API.interceptors.request.use(
+  (config) => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsInVzZXJuYW1lIjoiYW1hbC5qb2VAcWJ1cnN0LmNvbSIsImlhdCI6MTcwMjk3MTQzOSwiZXhwIjoxNzAyOTc1MDM5fQ.oL8oBpmpfS1Jyvv5hk5roxZ29lD5JT55tbt9gMydk7c";
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export default API;

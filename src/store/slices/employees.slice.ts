@@ -2,8 +2,7 @@ import { Action, Employee, FetchDataProps } from "../../models";
 import * as API from "../../api";
 import { showToast } from "./toasts.slice";
 import { errorMessages, successMessages } from "../../services";
-import { AppThunk, Dispatch, RootState } from "../store";
-import { ThunkAction } from "redux-thunk";
+import { AppThunk, Dispatch} from "../store";
 
 export interface IDataConfig<T> {
   offset: number;

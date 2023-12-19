@@ -1,6 +1,6 @@
 import { ThunkAction } from "redux-thunk";
 import { Action, IToast, ToastType } from "../../models";
-import { Dispatch, RootState } from "../store";
+import {  RootState } from "../store";
 
 export interface IShowToast {
   message: string;

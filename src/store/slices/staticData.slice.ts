@@ -45,7 +45,9 @@ export const setDepartments = (departments: Department[]) => ({
 export const fetchSkills = (): AppThunk<Promise<Skill[] | undefined>> => {
   return async (dispatch) => {
     try {
+      console.log("fetching skills");
       const skills = await API.getSkills();
+      console.log("skills", skills);
       dispatch(setSkills(skills));
       return skills;
     } catch (error: any) {

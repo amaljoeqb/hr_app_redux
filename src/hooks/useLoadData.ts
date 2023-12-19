@@ -10,8 +10,8 @@ export default function useLoadData() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const skills = dispatch(fetchSkills);
-    const departments = dispatch(fetchDepartments);
+    const skills = dispatch(fetchSkills());
+    const departments = dispatch(fetchDepartments());
     Promise.all([skills, departments]).then(() => {
       setLoading(false);
     });
