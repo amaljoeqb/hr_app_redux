@@ -2,7 +2,6 @@ import EmployeeTable from "./components/EmployeeTable";
 import { HoverButton, Loader } from "../../components";
 import { PaginationControl } from "../../components/";
 import SearchInput from "./components/SearchInput";
-import { useAppContext } from "../../store/app.context";
 import { useNavigate } from "react-router-dom";
 import useEmployeeTable from "./hooks/useEmployeeTable";
 import SkillsFilter from "./components/SkillsFilter";
@@ -13,6 +12,9 @@ import { StyledEmployeeListing } from "./EmployeeListing.style";
 import { columnIds } from "../../config";
 import { EmployeeCardsList } from "./components/EmployeeCardsList/EmployeeCardsList";
 import { useEmployeeList } from "./hooks/useEmployeeList";
+import { useState } from "react";
+import { Employee } from "../../models";
+import { useAppSelector } from "../../store/store";
 
 export function EmployeeListing() {
   const navigate = useNavigate();
@@ -29,8 +31,9 @@ export function EmployeeListing() {
     hasMore,
     loadingIconRef,
   } = useEmployeeList();
-  const urlParams = useQuery();
-  const deleteEmployeeId = urlParams.get("delete");
+  const deleteEmployeeDialog = useAppSelector(
+    (state) => state.ui?.deleteEmployeeDialog
+  );
 
   return (
     <StyledEmployeeListing>
@@ -69,13 +72,16 @@ export function EmployeeListing() {
         <EmployeeCardsList
           employees={displayData}
           searchTerm={searchTerm}
-          sort={sort}
+          sort={{
+            key: sort.columnId,
+            order: sort.order,
+          }}
         />
         {hasMore && <Loader innerRef={loadingIconRef} className="listing" />}
       </main>
-      {deleteEmployeeId && (
+      {deleteEmployeeDialog.isOpen && (
         <EmployeeDeletePopup
-          employeeId={deleteEmployeeId}
+          employee={deleteEmployeeDialog.employee}
           onClose={() => {
             navigate(-1);
           }}

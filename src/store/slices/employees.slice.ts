@@ -5,12 +5,12 @@ import { errorMessages, successMessages } from "../../services";
 import { AppThunk, Dispatch, RootState } from "../store";
 import { ThunkAction } from "redux-thunk";
 
-interface IConfig {
+export interface IDataConfig<T> {
   offset: number;
   pageSize: number;
   searchTerm: string;
   sort: {
-    columnId: keyof Employee;
+    columnId: keyof T;
     order: "asc" | "desc";
   };
 }
@@ -18,7 +18,7 @@ interface IConfig {
 interface EmployeesState {
   data: Employee[];
   total: number;
-  config: IConfig;
+  config: IDataConfig<Employee>;
   loading: boolean;
 }
 
@@ -150,12 +150,14 @@ export const deleteEmployee = (employeeId: string) => ({
   payload: employeeId,
 });
 
-export const setConfig = (config: IConfig) => ({
+export const setConfig = (config: IDataConfig<Employee>) => ({
   type: SET_CONFIG,
   payload: config,
 });
 
-export const setConfigAndFetchData = (config: IConfig): AppThunk => {
+export const setConfigAndFetchData = (
+  config: IDataConfig<Employee>
+): AppThunk => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(setConfig(config));

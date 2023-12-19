@@ -1,55 +1,33 @@
-import { useState, useCallback, useEffect, useRef } from "react";
-import { columnIds } from "../../../config";
-import { useApi, useInfiniteList } from "../../../hooks";
-import { Employee, FetchDataProps, State } from "../../../models";
+import { useState, useEffect, useRef } from "react";
+import { useInfiniteList } from "../../../hooks";
+import { Employee, } from "../../../models";
+import { useAppDispatch, useAppSelector } from "../../../store/store";
 import {
-  filterEmployees,
-  searchEmployees,
-} from "../../../services/employee.helpers";
-import { useAppContext } from "../../../store/app.context";
-import { useSelector } from "react-redux";
+  fetchMoreData,
+  setConfigAndFetchData,
+} from "../../../store/slices/employees.slice";
 
 export function useEmployeeList() {
-  const appContext = useAppContext();
-  const { getEmployees } = useApi();
-  const { skills, prevEmployees } = useSelector((state: State) => {
+  const dispatch = useAppDispatch();
+  const { employees, skills, prevEmployees } = useAppSelector((state) => {
     return {
-      employees: Array.from(state.employees.values()),
+      employees: state.employees,
       skills: state.staticData.skills,
       prevEmployees: state.prevEmployees,
     };
   });
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const loadingIconRef = useRef(null);
-
-  const searchFunction = useCallback((data: Employee[], searchTerm: string) => {
-    return searchEmployees(data, searchTerm, [
-      "employeeId",
-      "name",
-      "department",
-    ]);
-  }, []);
-
-  const filterFunction = useCallback(
-    (data: Employee[]) => filterEmployees(data, selectedSkills),
-    [selectedSkills]
-  );
-
-  const fetchData = useCallback(async (props: FetchDataProps<Employee>) => {
-    const response = await getEmployees(props);
-    return (
-      response || {
-        data: [],
-        total: 0,
-      }
-    );
-  }, []);
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
   const { loadMoreData, ...employeeList } = useInfiniteList<Employee>({
-    searchFunction,
-    filterFunction,
+    data: employees.data,
     id: "employeeId",
-    fetchData,
+    total: employees.total,
+    config: employees.config,
+    setConfigAndFetchData: (config) => dispatch(setConfigAndFetchData(config)),
+    fetchMoreData: async () => {
+      dispatch(fetchMoreData());
+    },
   });
 
   useEffect(() => {

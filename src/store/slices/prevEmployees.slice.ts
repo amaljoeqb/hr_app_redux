@@ -29,7 +29,7 @@ const prevEmployeesReducer = (
   }
 };
 
-const setPrevEmployee = (id: string, employee: Partial<Employee>) => ({
+export const setPrevEmployee = (id: string, employee: Partial<Employee>) => ({
   type: SET_PREV_EMPLOYEE,
   payload: { id, employee },
 });

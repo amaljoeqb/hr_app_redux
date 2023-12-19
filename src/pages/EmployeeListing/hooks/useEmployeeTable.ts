@@ -1,21 +1,20 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTable } from "../../../hooks";
 import { Employee } from "../../../models";
-import { useAppContext } from "../../../store/app.context";
 import { columnIds } from "../../../config";
 import {
   sortEmployees,
   filterEmployees,
   searchEmployees,
 } from "../../../services/employee.helpers";
-import { useSelector } from "react-redux";
-import { State } from "../../../models/";
+import { useAppDispatch, useAppSelector } from "../../../store/store";
+import { setAndDeletePrevEmployee, setPrevEmployee } from "../../../store/slices/prevEmployees.slice";
 
 export default function useEmployeeTable() {
-  const appContext = useAppContext();
-  const { employees, skills, prevEmployees } = useSelector((state: State) => {
+  const dispatch = useAppDispatch();
+  const { employees, skills, prevEmployees } = useAppSelector((state) => {
     return {
-      employees: Array.from(state.employees.values()),
+      employees: state.employees.data,
       skills: state.staticData.skills,
       prevEmployees: state.prevEmployees,
     };
@@ -51,10 +50,7 @@ export default function useEmployeeTable() {
     let prevEmployee = prevEmployees.get(id);
     if (prevEmployee) {
       delete prevEmployee[field];
-      appContext.dispatch({
-        type: "SET_PREV_EMPLOYEE",
-        payload: { id, employee: prevEmployee },
-      });
+      dispatch(setPrevEmployee(id, prevEmployee));
     }
   }
 

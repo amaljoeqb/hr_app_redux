@@ -1,9 +1,12 @@
 import { EmployeeFormProps } from "../components/EmployeeForm";
-import { useAppContext } from "../../../store/app.context";
-import { getNextEmployeeId, isEmployeeEqual } from "../../../services/";
+import { isEmployeeEqual } from "../../../services/";
 import { Employee } from "../../../models";
-import { useApi } from "../../../hooks";
 import { useMemo } from "react";
+import { useAppDispatch } from "../../../store/store";
+import {
+  createEmployee,
+  updateEmployee,
+} from "../../../store/slices/employees.slice";
 
 export default function useEmployeeForm({
   employee,
@@ -13,12 +16,11 @@ export default function useEmployeeForm({
   onEdit,
   onSave,
 }: EmployeeFormProps) {
-  const api = useApi();
-  const appContext = useAppContext();
+  const dispatch = useAppDispatch();
   const isInitialValid = employee !== undefined;
   const initialValues = useMemo(() => {
     const newEmployee: Employee = {
-      employeeId: getNextEmployeeId(appContext.state.employees),
+      employeeId: "",
       name: "",
       email: "",
       designation: "",
@@ -29,7 +31,7 @@ export default function useEmployeeForm({
       joiningDate: "",
     };
     return employee || newEmployee;
-  }, [employee, appContext.state.employees]);
+  }, []);
 
   const isCreate = !employee;
 
@@ -46,10 +48,10 @@ export default function useEmployeeForm({
   function onSubmit(values: Employee) {
     if (employee) {
       if (!isEmployeeEqual(employee, values)) {
-        api.updateEmployee(values);
+        dispatch(updateEmployee(values));
       }
     } else {
-      api.createEmployee(values);
+      dispatch(createEmployee(values));
     }
     onSave();
   }
@@ -58,7 +60,6 @@ export default function useEmployeeForm({
     onEdit();
   }
 
-
   return {
     initialValues,
     onSubmit,
@@ -66,6 +67,6 @@ export default function useEmployeeForm({
     departmentOptions,
     skillsOptions,
     isInitialValid,
-    isCreate
+    isCreate,
   };
 }
