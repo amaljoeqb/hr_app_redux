@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import { useApi } from "./";
+import { useAppDispatch } from "../store/store";
+import {
+  fetchDepartments,
+  fetchSkills,
+} from "../store/slices/staticData.slice";
 
 export default function useLoadData() {
   const [loading, setLoading] = useState(true);
-  const api = useApi();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const skills = api.getSkills();
-    const departments = api.getDepartments();
+    const skills = dispatch(fetchSkills);
+    const departments = dispatch(fetchDepartments);
     Promise.all([skills, departments]).then(() => {
       setLoading(false);
     });

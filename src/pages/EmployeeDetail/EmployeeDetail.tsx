@@ -1,19 +1,17 @@
 import { useNavigate, useParams } from "react-router-dom";
 import EmployeeForm from "./components/EmployeeForm";
-import { useAppContext } from "../../store/app.context";
-import { Employee, State } from "../../models";
+import { Employee } from "../../models";
 import { useQuery } from "../../hooks";
 import { Footer, Header } from "../../layout";
 import { StyledEmployeeDetail } from "./EmployeeDetail.style";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../store/store";
 
 export default function EmployeeDetail() {
   const employeeId = useParams<{ employeeId: string }>().employeeId;
-  const appContext = useAppContext();
   const navigate = useNavigate();
-  const { employees, skills, departments } = useSelector((state: State) => {
+  const { employees, skills, departments } = useAppSelector((state) => {
     return {
-      employees: Array.from(state.employees.values()),
+      employees: state.employees.data,
       skills: state.staticData.skills,
       departments: state.staticData.departments,
     };

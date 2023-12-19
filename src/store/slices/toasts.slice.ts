@@ -13,9 +13,9 @@ const REMOVE_TOAST = "REMOVE_TOAST";
 const toastsReducer = (state: IToast[] = [], action: Action) => {
   switch (action.type) {
     case ADD_TOAST:
-      return [...state, action.payload];
+      return [...state, action.payload as IToast];
     case REMOVE_TOAST:
-      return state.filter((toast) => toast.id !== action.payload);
+      return state.filter((toast) => toast.id !== (action.payload as number));
     default:
       return state;
   }
@@ -26,7 +26,7 @@ const addToast = (toast: IToast) => ({
   payload: toast,
 });
 
-const removeToast = (id: number) => ({
+export const removeToast = (id: number) => ({
   type: REMOVE_TOAST,
   payload: id,
 });

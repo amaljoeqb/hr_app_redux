@@ -1,4 +1,8 @@
+import * as API from "../../api";
 import { Skill, Department, Action } from "../../models";
+import { errorMessages } from "../../services";
+import { AppThunk } from "../store";
+import { showToast } from "./toasts.slice";
 
 export interface StaticDataState {
   skills: Skill[];
@@ -37,5 +41,41 @@ export const setDepartments = (departments: Department[]) => ({
   type: SET_DEPARTMENTS,
   payload: departments,
 });
+
+export const fetchSkills = (): AppThunk<Promise<Skill[] | undefined>> => {
+  return async (dispatch) => {
+    try {
+      const skills = await API.getSkills();
+      dispatch(setSkills(skills));
+      return skills;
+    } catch (error: any) {
+      dispatch(
+        showToast({
+          message: errorMessages.getSkillsError,
+          type: "error",
+        })
+      );
+    }
+  };
+};
+
+export const fetchDepartments = (): AppThunk<
+  Promise<Department[] | undefined>
+> => {
+  return async (dispatch) => {
+    try {
+      const departments = await API.getDepartments();
+      dispatch(setDepartments(departments));
+      return departments;
+    } catch (error: any) {
+      dispatch(
+        showToast({
+          message: errorMessages.getDepartmentsError,
+          type: "error",
+        })
+      );
+    }
+  };
+};
 
 export default staticDataReducer;

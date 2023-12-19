@@ -30,26 +30,31 @@ const SET_EMPLOYEE = "SET_EMPLOYEE";
 const DELETE_EMPLOYEE = "DELETE_EMPLOYEE";
 const SET_CONFIG = "SET_CONFIG";
 
-const employeesReducer = (
-  state: EmployeesState = {
-    data: [],
-    total: 0,
-    config: {
-      offset: 0,
-      pageSize: 10,
-      searchTerm: "",
-      sort: {
-        columnId: "employeeId",
-        order: "asc",
-      },
+const initialState: EmployeesState = {
+  data: [],
+  total: 0,
+  config: {
+    offset: 0,
+    pageSize: 10,
+    searchTerm: "",
+    sort: {
+      columnId: "employeeId",
+      order: "asc",
     },
-    loading: false,
-  } as EmployeesState,
+  },
+  loading: false,
+};
+
+const employeesReducer = (
+  state: EmployeesState = initialState,
   action: Action
 ) => {
   switch (action.type) {
     case SET_EMPLOYEES: {
-      const { data, total } = action.payload;
+      const { data, total } = action.payload as {
+        data: Employee[];
+        total: number;
+      };
       return {
         ...state,
         data,
@@ -57,21 +62,24 @@ const employeesReducer = (
       };
     }
     case ADD_EMPLOYEES: {
-      const employees = action.payload;
+      const employees = action.payload as Employee[];
       return {
         ...state,
         data: [...state.data, ...employees],
       };
     }
     case ADD_EMPLOYEE: {
-      const employee = action.payload;
+      const employee = action.payload as Employee;
       return {
         ...state,
         data: [employee, ...state.data],
       };
     }
     case UPDATE_EMPLOYEE_ID: {
-      const { oldId, newId } = action.payload;
+      const { oldId, newId } = action.payload as {
+        oldId: string;
+        newId: string;
+      };
       const data = state.data.map((employee) => {
         if (employee.employeeId === oldId) {
           return {
@@ -87,7 +95,7 @@ const employeesReducer = (
       };
     }
     case SET_EMPLOYEE: {
-      const employee = action.payload;
+      const employee = action.payload as Employee;
       let found = false;
       const data = state.data.map((e) => {
         if (e.employeeId === employee.employeeId) {
@@ -105,7 +113,7 @@ const employeesReducer = (
       };
     }
     case DELETE_EMPLOYEE: {
-      const employeeId = action.payload;
+      const employeeId = action.payload as string;
       const data = state.data.filter((e) => e.employeeId !== employeeId);
       return {
         ...state,
@@ -113,7 +121,7 @@ const employeesReducer = (
       };
     }
     case SET_CONFIG: {
-      const config = action.payload;
+      const config = action.payload as IDataConfig<Employee>;
       return {
         ...state,
         config,
