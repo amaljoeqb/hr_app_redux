@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { StyledLogin } from "./LoginPage.styles";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -10,7 +11,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div>
+    <StyledLogin>
       <h2>Login</h2>
       <form className="login-form" onSubmit={(e) => e.preventDefault()}>
         <div className="login-input-group">
@@ -39,7 +40,7 @@ const Login: React.FC = () => {
           Login
         </button>
       </form>
-    </div>
+    </StyledLogin>
   );
 };
 
