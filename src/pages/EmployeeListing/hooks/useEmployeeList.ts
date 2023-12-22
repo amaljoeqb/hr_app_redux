@@ -17,7 +17,6 @@ export function useEmployeeList() {
 
   const { loadMoreData, ...employeeList } = useInfiniteList<Employee>({
     data: employees.data,
-    id: "employeeId",
     total: employees.total,
     config: employees.config,
     setConfigAndFetchData: (config) => dispatch(setConfigAndFetchData(config)),

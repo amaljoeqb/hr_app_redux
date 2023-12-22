@@ -77,7 +77,13 @@ export function EmployeeListing() {
             order: sort.order,
           }}
         />
-        {hasMore && <Loader innerRef={loadingIconRef} className="listing" />}
+        {hasMore && (
+          <Loader
+            key={displayData.length}
+            innerRef={loadingIconRef}
+            className="listing"
+          />
+        )}
       </main>
       {deleteEmployeeDialog.isOpen && (
         <EmployeeDeletePopup
