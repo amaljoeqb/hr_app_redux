@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { StyledLogin } from "./LoginPage.styles";
+import useAuth from "./hooks/useAuth";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { user, logIn, logOut } = useAuth();
 
   const handleLogin = () => {
     console.log("Username:", username);
     console.log("Password:", password);
+    logIn(username, password);
   };
 
   return (

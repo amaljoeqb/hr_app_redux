@@ -9,6 +9,7 @@ import { default as employeesReducer } from "./slices/employees.slice";
 import { default as prevEmployeesReducer } from "./slices/prevEmployees.slice";
 import { default as staticDataReducer } from "./slices/staticData.slice";
 import { default as toastsReducer } from "./slices/toasts.slice";
+import authReducer from "./slices/login.slice";
 import { ThunkAction, thunk } from "redux-thunk";
 import uiReducer from "./slices/ui.slice";
 
@@ -18,6 +19,7 @@ export const rootReducer = combineReducers({
   prevEmployees: prevEmployeesReducer,
   toasts: toastsReducer,
   ui: uiReducer,
+  auth: authReducer,
 });
 
 export const store = createStore(
