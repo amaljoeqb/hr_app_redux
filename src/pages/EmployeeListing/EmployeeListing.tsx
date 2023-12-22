@@ -37,7 +37,6 @@ export function EmployeeListing() {
 
   return (
     <StyledEmployeeListing>
-      <Header />
       <main className="card">
         <h1>Employees</h1>
         <div className="emp-listing-header">
@@ -87,7 +86,6 @@ export function EmployeeListing() {
           }}
         />
       )}
-      <Footer />
     </StyledEmployeeListing>
   );
 }

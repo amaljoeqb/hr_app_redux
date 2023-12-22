@@ -31,7 +31,6 @@ export default function EmployeeDetail() {
 
   return (
     <StyledEmployeeDetail>
-      <Header />
       <div
         className={`popup emp-popup show-popup ${
           isEdit ? "edit-popup" : "view-popup"
@@ -78,7 +77,6 @@ export default function EmployeeDetail() {
           />
         </section>
       </div>
-      <Footer />
     </StyledEmployeeDetail>
   );
 }
