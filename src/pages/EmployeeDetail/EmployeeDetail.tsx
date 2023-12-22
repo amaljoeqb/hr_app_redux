@@ -9,13 +9,11 @@ import { useAppSelector } from "../../store/store";
 export default function EmployeeDetail() {
   const employeeId = useParams<{ employeeId: string }>().employeeId;
   const navigate = useNavigate();
-  const { employees, skills, departments } = useAppSelector((state) => {
-    return {
-      employees: state.employees.data,
-      skills: state.staticData.skills,
-      departments: state.staticData.departments,
-    };
-  });
+  
+  const employees = useAppSelector((state) => state.employees.data);
+  const skills = useAppSelector((state) => state.staticData.skills);
+  const departments = useAppSelector((state) => state.staticData.departments);
+
   let employee: Employee | undefined = undefined;
   const urlParams = useQuery();
   const isEdit = urlParams.get("edit") === "true";
