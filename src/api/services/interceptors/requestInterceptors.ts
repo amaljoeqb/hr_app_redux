@@ -1,7 +1,16 @@
 import { AxiosError, AxiosRequestConfig } from "axios";
 
+function getCookie(name: string) {
+  const value = `; ${document.cookie}`;
+  const parts: string[] = value?.split(`; ${name}=`) ?? [];
+  if (parts && parts.length === 2) return parts?.pop()?.split(";")?.shift();
+  return null;
+}
+
+export const getAccessToken = () => getCookie("accessToken");
+
 export const onRequest = (config: AxiosRequestConfig) => {
-  const token = "";
+  const token = getAccessToken();
   const headers = token ? { Authorization: `Bearer ${token}` } : {};
   config.headers = {
     "Content-type": "application/json",

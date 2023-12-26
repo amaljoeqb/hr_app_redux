@@ -10,6 +10,6 @@ export const loginUserCall = async ({
   password: string;
 }) => {
   const body = { username: email, password };
-  const response = await API.post(loginPostUrl, body);
+  const response: { access_token: string } = await API.post(loginPostUrl, body);
   return response;
 };

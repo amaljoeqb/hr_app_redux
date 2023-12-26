@@ -15,6 +15,8 @@ import { useEmployeeList } from "./hooks/useEmployeeList";
 import { useState } from "react";
 import { Employee } from "../../models";
 import { useAppSelector } from "../../store/store";
+import useAuth from "../Login/hooks/useAuth";
+import { useCookies } from "react-cookie";
 
 export function EmployeeListing() {
   const navigate = useNavigate();
@@ -34,7 +36,8 @@ export function EmployeeListing() {
   const deleteEmployeeDialog = useAppSelector(
     (state) => state.ui?.deleteEmployeeDialog
   );
-
+  const { logOut } = useAuth();
+  // logOut();
   return (
     <StyledEmployeeListing>
       <main className="card">
@@ -48,6 +51,15 @@ export function EmployeeListing() {
             />
           </div>
           <div className="next-section">
+            <div>
+              <button
+                onClick={() => {
+                  logOut();
+                }}
+              >
+                Logout
+              </button>
+            </div>
             <div className="filters-section">
               <SkillsFilter
                 skills={skills}

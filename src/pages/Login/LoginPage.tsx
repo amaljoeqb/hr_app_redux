@@ -5,11 +5,9 @@ import useAuth from "./hooks/useAuth";
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { user, logIn, logOut } = useAuth();
+  const { logIn } = useAuth();
 
   const handleLogin = () => {
-    console.log("Username:", username);
-    console.log("Password:", password);
     logIn(username, password);
   };
 
