@@ -7,7 +7,7 @@ function getCookie(name: string) {
   return null;
 }
 
-export const getAccessToken = () => getCookie("accessToken");
+const getAccessToken = () => getCookie("accessToken");
 
 export const onRequest = (config: AxiosRequestConfig) => {
   const token = getAccessToken();

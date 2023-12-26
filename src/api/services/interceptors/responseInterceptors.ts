@@ -2,7 +2,7 @@ import { AxiosError, AxiosResponse } from "axios";
 
 enum HTTP_STATUS {
   INFORMATION = 300,
-  SUCCESS = 200 || 201,
+  SUCCESS = 200,
   BAD_REQUEST = 400,
   NOT_FOUND = 404,
   FORBIDDEN = 403,

@@ -3,8 +3,8 @@ import EmployeeDetail from "../pages/EmployeeDetail/EmployeeDetail";
 import { EmployeeListing } from "../pages/EmployeeListing/EmployeeListing";
 import ErrorPage from "../pages/Error/ErrorScreen";
 import Login from "../pages/Login/LoginPage";
-import LoginLayout from "../layout/LoginLayout/LoginLayout";
 import HomeLayout from "../layout/HomeLayout/HomeLayout";
+import LoginLayout from "../layout/LoginLayout/LoginLayout";
 
 const routesConfig: RouteObject[] = [
   {

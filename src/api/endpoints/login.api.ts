@@ -2,14 +2,15 @@ import API from "../services/api";
 
 const loginPostUrl = "https://vipinms.cloud/auth/sign-in";
 
-export const loginUserCall = async ({
-  email,
-  password,
-}: {
+interface IloginUserCall {
   email: string;
   password: string;
-}) => {
+}
+interface IloginUserCallResponse {
+  access_token: string;
+}
+export const loginUserCall = async ({ email, password }: IloginUserCall) => {
   const body = { username: email, password };
-  const response: { access_token: string } = await API.post(loginPostUrl, body);
+  const response: IloginUserCallResponse = await API.post(loginPostUrl, body);
   return response;
 };
