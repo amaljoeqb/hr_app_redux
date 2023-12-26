@@ -36,8 +36,6 @@ export function EmployeeListing() {
   const deleteEmployeeDialog = useAppSelector(
     (state) => state.ui?.deleteEmployeeDialog
   );
-  const { logOut } = useAuth();
-  // logOut();
   return (
     <StyledEmployeeListing>
       <main className="card">
@@ -51,15 +49,6 @@ export function EmployeeListing() {
             />
           </div>
           <div className="next-section">
-            <div>
-              <button
-                onClick={() => {
-                  logOut();
-                }}
-              >
-                Logout
-              </button>
-            </div>
             <div className="filters-section">
               <SkillsFilter
                 skills={skills}
