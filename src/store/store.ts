@@ -12,6 +12,8 @@ import { default as toastsReducer } from "./slices/toasts.slice";
 import authReducer from "./slices/login.slice";
 import { ThunkAction, thunk } from "redux-thunk";
 import uiReducer from "./slices/ui.slice";
+import { composeWithDevTools } from "@redux-devtools/extension/lib/types/logOnly";
+import { composeWithDevToolsDevelopmentOnly } from "@redux-devtools/extension";
 
 export const rootReducer = combineReducers({
   employees: employeesReducer,
@@ -25,7 +27,7 @@ export const rootReducer = combineReducers({
 export const store = createStore(
   rootReducer,
   undefined,
-  applyMiddleware(thunk)
+  composeWithDevToolsDevelopmentOnly(applyMiddleware(thunk))
 );
 
 export type RootState = ReturnType<typeof rootReducer>;

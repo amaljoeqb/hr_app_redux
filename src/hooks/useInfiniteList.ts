@@ -8,14 +8,16 @@ export interface InfiniteListProps<T> {
   config: IDataConfig<T>;
   setConfigAndFetchData: (config: IDataConfig<T>) => void;
   fetchMoreData: () => Promise<void>;
-  id: keyof T;
 }
 
 export function useInfiniteList<T>(props: InfiniteListProps<T>) {
-  const { data, total, setConfigAndFetchData, id, config, fetchMoreData } =
-    props;
+  const { data, total, setConfigAndFetchData, config, fetchMoreData } = props;
   const [loading, setLoading] = useState(false);
   const hasMore = data.length < total;
+
+  useEffect(() => {
+    setConfigAndFetchData({ ...config, offset: 0 });
+  }, []);
 
   async function loadMoreData() {
     if (loading || !hasMore) return;
