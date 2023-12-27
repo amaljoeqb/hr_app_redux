@@ -19,7 +19,7 @@ API.interceptors.response.use(
 API.interceptors.request.use(
   (config) => {
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsInVzZXJuYW1lIjoiYW1hbC5qb2VAcWJ1cnN0LmNvbSIsImlhdCI6MTcwMzY2NzE4MiwiZXhwIjoxNzAzNjcwNzgyfQ.6KdI8N3-JfJHP0o8H_GpVr0Hpr94AwuHx6CuOSvMHLw";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsInVzZXJuYW1lIjoiYW1hbC5qb2VAcWJ1cnN0LmNvbSIsImlhdCI6MTcwMzY3MzI1MCwiZXhwIjoxNzAzNjc2ODUwfQ.1g38j58SrekRl8f0YY05tX-xpyMomZB81v4RddbY4_A";
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

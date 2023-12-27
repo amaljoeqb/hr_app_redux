@@ -126,6 +126,13 @@ const employeesReducer = (
         config,
       };
     }
+    case "SET_LOADING": {
+      const loading = action.payload as boolean;
+      return {
+        ...state,
+        loading,
+      };
+    }
     default: {
       return state;
     }
@@ -162,12 +169,18 @@ export const setConfig = (config: IDataConfig<Employee>) => ({
   payload: config,
 });
 
+export const setLoading = (loading: boolean) => ({
+  type: "SET_LOADING",
+  payload: loading,
+});
+
 export const setConfigAndFetchData = (
   config: IDataConfig<Employee>
 ): AppThunk => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(setConfig(config));
+      dispatch(setLoading(true));
       const fetchDataProps: FetchDataProps<Employee> = {
         offset: config.offset,
         limit: config.pageSize,
@@ -176,6 +189,7 @@ export const setConfigAndFetchData = (
       };
       const { data, total } = await API.getEmployees(fetchDataProps);
       dispatch(setEmployees(data, total));
+      dispatch(setLoading(false));
     } catch (error: any) {
       dispatch(
         showToast({
@@ -183,6 +197,7 @@ export const setConfigAndFetchData = (
           type: "error",
         })
       );
+      dispatch(setLoading(false));
     }
   };
 };
@@ -198,8 +213,10 @@ export const fetchMoreData = (): AppThunk => {
         sortBy: config.sort.columnId,
         sortDir: config.sort.order,
       };
+      dispatch(setLoading(true));
       const { data } = await API.getEmployees(fetchDataProps);
       dispatch(addEmployees(data));
+      dispatch(setLoading(false));
     } catch (error: any) {
       dispatch(
         showToast({
@@ -207,6 +224,7 @@ export const fetchMoreData = (): AppThunk => {
           type: "error",
         })
       );
+      dispatch(setLoading(false));
     }
   };
 };
