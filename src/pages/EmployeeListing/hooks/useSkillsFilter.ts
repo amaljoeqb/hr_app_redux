@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Skill } from "../../../models";
 import { SkillsFilterProps } from "../components/SkillsFilter";
 

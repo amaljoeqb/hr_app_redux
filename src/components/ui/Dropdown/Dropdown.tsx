@@ -5,7 +5,7 @@ export type DropdownPosition = "top" | "bottom";
 
 export function Dropdown(props: React.HTMLAttributes<HTMLDivElement>) {
   const ref = React.useRef<HTMLDivElement>(null);
-  const [position, setPosition] = React.useState<DropdownPosition>("bottom");
+  const [position] = React.useState<DropdownPosition>("bottom");
   const [coordinates, setCoordinates] = React.useState({ x: 0, y: 0 });
 
   React.useEffect(() => {

@@ -1,19 +1,12 @@
-import EmployeeTable from "./components/EmployeeTable";
 import { HoverButton, Loader } from "../../components";
-import { PaginationControl } from "../../components/";
 import SearchInput from "./components/SearchInput";
 import { useNavigate } from "react-router-dom";
-import useEmployeeTable from "./hooks/useEmployeeTable";
 import SkillsFilter from "./components/SkillsFilter";
 import EmployeeDeletePopup from "./components/EmployeeDeletePopup";
-import { useQuery } from "../../hooks";
 import { Footer, Header } from "../../layout";
 import { StyledEmployeeListing } from "./EmployeeListing.style";
-import { columnIds } from "../../config";
 import { EmployeeCardsList } from "./components/EmployeeCardsList/EmployeeCardsList";
 import { useEmployeeList } from "./hooks/useEmployeeList";
-import { useState } from "react";
-import { Employee } from "../../models";
 import { useAppSelector } from "../../store/store";
 
 export function EmployeeListing() {
@@ -25,9 +18,7 @@ export function EmployeeListing() {
     searchTerm,
     setSearchTerm,
     sort,
-    setSort,
     skills,
-    total,
     hasMore,
     loadingIconRef,
   } = useEmployeeList();
