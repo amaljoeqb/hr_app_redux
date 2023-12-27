@@ -22,7 +22,6 @@ export default function EmployeeDetail() {
     employee = employees.find((employee) => employee.employeeId === employeeId);
   }
 
-  console.log(employee);
   if (employee === undefined && !isEdit) {
     navigate("/404");
     return null;

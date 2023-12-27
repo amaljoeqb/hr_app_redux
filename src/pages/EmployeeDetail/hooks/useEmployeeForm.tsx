@@ -31,7 +31,7 @@ export default function useEmployeeForm({
       joiningDate: "",
     };
     return employee || newEmployee;
-  }, []);
+  }, [employee]);
 
   const isCreate = !employee;
 
