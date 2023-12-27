@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 export interface IDataConfig<T> {
   offset: number;
   pageSize: number;
@@ -23,12 +21,6 @@ export function useInfiniteList<T>(props: InfiniteListProps<T>) {
   const { data, total, setConfigAndFetchData, config, fetchMoreData, loading } =
     props;
   const hasMore = data.length < total;
-
-  useEffect(() => {
-    if (data.length === 0) {
-      setConfigAndFetchData({ ...config, offset: 0 });
-    }
-  }, []);
 
   async function loadMoreData() {
     if (loading || !hasMore) return;
