@@ -8,6 +8,7 @@ interface IloginUserCall {
 }
 interface IloginUserCallResponse {
   access_token: string;
+  refresh_token: string;
 }
 export const loginUserCall = async ({ email, password }: IloginUserCall) => {
   const body = { username: email, password };

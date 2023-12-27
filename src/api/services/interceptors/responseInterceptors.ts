@@ -1,4 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios";
+import { refreshFun, setCookie } from "../login.helper";
+import API from "../api";
 
 enum HTTP_STATUS {
   INFORMATION = 300,
@@ -10,11 +12,19 @@ enum HTTP_STATUS {
   UNAUTHORIZED = 401,
 }
 
-export function onResponseError(error: AxiosError): Promise<AxiosError> {
+export async function onResponseError(error: AxiosError): Promise<AxiosError> {
+  const { config } = error;
   if (error.response?.status === HTTP_STATUS.SERVER_ERROR) {
     return Promise.reject(error.response.data);
   } else if (error.response?.status === HTTP_STATUS.UNAUTHORIZED) {
-    return Promise.reject(error.response.data);
+    const refreshResponse = await refreshFun();
+    if (refreshResponse) {
+      setCookie("accessToken", refreshResponse.access_token);
+      setCookie("refreshToken", refreshResponse.refresh_token);
+      API(config!);
+    } else {
+      return Promise.reject(error.response.data);
+    }
   }
   return Promise.reject(error.response);
 }
