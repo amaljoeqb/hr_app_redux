@@ -3,15 +3,9 @@ import * as API from "../../api";
 import { showToast } from "./toasts.slice";
 import { errorMessages, successMessages } from "../../services";
 import { AppThunk, Dispatch } from "../store";
+import { IDataConfig } from "../../hooks/";
 
-export interface IEmployeeDataConfig {
-  offset: number;
-  pageSize: number;
-  searchTerm: string;
-  sort: {
-    columnId: keyof Employee;
-    order: "asc" | "desc";
-  };
+export interface IEmployeeDataConfig extends IDataConfig<Employee> {
   skillsIds?: string[];
 }
 

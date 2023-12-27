@@ -19,6 +19,7 @@ export function useEmployeeList() {
     data: employees.data,
     total: employees.total,
     config: employees.config,
+    loading: employees.loading,
     setConfigAndFetchData: (config) => dispatch(setConfigAndFetchData(config)),
     fetchMoreData: async () => {
       dispatch(fetchMoreData());
