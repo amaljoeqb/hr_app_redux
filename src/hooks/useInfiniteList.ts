@@ -16,7 +16,9 @@ export function useInfiniteList<T>(props: InfiniteListProps<T>) {
   const hasMore = data.length < total;
 
   useEffect(() => {
-    setConfigAndFetchData({ ...config, offset: 0 });
+    if (data.length === 0) {
+      setConfigAndFetchData({ ...config, offset: 0 });
+    }
   }, []);
 
   async function loadMoreData() {

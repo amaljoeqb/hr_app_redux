@@ -9,7 +9,7 @@ import { useAppSelector } from "../../store/store";
 export default function EmployeeDetail() {
   const employeeId = useParams<{ employeeId: string }>().employeeId;
   const navigate = useNavigate();
-  
+
   const employees = useAppSelector((state) => state.employees.data);
   const skills = useAppSelector((state) => state.staticData.skills);
   const departments = useAppSelector((state) => state.staticData.departments);
@@ -22,6 +22,7 @@ export default function EmployeeDetail() {
     employee = employees.find((employee) => employee.employeeId === employeeId);
   }
 
+  console.log(employee);
   if (employee === undefined && !isEdit) {
     navigate("/404");
     return null;
