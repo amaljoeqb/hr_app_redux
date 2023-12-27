@@ -4,20 +4,21 @@ import { showToast } from "./toasts.slice";
 import { errorMessages, successMessages } from "../../services";
 import { AppThunk, Dispatch } from "../store";
 
-export interface IDataConfig<T> {
+export interface IEmployeeDataConfig {
   offset: number;
   pageSize: number;
   searchTerm: string;
   sort: {
-    columnId: keyof T;
+    columnId: keyof Employee;
     order: "asc" | "desc";
   };
+  skillsIds?: string[];
 }
 
 interface EmployeesState {
   data: Employee[];
   total: number;
-  config: IDataConfig<Employee>;
+  config: IEmployeeDataConfig;
   loading: boolean;
 }
 
@@ -120,7 +121,7 @@ const employeesReducer = (
       };
     }
     case SET_CONFIG: {
-      const config = action.payload as IDataConfig<Employee>;
+      const config = action.payload as IEmployeeDataConfig;
       return {
         ...state,
         config,
@@ -164,7 +165,7 @@ export const deleteEmployee = (employeeId: string) => ({
   payload: employeeId,
 });
 
-export const setConfig = (config: IDataConfig<Employee>) => ({
+export const setConfig = (config: IEmployeeDataConfig) => ({
   type: SET_CONFIG,
   payload: config,
 });
@@ -175,7 +176,7 @@ export const setLoading = (loading: boolean) => ({
 });
 
 export const setConfigAndFetchData = (
-  config: IDataConfig<Employee>
+  config: IEmployeeDataConfig
 ): AppThunk => {
   return async (dispatch: Dispatch) => {
     try {

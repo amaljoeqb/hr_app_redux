@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { FetchDataProps, FetchDataReturn } from "../models";
-import { IDataConfig } from "../store/slices/employees.slice";
+import { IEmployeeDataConfig } from "../store/slices/employees.slice";
 
 export interface InfiniteListProps<T> {
   data: T[];
   total: number;
-  config: IDataConfig<T>;
-  setConfigAndFetchData: (config: IDataConfig<T>) => void;
+  config: IEmployeeDataConfig;
+  setConfigAndFetchData: (config: IEmployeeDataConfig) => void;
   fetchMoreData: () => Promise<void>;
 }
 
@@ -32,7 +32,7 @@ export function useInfiniteList<T>(props: InfiniteListProps<T>) {
     setConfigAndFetchData({ ...config, searchTerm, offset: 0 });
   }
 
-  function setSort(sort: IDataConfig<T>["sort"]) {
+  function setSort(sort: IEmployeeDataConfig["sort"]) {
     setConfigAndFetchData({ ...config, sort, offset: 0 });
   }
 
