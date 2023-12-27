@@ -37,10 +37,6 @@ const routesConfig: RouteObject[] = [
         path: "/404",
         element: <ErrorPage />,
       },
-      {
-        path: "/login",
-        element: <Login />,
-      },
     ],
   },
   { path: "*", element: <Navigate to="/login" replace /> },
