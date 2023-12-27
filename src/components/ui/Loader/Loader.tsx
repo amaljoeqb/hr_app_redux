@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import spinner from "../../../assets/img/spinner.svg";
 import { StyledLoader } from "./Loader.style";
 

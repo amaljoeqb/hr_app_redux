@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, InputHTMLAttributes } from "react";
+import { ButtonHTMLAttributes } from "react";
 import { StyledSubmitButton } from "./SubmitButton.style";
 
 interface ISubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}

@@ -1,4 +1,4 @@
-import { createRef, useEffect } from "react";
+import { createRef } from "react";
 import { StyledHighlightSpan } from "./HighlightSpan.style";
 
 export interface HighlightSpanProps
