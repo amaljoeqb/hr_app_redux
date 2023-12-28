@@ -6,12 +6,12 @@ interface IloginUserCall {
   email: string;
   password: string;
 }
-interface IloginUserCallResponse {
+export interface ItokenResponse {
   access_token: string;
   refresh_token: string;
 }
 export const loginUserCall = async ({ email, password }: IloginUserCall) => {
   const body = { username: email, password };
-  const response: IloginUserCallResponse = await API.post(loginPostUrl, body);
+  const response: ItokenResponse = await API.post(loginPostUrl, body);
   return response;
 };

@@ -1,3 +1,4 @@
+import { ItokenResponse } from "../endpoints/login.api";
 import API from "./api";
 import { jwtDecode } from "jwt-decode";
 
@@ -11,44 +12,31 @@ export function getCookie(name: string) {
 }
 
 export function setCookie(name: string, value: string) {
-  const decodedToken = jwtDecode(value);
+  const decodedToken = jwtDecode(value); //getting the payload of the token
   const expiration = new Date(0); // Start with Unix epoch
 
   if (decodedToken && decodedToken.exp) {
-    expiration.setUTCSeconds(decodedToken.exp);
+    expiration.setUTCSeconds(decodedToken.exp); //set expiration time of cookie with the expiration time of token
   }
 
   const cookieValue =
     encodeURIComponent(value) +
-    (decodedToken.exp ? `; expires=${expiration.toUTCString()}` : "");
+    (decodedToken.exp ? `; expires=${expiration.toUTCString()}` : ""); //convert expiration time to string
 
   document.cookie = `${name}=${cookieValue}; path=/`;
 }
-// export function setCookie(name: string, value: string) {
-//   const decodedToken = jwtDecode(value);
-//   const expiration = new Date();
-//   console.log(decodedToken);
-//   if (decodedToken && decodedToken.exp) {
-//     expiration.setDate(expiration.getDate() + decodedToken.exp);
-//   }
-//   const cookieValue =
-//     encodeURIComponent(value) +
-//     (decodedToken.exp ? `; expires=${expiration.toUTCString()}` : "");
-
-//   document.cookie = `${name}=${cookieValue}; path=/`;
-// }
 
 export function deleteCookie(name: string) {
-  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`; //setting expiration time to epoch
 }
 
 export const refreshFun = async () => {
   const refreshToken = getCookie("refreshToken");
   if (refreshToken) {
-    console.log(refreshToken);
     try {
-      const response: { access_token: string; refresh_token: string } =
-        await API.post(renewTokenUrl, { refreshToken });
+      const response: ItokenResponse = await API.post(renewTokenUrl, {
+        refreshToken,
+      });
       console.log(response, "response from renewed post");
       return response;
     } catch (err) {
