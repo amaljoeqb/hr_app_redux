@@ -15,7 +15,7 @@ export interface FetchEmployeesProps extends FetchDataProps<Employee> {
 
 export interface FetchEmployeesGlobalProps
   extends FetchDataProps<EmployeeGlobal> {
-  skillsIds: string;
+  skillIds: string;
 }
 
 export interface FetchDataReturn<T> {

@@ -1,9 +1,4 @@
-import {
-  Action,
-  Employee,
-  FetchDataProps,
-  FetchEmployeesProps,
-} from "../../models";
+import { Action, Employee, FetchEmployeesProps } from "../../models";
 import * as API from "../../api";
 import { showToast } from "./toasts.slice";
 import { errorMessages, successMessages } from "../../services";
@@ -11,7 +6,7 @@ import { AppThunk, Dispatch } from "../store";
 import { IDataConfig } from "../../hooks/";
 
 export interface IEmployeeDataConfig extends IDataConfig<Employee> {
-  skillsIds?: string[];
+  skillsIds: string[];
 }
 
 interface EmployeesState {

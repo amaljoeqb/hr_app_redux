@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { useInfiniteList } from "../../../hooks";
 import { Employee } from "../../../models";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
@@ -14,7 +14,6 @@ export function useEmployeeList() {
   const skills = useAppSelector((state) => state.staticData.skills);
   const prevEmployees = useAppSelector((state) => state.prevEmployees);
   const loadingIconRef = useRef(null);
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const defaultConfig = useMemo<IEmployeeDataConfig>(
     () => ({
       offset: 0,
@@ -29,7 +28,10 @@ export function useEmployeeList() {
     []
   );
 
-  const { loadMoreData, ...employeeList } = useInfiniteList<Employee, IEmployeeDataConfig>({
+  const { loadMoreData, ...employeeList } = useInfiniteList<
+    Employee,
+    IEmployeeDataConfig
+  >({
     data: employees.data,
     total: employees.total,
     config: employees.config ?? defaultConfig,
@@ -75,9 +77,20 @@ export function useEmployeeList() {
     };
   }, [loadMoreData]);
 
+  const setSelectedSkills = (skillsIds: string[]) => {
+    if (!employees.config) return;
+    dispatch(
+      setConfigAndFetchData({
+        ...employees.config,
+        skillsIds,
+        offset: 0,
+      })
+    );
+  };
+
   return {
     ...employeeList,
-    selectedSkills,
+    selectedSkills: employees.config?.skillsIds ?? defaultConfig.skillsIds,
     setSelectedSkills,
     skills,
     prevEmployees,

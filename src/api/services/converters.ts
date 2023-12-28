@@ -2,7 +2,6 @@ import {
   Employee,
   Skill,
   Department,
-  FetchDataProps,
   FetchEmployeesProps,
   FetchEmployeesGlobalProps,
 } from "../../models";
@@ -148,7 +147,7 @@ export function getEmployeeGlobalFetchParams(
     sortDir: props.sortDir,
     sortBy: sortKey,
     search: props.search,
-    skillsIds: props.skills.join(","),
+    skillIds: props.skills.join(","),
   };
   return params;
 }
