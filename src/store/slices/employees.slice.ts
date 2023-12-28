@@ -21,6 +21,7 @@ const SET_EMPLOYEES = "SET_EMPLOYEES";
 const ADD_EMPLOYEES = "ADD_EMPLOYEES";
 const ADD_EMPLOYEE = "ADD_EMPLOYEE";
 const UPDATE_EMPLOYEE_ID = "UPDATE_EMPLOYEE_ID";
+const SET_EMPLOYEE = "SET_EMPLOYEE";
 const DELETE_EMPLOYEE = "DELETE_EMPLOYEE";
 const SET_CONFIG = "SET_CONFIG";
 
@@ -80,6 +81,24 @@ const employeesReducer = (
         data,
       };
     }
+    case SET_EMPLOYEE: {
+      const employee = action.payload as Employee;
+      let found = false;
+      const data = state.data.map((e) => {
+        if (e.employeeId === employee.employeeId) {
+          found = true;
+          return employee;
+        }
+        return e;
+      });
+      if (!found) {
+        data.push(employee);
+      }
+      return {
+        ...state,
+        data,
+      };
+    }
     case DELETE_EMPLOYEE: {
       const employeeId = action.payload as string;
       const data = state.data.filter((e) => e.employeeId !== employeeId);
@@ -111,6 +130,11 @@ const employeesReducer = (
 const setEmployees = (employees: Employee[], total: number) => ({
   type: SET_EMPLOYEES,
   payload: { data: employees, total },
+});
+
+const setEmployee = (employee: Employee) => ({
+  type: SET_EMPLOYEE,
+  payload: employee,
 });
 
 const addEmployees = (employees: Employee[]) => ({
