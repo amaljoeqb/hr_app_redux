@@ -5,7 +5,11 @@ import {
   legacy_createStore as createStore,
 } from "redux";
 import { useSelector, useDispatch } from "react-redux";
-import { default as employeesReducer } from "./slices/employees.slice";
+import {
+  default as employeesReducer,
+  setConfig,
+  setConfigAndFetchData,
+} from "./slices/employees.slice";
 import { default as prevEmployeesReducer } from "./slices/prevEmployees.slice";
 import { default as staticDataReducer } from "./slices/staticData.slice";
 import { default as toastsReducer } from "./slices/toasts.slice";
@@ -24,7 +28,22 @@ export const rootReducer = combineReducers({
 export const store = createStore(
   rootReducer,
   undefined,
-  composeWithDevToolsDevelopmentOnly(applyMiddleware(thunk))
+  composeWithDevToolsDevelopmentOnly({
+    trace: true,
+    traceLimit: 25,
+  })(applyMiddleware(thunk))
+);
+
+store.dispatch(
+  setConfigAndFetchData({
+    offset: 0,
+    pageSize: 10,
+    searchTerm: "",
+    sort: {
+      columnId: "employeeId",
+      order: "asc",
+    },
+  })
 );
 
 export type RootState = ReturnType<typeof rootReducer>;

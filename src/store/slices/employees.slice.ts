@@ -36,7 +36,7 @@ const initialState: EmployeesState = {
       order: "asc",
     },
   },
-  loading: false,
+  loading: true,
 };
 
 const employeesReducer = (
