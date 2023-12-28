@@ -12,7 +12,8 @@ export interface IEmployeeDataConfig extends IDataConfig<Employee> {
 interface EmployeesState {
   data: Employee[];
   total: number;
-  config: IEmployeeDataConfig;
+  // if config is present, data should be available according to the config or loading should be true
+  config?: IEmployeeDataConfig;
   loading: boolean;
 }
 
@@ -20,22 +21,13 @@ const SET_EMPLOYEES = "SET_EMPLOYEES";
 const ADD_EMPLOYEES = "ADD_EMPLOYEES";
 const ADD_EMPLOYEE = "ADD_EMPLOYEE";
 const UPDATE_EMPLOYEE_ID = "UPDATE_EMPLOYEE_ID";
-const SET_EMPLOYEE = "SET_EMPLOYEE";
 const DELETE_EMPLOYEE = "DELETE_EMPLOYEE";
 const SET_CONFIG = "SET_CONFIG";
 
 const initialState: EmployeesState = {
   data: [],
   total: 0,
-  config: {
-    offset: 0,
-    pageSize: 10,
-    searchTerm: "",
-    sort: {
-      columnId: "employeeId",
-      order: "asc",
-    },
-  },
+  config: undefined,
   loading: true,
 };
 
@@ -88,24 +80,6 @@ const employeesReducer = (
         data,
       };
     }
-    case SET_EMPLOYEE: {
-      const employee = action.payload as Employee;
-      let found = false;
-      const data = state.data.map((e) => {
-        if (e.employeeId === employee.employeeId) {
-          found = true;
-          return employee;
-        }
-        return e;
-      });
-      if (!found) {
-        data.push(employee);
-      }
-      return {
-        ...state,
-        data,
-      };
-    }
     case DELETE_EMPLOYEE: {
       const employeeId = action.payload as string;
       const data = state.data.filter((e) => e.employeeId !== employeeId);
@@ -139,11 +113,6 @@ const setEmployees = (employees: Employee[], total: number) => ({
   payload: { data: employees, total },
 });
 
-const setEmployee = (employee: Employee) => ({
-  type: SET_EMPLOYEE,
-  payload: employee,
-});
-
 const addEmployees = (employees: Employee[]) => ({
   type: ADD_EMPLOYEES,
   payload: employees,
@@ -159,7 +128,7 @@ export const deleteEmployee = (employeeId: string) => ({
   payload: employeeId,
 });
 
-export const setConfig = (config: IEmployeeDataConfig) => ({
+export const setConfig = (config: IEmployeeDataConfig | undefined) => ({
   type: SET_CONFIG,
   payload: config,
 });
@@ -197,11 +166,32 @@ export const setConfigAndFetchData = (
   };
 };
 
+export const clearConfigAndFetchEmployee = (employeeId: string): AppThunk => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch(setConfig(undefined));
+      dispatch(setLoading(true));
+      const employee = await API.getEmployee(employeeId);
+      dispatch(setEmployees([employee], 1));
+      dispatch(setLoading(false));
+    } catch (error: any) {
+      dispatch(
+        showToast({
+          message: errorMessages.getEmployeeError(employeeId),
+          type: "error",
+        })
+      );
+      dispatch(setLoading(false));
+    }
+  };
+};
+
 export const fetchMoreData = (): AppThunk => {
   return async (dispatch: Dispatch, getState) => {
     try {
       const { employees } = getState();
       const { config } = employees;
+      if (!config) return;
       const fetchDataProps: FetchDataProps<Employee> = {
         offset: config.offset + employees.data.length,
         limit: config.pageSize,
@@ -220,22 +210,6 @@ export const fetchMoreData = (): AppThunk => {
         })
       );
       dispatch(setLoading(false));
-    }
-  };
-};
-
-export const fetchEmployee = (employeeId: string): AppThunk => {
-  return async (dispatch: Dispatch) => {
-    try {
-      const employee = await API.getEmployee(employeeId);
-      dispatch(setEmployee(employee));
-    } catch (error: any) {
-      dispatch(
-        showToast({
-          message: errorMessages.getEmployeeError(employeeId),
-          type: "error",
-        })
-      );
     }
   };
 };
@@ -299,6 +273,7 @@ export const deleteEmployeeAndFetchMore =
     try {
       dispatch(deleteEmployee(employeeId));
       const { config } = employees;
+      if (!config) return;
       const fetchDataProps: FetchDataProps<Employee> = {
         offset: config.offset + employees.data.length,
         limit: 1,

@@ -7,7 +7,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import {
   default as employeesReducer,
-  setConfig,
   setConfigAndFetchData,
 } from "./slices/employees.slice";
 import { default as prevEmployeesReducer } from "./slices/prevEmployees.slice";
@@ -34,17 +33,6 @@ export const store = createStore(
   })(applyMiddleware(thunk))
 );
 
-store.dispatch(
-  setConfigAndFetchData({
-    offset: 0,
-    pageSize: 10,
-    searchTerm: "",
-    sort: {
-      columnId: "employeeId",
-      order: "asc",
-    },
-  })
-);
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type Dispatch = typeof store.dispatch;

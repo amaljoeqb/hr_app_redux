@@ -20,7 +20,7 @@ export interface InfiniteListProps<T> {
 export function useInfiniteList<T>(props: InfiniteListProps<T>) {
   const { data, total, setConfigAndFetchData, config, fetchMoreData, loading } =
     props;
-  const hasMore = data.length < total;
+  const hasMore = data.length < total || loading;
 
   async function loadMoreData() {
     if (loading || !hasMore) return;
