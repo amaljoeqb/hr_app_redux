@@ -24,6 +24,7 @@ const UPDATE_EMPLOYEE_ID = "UPDATE_EMPLOYEE_ID";
 const SET_EMPLOYEE = "SET_EMPLOYEE";
 const DELETE_EMPLOYEE = "DELETE_EMPLOYEE";
 const SET_CONFIG = "SET_CONFIG";
+const SET_LOADING = "SET_LOADING";
 
 const initialState: EmployeesState = {
   data: [],
@@ -158,7 +159,7 @@ export const setConfig = (config: IEmployeeDataConfig | undefined) => ({
 });
 
 export const setLoading = (loading: boolean) => ({
-  type: "SET_LOADING",
+  type: SET_LOADING,
   payload: loading,
 });
 

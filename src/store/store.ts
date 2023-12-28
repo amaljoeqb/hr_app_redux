@@ -7,7 +7,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import {
   default as employeesReducer,
-  setConfigAndFetchData,
 } from "./slices/employees.slice";
 import { default as prevEmployeesReducer } from "./slices/prevEmployees.slice";
 import { default as staticDataReducer } from "./slices/staticData.slice";
