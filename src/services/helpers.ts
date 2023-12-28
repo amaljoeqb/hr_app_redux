@@ -183,7 +183,7 @@ export function getEmployeeDiff(
 export const firebaseUploadImage = async (file: any): Promise<string> => {
   try {
     if (!file) {
-      return "";
+      return Promise.resolve("");
     }
     const storageRef = strRef(storage, crypto.randomUUID());
     const snapshot = await uploadBytes(storageRef, file);

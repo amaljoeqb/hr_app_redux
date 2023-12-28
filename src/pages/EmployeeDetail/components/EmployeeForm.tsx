@@ -66,14 +66,13 @@ export default function EmployeeForm(props: EmployeeFormProps) {
                 type="file"
                 name="employee profile"
                 onChange={(e) => {
-                  setprofileImg(
-                    e.target.files
-                      ? URL.createObjectURL(e.target.files[0])
-                      : profileImg
-                  );
-                  setUploadImg(
-                    e.target.files ? e.target.files[0] : initialProfilePic
-                  );
+                  if (e.target.files) {
+                    setprofileImg(URL.createObjectURL(e.target.files[0]));
+                    setUploadImg(e.target.files[0]);
+                  } else {
+                    setprofileImg(profileImg);
+                    setUploadImg(initialProfilePic);
+                  }
                 }}
                 accept="image/*"
               />

@@ -24,7 +24,7 @@ export function EmployeeCard({ employee }: { employee: Employee }) {
         />
       </div>
       <img
-        src={employee.profilePic ? employee.profilePic : defaultprofileImg}
+        src={employee.profilePic ?? defaultprofileImg}
         alt="employee profile"
       />
       <div>

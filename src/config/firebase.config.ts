@@ -2,15 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCDj_QMPEm3JLkPd4MUkdoJX2Ad-g9tcBU",
-  authDomain: "hrm-app-39bd9.firebaseapp.com",
-  databaseURL:
-    "https://hrm-app-39bd9-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "hrm-app-39bd9",
-  storageBucket: "hrm-app-39bd9.appspot.com",
-  messagingSenderId: "832039794807",
-  appId: "1:832039794807:web:9040ba14779a13af856e72",
-  measurementId: "G-FF78NMEGPK",
+  apiKey: process.env.REACT_APP_FB_API_KEY,
+  authDomain: process.env.REACT_APP_FB_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FB_DATABASE_URL,
+  projectId: process.env.REACT_APP_FB_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FB_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FB_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FB_APP_ID,
+  measurementId: process.env.REACT_APP_FB_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);

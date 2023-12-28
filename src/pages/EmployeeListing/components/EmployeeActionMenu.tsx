@@ -19,7 +19,7 @@ export default function EmployeeActionMenu(props: EmployeeActionMenuProps) {
     >
       <div
         onClick={(e) => {
-          e.stopPropagation();
+          e.stopPropagation(); // this prevents the onclick function of the employee card and prevents showing employee details page when clicking on the button and on the select option div
         }}
         className={`action-container ${isActive ? "active" : ""}`}
       >
