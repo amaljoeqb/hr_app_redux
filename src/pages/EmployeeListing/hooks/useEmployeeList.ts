@@ -29,7 +29,7 @@ export function useEmployeeList() {
     []
   );
 
-  const { loadMoreData, ...employeeList } = useInfiniteList<Employee>({
+  const { loadMoreData, ...employeeList } = useInfiniteList<Employee, IEmployeeDataConfig>({
     data: employees.data,
     total: employees.total,
     config: employees.config ?? defaultConfig,

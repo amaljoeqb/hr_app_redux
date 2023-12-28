@@ -1,4 +1,4 @@
-import { Employee, FetchDataProps } from "../../models";
+import { Employee, FetchDataProps, FetchEmployeesProps } from "../../models";
 import { API } from "..";
 import {
   getEmployeeFromEmployeeGlobal,
@@ -12,7 +12,7 @@ import {
   EmployeeResponse,
 } from "../models";
 
-export const getEmployees = async (props: FetchDataProps<Employee>) => {
+export const getEmployees = async (props: FetchEmployeesProps) => {
   const params: FetchDataProps<EmployeeGlobal> =
     getEmployeeGlobalFetchParams(props);
   const response: EmployeeResponse = await API.get("/employee", {

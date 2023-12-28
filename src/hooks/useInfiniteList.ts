@@ -8,16 +8,16 @@ export interface IDataConfig<T> {
   };
 }
 
-export interface InfiniteListProps<T> {
+export interface InfiniteListProps<T, DataConfigType extends IDataConfig<T>> {
   data: T[];
   loading: boolean;
   total: number;
-  config: IDataConfig<T>;
-  setConfigAndFetchData: (config: IDataConfig<T>) => void;
+  config: DataConfigType;
+  setConfigAndFetchData: (config: DataConfigType) => void;
   fetchMoreData: () => Promise<void>;
 }
 
-export function useInfiniteList<T>(props: InfiniteListProps<T>) {
+export function useInfiniteList<T, DataConfigType extends IDataConfig<T>>(props: InfiniteListProps<T, DataConfigType>) {
   const { data, total, setConfigAndFetchData, config, fetchMoreData, loading } =
     props;
   const hasMore = data.length < total || loading;
@@ -31,7 +31,7 @@ export function useInfiniteList<T>(props: InfiniteListProps<T>) {
     setConfigAndFetchData({ ...config, searchTerm, offset: 0 });
   }
 
-  function setSort(sort: IDataConfig<T>["sort"]) {
+  function setSort(sort: DataConfigType["sort"]) {
     setConfigAndFetchData({ ...config, sort, offset: 0 });
   }
 

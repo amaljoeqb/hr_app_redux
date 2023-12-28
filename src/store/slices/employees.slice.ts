@@ -1,4 +1,9 @@
-import { Action, Employee, FetchDataProps } from "../../models";
+import {
+  Action,
+  Employee,
+  FetchDataProps,
+  FetchEmployeesProps,
+} from "../../models";
 import * as API from "../../api";
 import { showToast } from "./toasts.slice";
 import { errorMessages, successMessages } from "../../services";
@@ -170,11 +175,13 @@ export const setConfigAndFetchData = (
     try {
       dispatch(setConfig(config));
       dispatch(setLoading(true));
-      const fetchDataProps: FetchDataProps<Employee> = {
+      const fetchDataProps: FetchEmployeesProps = {
         offset: config.offset,
         limit: config.pageSize,
         sortBy: config.sort.columnId,
         sortDir: config.sort.order,
+        search: config.searchTerm,
+        skills: config.skillsIds ?? [],
       };
       const { data, total } = await API.getEmployees(fetchDataProps);
       dispatch(setEmployees(data, total));
@@ -217,11 +224,13 @@ export const fetchMoreData = (): AppThunk => {
       const { employees } = getState();
       const { config } = employees;
       if (!config) return;
-      const fetchDataProps: FetchDataProps<Employee> = {
+      const fetchDataProps: FetchEmployeesProps = {
         offset: config.offset + employees.data.length,
         limit: config.pageSize,
         sortBy: config.sort.columnId,
         sortDir: config.sort.order,
+        search: config.searchTerm,
+        skills: config.skillsIds ?? [],
       };
       dispatch(setLoading(true));
       const { data } = await API.getEmployees(fetchDataProps);
@@ -299,11 +308,13 @@ export const deleteEmployeeAndFetchMore =
       dispatch(deleteEmployee(employeeId));
       const { config } = employees;
       if (!config) return;
-      const fetchDataProps: FetchDataProps<Employee> = {
+      const fetchDataProps: FetchEmployeesProps = {
         offset: config.offset + employees.data.length,
         limit: 1,
         sortBy: config.sort.columnId,
         sortDir: config.sort.order,
+        search: config.searchTerm,
+        skills: config.skillsIds ?? [],
       };
       const { data } = await API.getEmployees(fetchDataProps);
       dispatch(addEmployees(data));
