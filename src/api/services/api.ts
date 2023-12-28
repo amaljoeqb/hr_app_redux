@@ -18,8 +18,8 @@ API.interceptors.response.use(
 
 API.interceptors.request.use(
   (config) => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsInVzZXJuYW1lIjoiYW1hbC5qb2VAcWJ1cnN0LmNvbSIsImlhdCI6MTcwMzY3MzI1MCwiZXhwIjoxNzAzNjc2ODUwfQ.1g38j58SrekRl8f0YY05tX-xpyMomZB81v4RddbY4_A";
+    const token = process.env.REACT_APP_API_TOKEN;
+    console.log(token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
