@@ -30,7 +30,7 @@ const initialState: EmployeesState = {
   data: [],
   total: 0,
   config: undefined,
-  loading: true,
+  loading: false,
 };
 
 const employeesReducer = (
