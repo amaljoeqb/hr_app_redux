@@ -21,7 +21,7 @@ export async function onResponseError(error: AxiosError): Promise<AxiosError> {
     if (refreshResponse) {
       setCookie("accessToken", refreshResponse.access_token);
       setCookie("refreshToken", refreshResponse.refresh_token);
-      API(config!);
+      return API(config!);
     } else {
       return Promise.reject(error.response.data);
     }

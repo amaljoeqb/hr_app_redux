@@ -2,13 +2,18 @@ import { useAppDispatch, useAppSelector } from "../../../store/store";
 import { useCallback, useEffect } from "react";
 import { loginUser, logoutUser } from "../../../store/slices/login.slice";
 import { loginUserCall } from "../../../api/endpoints/login.api";
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode, JwtPayload } from "jwt-decode";
 import {
   deleteCookie,
   getCookie,
   setCookie,
 } from "../../../api/services/login.helper";
+import { showToast } from "../../../store/slices/toasts.slice";
 
+interface IJwtPayload extends JwtPayload {
+  username?: string;
+}
+const invalidLoginMsg = "Invalid Credentials";
 const useAuth = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
@@ -24,9 +29,23 @@ const useAuth = () => {
         setCookie("accessToken", authToken);
         setCookie("refreshToken", refreshToken);
         dispatch(loginUser());
+        const decodedAccessToken: IJwtPayload = jwtDecode(authToken);
+        console.log(decodedAccessToken.username);
+        dispatch(
+          showToast({
+            message: `Welcome back ${decodedAccessToken.username}`,
+            type: "success",
+          })
+        );
       }
     } catch (error: any) {
       console.log(error.message, "error in fetching the access token");
+      dispatch(
+        showToast({
+          message: invalidLoginMsg,
+          type: "error",
+        })
+      );
     }
   };
 

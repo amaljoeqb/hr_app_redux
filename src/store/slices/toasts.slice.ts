@@ -1,6 +1,6 @@
 import { ThunkAction } from "redux-thunk";
 import { Action, IToast, ToastType } from "../../models";
-import {  RootState } from "../store";
+import { RootState } from "../store";
 
 export interface IShowToast {
   message: string;
@@ -42,9 +42,9 @@ export const showToast = ({
       id: Date.now(),
     };
     const timer = setTimeout(() => {
-      removeToast(toast.id);
+      dispatch(removeToast(toast.id));
     }, 3000);
-    addToast(toast);
+    dispatch(addToast(toast));
     return () => clearTimeout(timer);
   };
 };
