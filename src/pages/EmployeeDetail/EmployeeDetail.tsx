@@ -4,12 +4,15 @@ import { Employee } from "../../models";
 import { useQuery } from "../../hooks";
 import { Footer, Header } from "../../layout";
 import { StyledEmployeeDetail } from "./EmployeeDetail.style";
-import { useAppSelector } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 import { useEffect } from "react";
+import { clearConfigAndFetchEmployee } from "../../store/slices/employees.slice";
+import { Loader } from "../../components";
 
 export default function EmployeeDetail() {
   const employeeId = useParams<{ employeeId: string }>().employeeId;
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const skills = useAppSelector((state) => state.staticData.skills);
   const departments = useAppSelector((state) => state.staticData.departments);
@@ -21,10 +24,10 @@ export default function EmployeeDetail() {
   const isEdit = urlParams.get("edit") === "true";
 
   useEffect(() => {
-    if (!loading && !employee) {
-      navigate("/404");
+    if (employeeId && !employee) {
+      dispatch(clearConfigAndFetchEmployee(employeeId));
     }
-  }, [employee, navigate, loading]);
+  }, [employeeId, dispatch]);
 
   return (
     <StyledEmployeeDetail>
@@ -60,19 +63,23 @@ export default function EmployeeDetail() {
               </div>
             </h2>
           </div>
-          <EmployeeForm
-            employee={employee}
-            skills={skills}
-            departments={departments}
-            isView={!isEdit}
-            className={isEdit ? "edit" : "view"}
-            onEdit={() => {
-              navigate(`/employee/${employeeId}?edit=true`);
-            }}
-            onSave={() => {
-              navigate(-1);
-            }}
-          />
+          {loading ? (
+            <Loader />
+          ) : (
+            <EmployeeForm
+              employee={employee}
+              skills={skills}
+              departments={departments}
+              isView={!isEdit}
+              className={isEdit ? "edit" : "view"}
+              onEdit={() => {
+                navigate(`/employee/${employeeId}?edit=true`);
+              }}
+              onSave={() => {
+                navigate(-1);
+              }}
+            />
+          )}
         </section>
       </div>
       <Footer />

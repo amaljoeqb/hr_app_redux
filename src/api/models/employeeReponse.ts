@@ -1,8 +1,13 @@
-export interface EmployeeResponse {
+export interface EmployeesResponse {
   data: {
     employees: EmployeeGlobal[];
     count: number;
   };
+  message: string;
+}
+
+export interface EmployeeResponse {
+  data: EmployeeGlobal;
   message: string;
 }
 
