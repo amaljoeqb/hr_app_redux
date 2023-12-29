@@ -18,12 +18,7 @@ export function EmployeeCard({ employee }: { employee: Employee }) {
   return (
     <FlipCard
       front={
-        <StyledEmployeeCard
-          onClick={() => {
-            //navigate(`/employee/${employee.employeeId}`);
-          }}
-          tabIndex={0}
-        >
+        <StyledEmployeeCard tabIndex={0}>
           <div className="edit-del-button">
             <EmployeeActionMenu
               onDelete={() => {
@@ -44,9 +39,12 @@ export function EmployeeCard({ employee }: { employee: Employee }) {
       }
       back={
         <div className="back-content">
-          <EmployeeDetail />
+          <EmployeeDetail employee={employee} />
         </div>
       }
+      onClick={() => {
+        navigate(`/employee/${employee.employeeId}`);
+      }}
     />
   );
 }

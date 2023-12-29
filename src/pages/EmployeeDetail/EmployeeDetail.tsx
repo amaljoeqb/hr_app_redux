@@ -9,15 +9,23 @@ import { useEffect } from "react";
 import { clearConfigAndFetchEmployee } from "../../store/slices/employees.slice";
 import { Loader } from "../../components";
 
-export default function EmployeeDetail() {
+export default function EmployeeDetail({
+  employee: givenEmployee,
+}: {
+  employee?: Employee;
+}) {
   const employeeId = useParams<{ employeeId: string }>().employeeId;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const skills = useAppSelector((state) => state.staticData.skills);
   const departments = useAppSelector((state) => state.staticData.departments);
-  const employee: Employee | undefined = useAppSelector((state) =>
-    state.employees.data.find((employee) => employee.employeeId === employeeId)
+  const employee: Employee | undefined = useAppSelector(
+    (state) =>
+      givenEmployee ||
+      state.employees.data.find(
+        (employee) => employee.employeeId === employeeId
+      )
   );
   const loading = useAppSelector((state) => state.employees.loading);
   const urlParams = useQuery();
