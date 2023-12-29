@@ -27,7 +27,7 @@ export default function EmployeeDetail() {
     if (employeeId && !employee) {
       dispatch(clearConfigAndFetchEmployee(employeeId));
     }
-  }, [employeeId, dispatch]);
+  }, [employeeId, dispatch, employee]);
 
   return (
     <StyledEmployeeDetail>
