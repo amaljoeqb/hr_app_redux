@@ -5,27 +5,26 @@ import { useQuery } from "../../hooks";
 import { Footer, Header } from "../../layout";
 import { StyledEmployeeDetail } from "./EmployeeDetail.style";
 import { useAppSelector } from "../../store/store";
+import { useEffect } from "react";
 
 export default function EmployeeDetail() {
   const employeeId = useParams<{ employeeId: string }>().employeeId;
   const navigate = useNavigate();
 
-  const employees = useAppSelector((state) => state.employees.data);
   const skills = useAppSelector((state) => state.staticData.skills);
   const departments = useAppSelector((state) => state.staticData.departments);
-
-  let employee: Employee | undefined = undefined;
+  const employee: Employee | undefined = useAppSelector((state) =>
+    state.employees.data.find((employee) => employee.employeeId === employeeId)
+  );
+  const loading = useAppSelector((state) => state.employees.loading);
   const urlParams = useQuery();
   const isEdit = urlParams.get("edit") === "true";
 
-  if (employeeId) {
-    employee = employees.find((employee) => employee.employeeId === employeeId);
-  }
-
-  if (employee === undefined && !isEdit) {
-    navigate("/404");
-    return null;
-  }
+  useEffect(() => {
+    if (!loading && !employee) {
+      navigate("/404");
+    }
+  }, [employee, navigate, loading]);
 
   return (
     <StyledEmployeeDetail>
