@@ -17,10 +17,10 @@ const invalidLoginMsg = "Invalid Credentials";
 const useAuth = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
-  const logIn = async (email: string, password: string) => {
+  const logIn = async (userName: string, password: string) => {
     try {
       const authResponse = await loginUserCall({
-        email,
+        userName,
         password,
       });
       if (authResponse) {

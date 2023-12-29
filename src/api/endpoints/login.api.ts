@@ -3,15 +3,15 @@ import API from "../services/api";
 const loginPostUrl = "auth/sign-in";
 
 interface IloginUserCall {
-  email: string;
+  userName: string;
   password: string;
 }
 export interface ItokenResponse {
   access_token: string;
   refresh_token: string;
 }
-export const loginUserCall = async ({ email, password }: IloginUserCall) => {
-  const body = { username: email, password };
+export const loginUserCall = async ({ userName, password }: IloginUserCall) => {
+  const body = { username: userName, password };
   const response: ItokenResponse = await API.post(loginPostUrl, body);
   return response;
 };
