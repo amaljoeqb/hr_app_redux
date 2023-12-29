@@ -17,7 +17,9 @@ export interface InfiniteListProps<T, DataConfigType extends IDataConfig<T>> {
   fetchMoreData: () => Promise<void>;
 }
 
-export function useInfiniteList<T, DataConfigType extends IDataConfig<T>>(props: InfiniteListProps<T, DataConfigType>) {
+export function useInfiniteList<T, DataConfigType extends IDataConfig<T>>(
+  props: InfiniteListProps<T, DataConfigType>
+) {
   const { data, total, setConfigAndFetchData, config, fetchMoreData, loading } =
     props;
   const hasMore = data.length < total || loading;
