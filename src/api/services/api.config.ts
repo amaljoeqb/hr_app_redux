@@ -1,4 +1,4 @@
 export const apiConfig = {
-  baseURL: "https://vipinms.cloud/",
+  baseURL: process.env.REACT_APP_BASEURL,
   timeout: 120000,
 };

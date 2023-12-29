@@ -1,6 +1,6 @@
 import API from "../services/api";
 
-const loginPostUrl = "https://vipinms.cloud/auth/sign-in";
+const loginPostUrl = "auth/sign-in";
 
 interface IloginUserCall {
   email: string;
