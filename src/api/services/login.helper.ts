@@ -37,7 +37,6 @@ export const refreshFun = async () => {
       const response: ItokenResponse = await API.post(renewTokenUrl, {
         refreshToken,
       });
-      console.log(response, "response from renewed post");
       return response;
     } catch (err) {
       console.log("try again, couldnt renew refresh token");

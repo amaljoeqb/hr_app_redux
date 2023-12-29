@@ -30,7 +30,6 @@ const useAuth = () => {
         setCookie("refreshToken", refreshToken);
         dispatch(loginUser());
         const decodedAccessToken: IJwtPayload = jwtDecode(authToken);
-        console.log(decodedAccessToken.username);
         dispatch(
           showToast({
             message: `Welcome back ${decodedAccessToken.username}`,
@@ -39,7 +38,6 @@ const useAuth = () => {
         );
       }
     } catch (error: any) {
-      console.log(error.message, "error in fetching the access token");
       dispatch(
         showToast({
           message: invalidLoginMsg,
