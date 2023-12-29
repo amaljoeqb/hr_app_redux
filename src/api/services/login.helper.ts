@@ -1,9 +1,10 @@
+import useAuth from "../../pages/Login/hooks/useAuth";
+import { useAppDispatch } from "../../store/store";
 import { ItokenResponse } from "../endpoints/login.api";
 import API from "./api";
 import { jwtDecode } from "jwt-decode";
 
-const renewTokenUrl = "auth/renew-token";
-
+const renewTokenUrl = "auth/renew-tokens";
 export function getCookie(name: string) {
   const value = `; ${document.cookie}`;
   const parts: string[] = value?.split(`; ${name}=`) ?? [];
@@ -39,7 +40,9 @@ export const refreshFun = async () => {
       });
       return response;
     } catch (err) {
-      console.log("try again, couldnt renew refresh token");
+      deleteCookie("accessToken");
+      deleteCookie("refreshToken");
+      window.location.assign(`hr_app_react/login`);
       return;
     }
   } else return;
