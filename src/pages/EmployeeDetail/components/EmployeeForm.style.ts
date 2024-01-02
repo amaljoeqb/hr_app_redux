@@ -25,7 +25,7 @@ export const StyledEmployeeForm = styled.div`
     overflow: clip;
     cursor: pointer;
   }
-  form .profile-upload > label > div {
+  form .profile-upload > label .image-edit-icon {
     position: absolute;
     top: 110px;
     right: 10px;
@@ -43,7 +43,7 @@ export const StyledEmployeeForm = styled.div`
     border-radius: 50%;
   }
 
-  form .profile-upload > label > div.is-view {
+  form .profile-upload > label .image-edit-icon.is-view {
     display: none;
   }
 
