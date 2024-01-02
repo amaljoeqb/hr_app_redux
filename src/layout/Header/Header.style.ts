@@ -5,11 +5,11 @@ export const StyledHeader = styled.header`
   justify-content: space-between;
   align-items: center;
 
-  background-color: white;
-  z-index: 10;
+  background-color: var(--neutral-light);
+  z-index: 2;
   border-bottom: 1px solid var(--light-grey);
 
-  & > div {
+  .logout-button {
     margin-right: 30px;
   }
 `;

@@ -15,7 +15,7 @@ const Login: React.FC = () => {
     <StyledLogin>
       <h2>Login</h2>
       <form className="login-form" onSubmit={(e) => e.preventDefault()}>
-        <div className="login-input-group">
+        <section className="login-input-group">
           <label htmlFor="username">Username</label>
           <input
             type="text"
@@ -25,8 +25,8 @@ const Login: React.FC = () => {
             className="login-input"
             placeholder="Enter your username"
           />
-        </div>
-        <div className="login-input-group">
+        </section>
+        <section className="login-input-group">
           <label htmlFor="password">Password</label>
           <input
             type="password"
@@ -36,7 +36,7 @@ const Login: React.FC = () => {
             className="login-input"
             placeholder="Enter your password"
           />
-        </div>
+        </section>
         <button type="submit" onClick={handleLogin} className="login-button">
           Login
         </button>

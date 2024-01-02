@@ -31,7 +31,7 @@ export function deleteCookie(name: string) {
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`; //setting expiration time to epoch
 }
 
-export const refreshFun = async () => {
+export const renewRefreshToken = async () => {
   const refreshToken = getCookie("refreshToken");
   if (refreshToken) {
     try {

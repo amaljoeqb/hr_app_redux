@@ -13,7 +13,7 @@ import { showToast } from "../../../store/slices/toasts.slice";
 interface IJwtPayload extends JwtPayload {
   username?: string;
 }
-const invalidLoginMsg = "Invalid Credentials";
+const invalidLoginMessage = "Invalid Credentials";
 const useAuth = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
@@ -40,7 +40,7 @@ const useAuth = () => {
     } catch (error: any) {
       dispatch(
         showToast({
-          message: invalidLoginMsg,
+          message: invalidLoginMessage,
           type: "error",
         })
       );

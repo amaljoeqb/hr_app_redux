@@ -14,8 +14,8 @@ export function Header() {
           <span className="bold">The Q</span> Company
         </h1>
       </Link>
-      <div>
-        <HoverButton onClick={() => logOut()}>
+      <div className="logout-button">
+        <HoverButton onClick={logOut}>
           Logout <span className="material-symbols-outlined">logout</span>
         </HoverButton>
       </div>

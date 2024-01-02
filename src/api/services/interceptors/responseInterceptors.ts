@@ -1,5 +1,5 @@
 import { AxiosError, AxiosResponse } from "axios";
-import { refreshFun, setCookie } from "../login.helper";
+import { renewRefreshToken, setCookie } from "../login.helper";
 import API from "../api";
 
 enum HTTP_STATUS {
@@ -17,7 +17,7 @@ export async function onResponseError(error: AxiosError): Promise<AxiosError> {
   if (error.response?.status === HTTP_STATUS.SERVER_ERROR) {
     return Promise.reject(error.response.data);
   } else if (error.response?.status === HTTP_STATUS.UNAUTHORIZED) {
-    const refreshResponse = await refreshFun();
+    const refreshResponse = await renewRefreshToken();
     if (refreshResponse) {
       setCookie("accessToken", refreshResponse.access_token);
       setCookie("refreshToken", refreshResponse.refresh_token);
