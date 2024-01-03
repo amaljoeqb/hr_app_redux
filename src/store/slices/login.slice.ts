@@ -1,3 +1,4 @@
+import { getCookie } from "../../api/services/login.helper";
 import { Action } from "../../models";
 const LOGIN_USER = "LOGIN_USER";
 const LOGOUT_USER = "LOGOUT_USER";
@@ -10,7 +11,7 @@ interface authState {
 
 const initialState: authState = {
   user: {
-    isAuth: false,
+    isAuth: getCookie("accessToken") ? true : false,
   },
 };
 
