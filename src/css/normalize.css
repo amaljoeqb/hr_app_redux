@@ -1,5 +1,5 @@
 a {
-  color: black;
+  color: var(--neutral-dark);
   text-decoration: none;
 }
 

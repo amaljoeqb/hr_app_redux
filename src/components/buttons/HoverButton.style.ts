@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledHoverButton = styled.button`
-  background-color: white;
+  background-color: var(--neutral-light);
   border: none;
   outline: 1px solid var(--border-color);
   box-shadow: var(--light-shadow);

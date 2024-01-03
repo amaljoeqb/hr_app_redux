@@ -27,16 +27,16 @@ export const StyledLogin = styled.div`
   & .login-button {
     padding: 10px;
     font-size: 16px;
-    background-color: #fff;
-    color: #000;
-    border: 1px solid #000;
+    background-color: var(--neutral-light);
+    color: var(--neutral-dark);
+    border: 1px solid var(--neutral-dark);
     cursor: pointer;
     transition: transform 0.2s ease;
   }
   & .login-button:hover {
-    color: #fff;
-    background-color: #000;
-    border: 1px solid #fff;
+    color: var(--neutral-light);
+    background-color: var(--neutral-dark);
+    border: 1px solid var(--neutral-light);
     transform: scale(1.08);
   }
 `;

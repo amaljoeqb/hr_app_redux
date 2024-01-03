@@ -49,7 +49,7 @@ export const StyledEmployeeCard = styled.div`
   }
   .view-emp-id {
     font-size: 12px;
-    color: #808080;
+    color: var(--neutral-mid);
   }
   .view-emp-dept {
     font-size: 12px;
@@ -80,7 +80,7 @@ export const StyledEmployeeCard = styled.div`
   }
 
   .action-menu {
-    background-color: white;
+    background-color: var(--neutral-light);
     border: 1px solid var(--border-color);
     border-radius: 4px;
     display: none;
