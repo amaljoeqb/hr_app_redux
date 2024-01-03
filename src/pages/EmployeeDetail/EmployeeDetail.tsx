@@ -4,28 +4,30 @@ import { Employee } from "../../models";
 import { useQuery } from "../../hooks";
 import { Footer, Header } from "../../layout";
 import { StyledEmployeeDetail } from "./EmployeeDetail.style";
-import { useAppSelector } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { useEffect } from "react";
+import { clearConfigAndFetchEmployee } from "../../store/slices/employees.slice";
+import { Loader } from "../../components";
 
 export default function EmployeeDetail() {
   const employeeId = useParams<{ employeeId: string }>().employeeId;
   const navigate = useNavigate();
-  
-  const employees = useAppSelector((state) => state.employees.data);
+  const dispatch = useAppDispatch();
+
   const skills = useAppSelector((state) => state.staticData.skills);
   const departments = useAppSelector((state) => state.staticData.departments);
-
-  let employee: Employee | undefined = undefined;
+  const employee: Employee | undefined = useAppSelector((state) =>
+    state.employees.data.find((employee) => employee.employeeId === employeeId)
+  );
+  const loading = useAppSelector((state) => state.employees.loading);
   const urlParams = useQuery();
   const isEdit = urlParams.get("edit") === "true";
 
-  if (employeeId) {
-    employee = employees.find((employee) => employee.employeeId === employeeId);
-  }
-
-  if (employee === undefined && !isEdit) {
-    navigate("/404");
-    return null;
-  }
+  useEffect(() => {
+    if (employeeId && !employee) {
+      dispatch(clearConfigAndFetchEmployee(employeeId));
+    }
+  }, [employeeId, dispatch, employee]);
 
   return (
     <StyledEmployeeDetail>
@@ -60,19 +62,23 @@ export default function EmployeeDetail() {
               </div>
             </h2>
           </div>
-          <EmployeeForm
-            employee={employee}
-            skills={skills}
-            departments={departments}
-            isView={!isEdit}
-            className={isEdit ? "edit" : "view"}
-            onEdit={() => {
-              navigate(`/employee/${employeeId}?edit=true`);
-            }}
-            onSave={() => {
-              navigate(-1);
-            }}
-          />
+          {loading ? (
+            <Loader />
+          ) : (
+            <EmployeeForm
+              employee={employee}
+              skills={skills}
+              departments={departments}
+              isView={!isEdit}
+              className={isEdit ? "edit" : "view"}
+              onEdit={() => {
+                navigate(`/employee/${employeeId}?edit=true`);
+              }}
+              onSave={() => {
+                navigate(-1);
+              }}
+            />
+          )}
         </section>
       </div>
     </StyledEmployeeDetail>

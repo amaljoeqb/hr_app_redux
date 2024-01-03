@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Skill } from "../../../models";
 import { SkillsFilterProps } from "../components/SkillsFilter";
 
@@ -44,9 +44,7 @@ export default function useSkillsFilter({
         }).length,
         checked: selectedSkills.includes(skill.skillId),
       };
-    })
-    .filter((option) => option.count > 0)
-    .sort((a, b) => b.count - a.count);
+    });
 
   return {
     isActive,

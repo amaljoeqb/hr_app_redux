@@ -1,36 +1,39 @@
-import { useState, useEffect } from "react";
-import { FetchDataProps, FetchDataReturn } from "../models";
-import { IDataConfig } from "../store/slices/employees.slice";
+export interface IDataConfig<T> {
+  offset: number;
+  pageSize: number;
+  searchTerm: string;
+  sort: {
+    columnId: keyof T;
+    order: "asc" | "desc";
+  };
+}
 
-export interface InfiniteListProps<T> {
+export interface InfiniteListProps<T, DataConfigType extends IDataConfig<T>> {
   data: T[];
+  loading: boolean;
   total: number;
-  config: IDataConfig<T>;
-  setConfigAndFetchData: (config: IDataConfig<T>) => void;
+  config: DataConfigType;
+  setConfigAndFetchData: (config: DataConfigType) => void;
   fetchMoreData: () => Promise<void>;
 }
 
-export function useInfiniteList<T>(props: InfiniteListProps<T>) {
-  const { data, total, setConfigAndFetchData, config, fetchMoreData } = props;
-  const [loading, setLoading] = useState(false);
-  const hasMore = data.length < total;
-
-  useEffect(() => {
-    setConfigAndFetchData({ ...config, offset: 0 });
-  }, []);
+export function useInfiniteList<T, DataConfigType extends IDataConfig<T>>(
+  props: InfiniteListProps<T, DataConfigType>
+) {
+  const { data, total, setConfigAndFetchData, config, fetchMoreData, loading } =
+    props;
+  const hasMore = data.length < total || loading;
 
   async function loadMoreData() {
     if (loading || !hasMore) return;
-    setLoading(true);
     await fetchMoreData();
-    setLoading(false);
   }
 
   function setSearchTerm(searchTerm: string) {
     setConfigAndFetchData({ ...config, searchTerm, offset: 0 });
   }
 
-  function setSort(sort: IDataConfig<T>["sort"]) {
+  function setSort(sort: DataConfigType["sort"]) {
     setConfigAndFetchData({ ...config, sort, offset: 0 });
   }
 

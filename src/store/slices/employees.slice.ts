@@ -1,23 +1,19 @@
-import { Action, Employee, FetchDataProps } from "../../models";
+import { Action, Employee, FetchEmployeesProps } from "../../models";
 import * as API from "../../api";
 import { showToast } from "./toasts.slice";
 import { errorMessages, successMessages } from "../../services";
 import { AppThunk, Dispatch } from "../store";
+import { IDataConfig } from "../../hooks/";
 
-export interface IDataConfig<T> {
-  offset: number;
-  pageSize: number;
-  searchTerm: string;
-  sort: {
-    columnId: keyof T;
-    order: "asc" | "desc";
-  };
+export interface IEmployeeDataConfig extends IDataConfig<Employee> {
+  skillsIds: string[];
 }
 
 interface EmployeesState {
   data: Employee[];
   total: number;
-  config: IDataConfig<Employee>;
+  // if config is present, data should be available according to the config or loading should be true
+  config?: IEmployeeDataConfig;
   loading: boolean;
 }
 
@@ -28,19 +24,12 @@ const UPDATE_EMPLOYEE_ID = "UPDATE_EMPLOYEE_ID";
 const SET_EMPLOYEE = "SET_EMPLOYEE";
 const DELETE_EMPLOYEE = "DELETE_EMPLOYEE";
 const SET_CONFIG = "SET_CONFIG";
+const SET_LOADING = "SET_LOADING";
 
 const initialState: EmployeesState = {
   data: [],
   total: 0,
-  config: {
-    offset: 0,
-    pageSize: 10,
-    searchTerm: "",
-    sort: {
-      columnId: "employeeId",
-      order: "asc",
-    },
-  },
+  config: undefined,
   loading: false,
 };
 
@@ -120,10 +109,17 @@ const employeesReducer = (
       };
     }
     case SET_CONFIG: {
-      const config = action.payload as IDataConfig<Employee>;
+      const config = action.payload as IEmployeeDataConfig;
       return {
         ...state,
         config,
+      };
+    }
+    case "SET_LOADING": {
+      const loading = action.payload as boolean;
+      return {
+        ...state,
+        loading,
       };
     }
     default: {
@@ -157,25 +153,34 @@ export const deleteEmployee = (employeeId: string) => ({
   payload: employeeId,
 });
 
-export const setConfig = (config: IDataConfig<Employee>) => ({
+export const setConfig = (config: IEmployeeDataConfig | undefined) => ({
   type: SET_CONFIG,
   payload: config,
 });
 
+export const setLoading = (loading: boolean) => ({
+  type: SET_LOADING,
+  payload: loading,
+});
+
 export const setConfigAndFetchData = (
-  config: IDataConfig<Employee>
+  config: IEmployeeDataConfig
 ): AppThunk => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(setConfig(config));
-      const fetchDataProps: FetchDataProps<Employee> = {
+      dispatch(setLoading(true));
+      const fetchDataProps: FetchEmployeesProps = {
         offset: config.offset,
         limit: config.pageSize,
         sortBy: config.sort.columnId,
         sortDir: config.sort.order,
+        search: config.searchTerm,
+        skills: config.skillsIds ?? [],
       };
       const { data, total } = await API.getEmployees(fetchDataProps);
       dispatch(setEmployees(data, total));
+      dispatch(setLoading(false));
     } catch (error: any) {
       dispatch(
         showToast({
@@ -183,6 +188,27 @@ export const setConfigAndFetchData = (
           type: "error",
         })
       );
+      dispatch(setLoading(false));
+    }
+  };
+};
+
+export const clearConfigAndFetchEmployee = (employeeId: string): AppThunk => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch(setConfig(undefined));
+      dispatch(setLoading(true));
+      const employee = await API.getEmployee(employeeId);
+      dispatch(setEmployees([employee], 1));
+      dispatch(setLoading(false));
+    } catch (error: any) {
+      dispatch(
+        showToast({
+          message: errorMessages.getEmployeeError(employeeId),
+          type: "error",
+        })
+      );
+      dispatch(setLoading(false));
     }
   };
 };
@@ -192,14 +218,19 @@ export const fetchMoreData = (): AppThunk => {
     try {
       const { employees } = getState();
       const { config } = employees;
-      const fetchDataProps: FetchDataProps<Employee> = {
+      if (!config) return;
+      const fetchDataProps: FetchEmployeesProps = {
         offset: config.offset + employees.data.length,
         limit: config.pageSize,
         sortBy: config.sort.columnId,
         sortDir: config.sort.order,
+        search: config.searchTerm,
+        skills: config.skillsIds ?? [],
       };
+      dispatch(setLoading(true));
       const { data } = await API.getEmployees(fetchDataProps);
       dispatch(addEmployees(data));
+      dispatch(setLoading(false));
     } catch (error: any) {
       dispatch(
         showToast({
@@ -207,22 +238,7 @@ export const fetchMoreData = (): AppThunk => {
           type: "error",
         })
       );
-    }
-  };
-};
-
-export const fetchEmployee = (employeeId: string): AppThunk => {
-  return async (dispatch: Dispatch) => {
-    try {
-      const employee = await API.getEmployee(employeeId);
-      dispatch(setEmployee(employee));
-    } catch (error: any) {
-      dispatch(
-        showToast({
-          message: errorMessages.getEmployeeError(employeeId),
-          type: "error",
-        })
-      );
+      dispatch(setLoading(false));
     }
   };
 };
@@ -286,11 +302,14 @@ export const deleteEmployeeAndFetchMore =
     try {
       dispatch(deleteEmployee(employeeId));
       const { config } = employees;
-      const fetchDataProps: FetchDataProps<Employee> = {
+      if (!config) return;
+      const fetchDataProps: FetchEmployeesProps = {
         offset: config.offset + employees.data.length,
         limit: 1,
         sortBy: config.sort.columnId,
         sortDir: config.sort.order,
+        search: config.searchTerm,
+        skills: config.skillsIds ?? [],
       };
       const { data } = await API.getEmployees(fetchDataProps);
       dispatch(addEmployees(data));

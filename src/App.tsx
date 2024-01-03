@@ -11,7 +11,7 @@ import { Loader } from "./components";
 import { useAppDispatch, useAppSelector } from "./store/store";
 import { removeToast } from "./store/slices/toasts.slice";
 
-const basename = "/hr_app_react";
+const basename = "/";
 
 const router = createBrowserRouter(routes, {
   basename,
