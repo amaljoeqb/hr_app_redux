@@ -107,7 +107,7 @@ export const StyledEmployeeForm = styled.div`
     border: none;
     padding: 10px 0;
     font-size: 16px;
-    color: black;
+    color: var(--neutral-dark);
     display: inline-block;
     pointer-events: none;
     box-shadow: none;
@@ -144,7 +144,7 @@ export const StyledEmployeeForm = styled.div`
     top: 100%;
     width: 100%;
     margin-top: 6px;
-    background-color: white;
+    background-color: var(--neutral-light);
     box-shadow: 0px 8px 16px 0px #00000040;
     z-index: 1;
     max-height: 240px;
@@ -201,7 +201,7 @@ export const StyledEmployeeForm = styled.div`
   &.view textarea,
   &.view .skills-input-container {
     border-color: transparent;
-    background-color: white;
+    background-color: var(--neutral-light);
     transform: translateX(-13px);
     box-shadow: var(--no-shadow);
   }

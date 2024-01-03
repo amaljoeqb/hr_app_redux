@@ -8,7 +8,7 @@
   position: absolute;
   display: none;
   flex-direction: column;
-  background-color: white;
+  background-color: var(--neutral-light);
   padding: 0;
   width: 200px;
   box-shadow: var(--shadow);
@@ -28,7 +28,7 @@
   row-gap: 16px;
   border-radius: 8px;
   padding: 16px;
-  background-color: white;
+  background-color: var(--neutral-light);
   box-shadow: var(--shadow);
   display: flex;
   align-items: center;
@@ -107,7 +107,7 @@ input.filter-search:focus {
   row-gap: 12px;
   font-size: 14px;
   cursor: pointer;
-  background-color: white;
+  background-color: var(--neutral-light);
   border: none;
   margin: 4px;
   border-radius: 4px;

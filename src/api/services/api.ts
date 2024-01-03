@@ -1,32 +1,30 @@
-import axios, { AxiosInstance } from "axios";
+import axios, {
+  AxiosInstance,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
 import { apiConfig } from "../";
+import { onRequest, onRequestError } from "./interceptors/requestInterceptors";
+import {
+  onResponse,
+  onResponseError,
+} from "./interceptors/responseInterceptors";
 
 const API: AxiosInstance = axios.create(apiConfig);
 
-// reject promise if status code not 200
-API.interceptors.response.use(
-  (response) => {
-    if (response.status > 299) {
-      return Promise.reject(response);
-    }
-    return response.data;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
 API.interceptors.request.use(
-  (config) => {
-    const token = process.env.REACT_APP_API_TOKEN;
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
+  onRequest as unknown as (
+    value: InternalAxiosRequestConfig<any>
+  ) =>
+    | InternalAxiosRequestConfig<any>
+    | Promise<InternalAxiosRequestConfig<any>>,
+  onRequestError
+);
+API.interceptors.response.use(
+  onResponse as unknown as (
+    value: AxiosResponse<any, any>
+  ) => AxiosResponse<any, any> | Promise<AxiosResponse<any, any>>,
+  onResponseError
 );
 
 export default API;

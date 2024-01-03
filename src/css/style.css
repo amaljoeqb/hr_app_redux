@@ -22,6 +22,9 @@
   --modified-color: #BF360C;
   --modified-bg-color: #FFF3E0;
   --added-color: #388E3C;
+  --neutral-light: #fff;
+  --neutral-dark: #000;
+  --neutral-mid: #808080;
 }
 
 html {
