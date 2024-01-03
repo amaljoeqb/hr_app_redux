@@ -4,8 +4,9 @@ import { Formik, Form, FormikProps } from "formik";
 import { HoverButton, SelectInput, SubmitButton } from "../../../components";
 import { employeeSchema } from "../../../config";
 import useEmployeeForm from "../hooks/useEmployeeForm";
-import { useEffect, useRef } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { StyledEmployeeForm } from "./EmployeeForm.style";
+import defaultAddEmpImg from "../../../assets/img/profile_img_logo.svg";
 
 export interface EmployeeFormProps {
   employee: Employee | undefined;
@@ -26,9 +27,27 @@ export default function EmployeeForm(props: EmployeeFormProps) {
     isInitialValid,
     onClickEdit,
     isCreate,
+    setUploadImg,
   } = useEmployeeForm(props);
+  const initialProfilePic = initialValues.profilePic
+    ? initialValues.profilePic
+    : "";
+  const [profileImg, setprofileImg] = useState(
+    initialProfilePic !== "" ? initialProfilePic : defaultAddEmpImg
+  );
 
   const formik = useRef<FormikProps<Employee>>(null);
+
+  const hangeImageChange = useCallback((e: ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    if (target.files) {
+      setprofileImg(URL.createObjectURL(target.files[0]));
+      setUploadImg(target.files[0]);
+    } else {
+      setprofileImg(profileImg);
+      setUploadImg(initialProfilePic);
+    }
+  }, []);
 
   useEffect(() => {
     if (formik.current) {
@@ -46,6 +65,26 @@ export default function EmployeeForm(props: EmployeeFormProps) {
         innerRef={formik}
       >
         <Form id="emp-form" noValidate>
+          <section
+            className={"profile-upload " + (props.isView ? "is-view" : "")}
+          >
+            <label htmlFor="imageUpload" tabIndex={0}>
+              <img src={profileImg} alt="employee profile" />
+              <div
+                className={"image-edit-icon" + (props.isView ? "is-view" : "")}
+              >
+                <span className="material-symbols-outlined"> edit </span>
+              </div>
+              <input
+                id="imageUpload"
+                style={{ display: "none" }}
+                type="file"
+                name="employee profile"
+                onChange={hangeImageChange}
+                accept="image/*"
+              />
+            </label>
+          </section>
           <div className="row">
             <TextInput
               label="Employee ID"

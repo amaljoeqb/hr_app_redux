@@ -1,7 +1,8 @@
 import { EmployeeFormProps } from "../components/EmployeeForm";
 import { isEmployeeEqual } from "../../../services/";
 import { Employee } from "../../../models";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { firebaseUploadImage } from "../../../services/";
 import { useAppDispatch } from "../../../store/store";
 import {
   createEmployee,
@@ -29,10 +30,11 @@ export default function useEmployeeForm({
       skills: [],
       dateOfBirth: "",
       joiningDate: "",
+      profilePic: "",
     };
     return employee || newEmployee;
   }, [employee]);
-
+  const [uploadImg, setUploadImg] = useState<string | File>("");
   const isCreate = !employee;
 
   const departmentOptions = departments.map((department) => ({
@@ -45,10 +47,13 @@ export default function useEmployeeForm({
     label: skill.skill,
   }));
 
-  function onSubmit(values: Employee) {
+  async function onSubmit(values: Employee) {
+    const imgUrl = await firebaseUploadImage(uploadImg);
+    const hardValue = structuredClone(values);
+    hardValue.profilePic = imgUrl;
     if (employee) {
-      if (!isEmployeeEqual(employee, values)) {
-        dispatch(updateEmployee(values));
+      if (!isEmployeeEqual(employee, hardValue)) {
+        dispatch(updateEmployee(hardValue));
       }
     } else {
       dispatch(createEmployee(values));
@@ -68,5 +73,7 @@ export default function useEmployeeForm({
     skillsOptions,
     isInitialValid,
     isCreate,
+    setUploadImg,
+    uploadImg,
   };
 }

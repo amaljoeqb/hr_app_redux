@@ -8,6 +8,58 @@ export const StyledEmployeeForm = styled.div`
     row-gap: 16px;
     max-width: 600px;
   }
+
+  form .profile-upload {
+    align-self: center;
+    margin-bottom: 50px;
+    position: relative;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+  }
+  form .profile-upload > label {
+    display: block;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: clip;
+    cursor: pointer;
+  }
+  form .profile-upload > label .image-edit-icon {
+    position: absolute;
+    top: 110px;
+    right: 10px;
+    width: 45px;
+    height: 45px;
+    background-color: rgb(0, 0, 0);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+    border-radius: 50%;
+  }
+
+  form .profile-upload > label .image-edit-icon.is-view {
+    display: none;
+  }
+
+  form .profile-upload:hover {
+    transform: scale(1.05);
+  }
+  form .profile-upload.is-view {
+    pointer-events: none;
+  }
+  form .profile-upload > label > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   form .field {
     display: flex;
     flex-direction: column;

@@ -3,6 +3,7 @@ import { ClickAwayListener } from "../../../components";
 import { Dropdown } from "../../../components/ui/Dropdown/Dropdown";
 
 export interface EmployeeActionMenuProps {
+  onClick?: (e: MouseEvent) => void;
   onDelete: () => void;
   onEdit: () => void;
 }
@@ -17,10 +18,10 @@ export default function EmployeeActionMenu(props: EmployeeActionMenuProps) {
       }}
     >
       <div
-        className={`action-container ${isActive ? "active" : ""}`}
         onClick={(e) => {
-          e.stopPropagation();
+          e.stopPropagation(); // this prevents the onclick function of the employee card and prevents showing employee details page when clicking on the button and on the select option div
         }}
+        className={`action-container ${isActive ? "active" : ""}`}
       >
         <button
           className="action-btn"
