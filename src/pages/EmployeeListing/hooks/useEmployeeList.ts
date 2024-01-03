@@ -1,49 +1,52 @@
-import { useState, useCallback, useEffect, useRef } from "react";
-import { columnIds } from "../../../config";
-import { useApi, useInfiniteList } from "../../../hooks";
-import { Employee, FetchDataProps } from "../../../models";
+import { useEffect, useRef, useMemo } from "react";
+import { useInfiniteList } from "../../../hooks";
+import { Employee } from "../../../models";
+import { useAppDispatch, useAppSelector } from "../../../store/store";
 import {
-  filterEmployees,
-  searchEmployees,
-} from "../../../services/employee.helpers";
-import { useAppContext } from "../../../store/app.context";
+  IEmployeeDataConfig,
+  fetchMoreData,
+  setConfigAndFetchData,
+} from "../../../store/slices/employees.slice";
 
 export function useEmployeeList() {
-  const appContext = useAppContext();
-  const { getEmployees } = useApi();
-  const { skills, prevEmployees } = appContext.state;
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const dispatch = useAppDispatch();
+  const employees = useAppSelector((state) => state.employees);
+  const skills = useAppSelector((state) => state.staticData.skills);
+  const prevEmployees = useAppSelector((state) => state.prevEmployees);
   const loadingIconRef = useRef(null);
-
-  const searchFunction = useCallback((data: Employee[], searchTerm: string) => {
-    return searchEmployees(data, searchTerm, [
-      "employeeId",
-      "name",
-      "department",
-    ]);
-  }, []);
-
-  const filterFunction = useCallback(
-    (data: Employee[]) => filterEmployees(data, selectedSkills),
-    [selectedSkills]
+  const defaultConfig = useMemo<IEmployeeDataConfig>(
+    () => ({
+      offset: 0,
+      pageSize: 10,
+      searchTerm: "",
+      sort: {
+        columnId: "employeeId",
+        order: "asc",
+      },
+      skillsIds: [],
+    }),
+    []
   );
 
-  const fetchData = useCallback(async (props: FetchDataProps<Employee>) => {
-    const response = await getEmployees(props);
-    return (
-      response || {
-        data: [],
-        total: 0,
-      }
-    );
-  }, []);
-
-  const { loadMoreData, ...employeeList } = useInfiniteList<Employee>({
-    searchFunction,
-    filterFunction,
-    id: "employeeId",
-    fetchData,
+  const { loadMoreData, ...employeeList } = useInfiniteList<
+    Employee,
+    IEmployeeDataConfig
+  >({
+    data: employees.data,
+    total: employees.total,
+    config: employees.config ?? defaultConfig,
+    loading: employees.loading,
+    setConfigAndFetchData: (config) => dispatch(setConfigAndFetchData(config)),
+    fetchMoreData: async () => {
+      dispatch(fetchMoreData());
+    },
   });
+
+  useEffect(() => {
+    if (!employees.config) {
+      dispatch(setConfigAndFetchData(defaultConfig));
+    }
+  }, [dispatch, employees.config, defaultConfig]);
 
   useEffect(() => {
     const { current } = loadingIconRef;
@@ -74,9 +77,20 @@ export function useEmployeeList() {
     };
   }, [loadMoreData]);
 
+  const setSelectedSkills = (skillsIds: string[]) => {
+    if (!employees.config) return;
+    dispatch(
+      setConfigAndFetchData({
+        ...employees.config,
+        skillsIds,
+        offset: 0,
+      })
+    );
+  };
+
   return {
     ...employeeList,
-    selectedSkills,
+    selectedSkills: employees.config?.skillsIds ?? defaultConfig.skillsIds,
     setSelectedSkills,
     skills,
     prevEmployees,

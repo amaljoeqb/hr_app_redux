@@ -1,4 +1,10 @@
-import { Employee, Skill, Department, FetchDataProps } from "../../models";
+import {
+  Employee,
+  Skill,
+  Department,
+  FetchEmployeesProps,
+  FetchEmployeesGlobalProps,
+} from "../../models";
 import {
   EmployeeGlobal,
   SkillGlobal,
@@ -115,8 +121,8 @@ export function getDepartmentFromDepartmentGlobal(
 }
 
 export function getEmployeeGlobalFetchParams(
-  props: FetchDataProps<Employee>
-): FetchDataProps<EmployeeGlobal> {
+  props: FetchEmployeesProps
+): FetchEmployeesGlobalProps {
   let sortKey: keyof EmployeeGlobal = "id";
   switch (props.sortBy) {
     case "name":
@@ -135,11 +141,13 @@ export function getEmployeeGlobalFetchParams(
     default:
       sortKey = props.sortBy;
   }
-  const params: FetchDataProps<EmployeeGlobal> = {
+  const params: FetchEmployeesGlobalProps = {
     limit: props.limit,
     offset: props.offset,
     sortDir: props.sortDir,
     sortBy: sortKey,
+    search: props.search,
+    skillIds: props.skills.join(","),
   };
   return params;
 }
