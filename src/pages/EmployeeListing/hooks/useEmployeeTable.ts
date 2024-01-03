@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useTable } from "../../../hooks";
 import { Employee } from "../../../models";
 import { columnIds } from "../../../config";
@@ -8,7 +8,7 @@ import {
   searchEmployees,
 } from "../../../services/employee.helpers";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
-import { setAndDeletePrevEmployee, setPrevEmployee } from "../../../store/slices/prevEmployees.slice";
+import { setPrevEmployee } from "../../../store/slices/prevEmployees.slice";
 
 export default function useEmployeeTable() {
   const dispatch = useAppDispatch();
