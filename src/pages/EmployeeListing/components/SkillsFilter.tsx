@@ -93,7 +93,6 @@ export default function SkillsFilter({
                     readOnly={true}
                   />
                   <p className="name">{option.skill}</p>
-                  <p className="count">{option.count}</p>
                 </li>
               );
             })}

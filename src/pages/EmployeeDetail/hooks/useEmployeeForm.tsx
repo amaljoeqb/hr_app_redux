@@ -1,10 +1,13 @@
 import { EmployeeFormProps } from "../components/EmployeeForm";
-import { useAppContext } from "../../../store/app.context";
-import { getNextEmployeeId, isEmployeeEqual } from "../../../services/";
+import { isEmployeeEqual } from "../../../services/";
 import { Employee } from "../../../models";
-import { useApi } from "../../../hooks";
 import { useMemo, useState } from "react";
 import { firebaseUploadImage } from "../../../services/";
+import { useAppDispatch } from "../../../store/store";
+import {
+  createEmployee,
+  updateEmployee,
+} from "../../../store/slices/employees.slice";
 
 export default function useEmployeeForm({
   employee,
@@ -14,12 +17,11 @@ export default function useEmployeeForm({
   onEdit,
   onSave,
 }: EmployeeFormProps) {
-  const api = useApi();
-  const appContext = useAppContext();
+  const dispatch = useAppDispatch();
   const isInitialValid = employee !== undefined;
   const initialValues = useMemo(() => {
     const newEmployee: Employee = {
-      employeeId: getNextEmployeeId(appContext.state.employees),
+      employeeId: "",
       name: "",
       email: "",
       designation: "",
@@ -31,7 +33,7 @@ export default function useEmployeeForm({
       profilePic: "",
     };
     return employee || newEmployee;
-  }, [employee, appContext.state.employees]);
+  }, [employee]);
   const [uploadImg, setUploadImg] = useState<string | File>("");
   const isCreate = !employee;
 
@@ -51,10 +53,10 @@ export default function useEmployeeForm({
     hardValue.profilePic = imgUrl;
     if (employee) {
       if (!isEmployeeEqual(employee, hardValue)) {
-        api.updateEmployee(hardValue);
+        dispatch(updateEmployee(hardValue));
       }
     } else {
-      api.createEmployee(values);
+      dispatch(createEmployee(values));
     }
     onSave();
   }

@@ -1,13 +1,24 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useTable } from "../../../hooks";
 import { Employee } from "../../../models";
-import { useAppContext } from "../../../store/app.context";
 import { columnIds } from "../../../config";
-import { sortEmployees, filterEmployees, searchEmployees } from "../../../services/employee.helpers";
+import {
+  sortEmployees,
+  filterEmployees,
+  searchEmployees,
+} from "../../../services/employee.helpers";
+import { useAppDispatch, useAppSelector } from "../../../store/store";
+import { setPrevEmployee } from "../../../store/slices/prevEmployees.slice";
 
 export default function useEmployeeTable() {
-  const appContext = useAppContext();
-  const { employees, skills, prevEmployees } = appContext.state;
+  const dispatch = useAppDispatch();
+  const { employees, skills, prevEmployees } = useAppSelector((state) => {
+    return {
+      employees: state.employees.data,
+      skills: state.staticData.skills,
+      prevEmployees: state.prevEmployees,
+    };
+  });
   const [columns, setColumns] = useState(columnIds.large);
 
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
@@ -39,10 +50,7 @@ export default function useEmployeeTable() {
     let prevEmployee = prevEmployees.get(id);
     if (prevEmployee) {
       delete prevEmployee[field];
-      appContext.dispatch({
-        type: "SET_PREV_EMPLOYEE",
-        payload: { id, employee: prevEmployee },
-      });
+      dispatch(setPrevEmployee(id, prevEmployee));
     }
   }
 

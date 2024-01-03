@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { IToast, ToastType } from "../models";
 
 export interface IShowToast {

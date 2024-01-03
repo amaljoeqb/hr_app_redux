@@ -1,25 +1,17 @@
 import { HoverButton, Popup } from "../../../components";
-import { useApi } from "../../../hooks";
-import { useAppContext } from "../../../store/app.context";
+import { Employee } from "../../../models";
 
 export interface EmployeeDeletePopupProps {
-  employeeId: string;
+  employee: Employee;
   onClose: () => void;
 }
 
 export default function EmployeeDeletePopup({
-  employeeId,
+  employee,
   onClose,
 }: EmployeeDeletePopupProps) {
-  const api = useApi();
-  const appContext = useAppContext();
-
-  const employee = appContext.state.employees.find(
-    (employee) => employee.employeeId === employeeId
-  );
 
   function onDelete() {
-    api.deleteEmployee(employeeId);
     onClose();
   }
 
