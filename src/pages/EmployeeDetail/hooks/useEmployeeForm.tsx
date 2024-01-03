@@ -48,7 +48,9 @@ export default function useEmployeeForm({
   }));
 
   async function onSubmit(values: Employee) {
-    const imgUrl = await firebaseUploadImage(uploadImg);
+    const imgUrl = !uploadImg
+      ? initialValues.profilePic
+      : await firebaseUploadImage(uploadImg);
     const hardValue = structuredClone(values);
     hardValue.profilePic = imgUrl;
     if (employee) {
