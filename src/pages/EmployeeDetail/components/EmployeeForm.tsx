@@ -38,16 +38,19 @@ export default function EmployeeForm(props: EmployeeFormProps) {
 
   const formik = useRef<FormikProps<Employee>>(null);
 
-  const hangeImageChange = useCallback((e: ChangeEvent) => {
-    const target = e.target as HTMLInputElement;
-    if (target.files) {
-      setprofileImg(URL.createObjectURL(target.files[0]));
-      setUploadImg(target.files[0]);
-    } else {
-      setprofileImg(profileImg);
-      setUploadImg(initialProfilePic);
-    }
-  }, []);
+  const hangeImageChange = useCallback(
+    (e: ChangeEvent) => {
+      const target = e.target as HTMLInputElement;
+      if (target.files) {
+        setprofileImg(URL.createObjectURL(target.files[0]));
+        setUploadImg(target.files[0]);
+      } else {
+        setprofileImg(profileImg);
+        setUploadImg(initialProfilePic);
+      }
+    },
+    [initialProfilePic, profileImg, setUploadImg]
+  );
 
   useEffect(() => {
     if (formik.current) {
