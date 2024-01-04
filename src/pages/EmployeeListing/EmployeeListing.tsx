@@ -34,6 +34,7 @@ export function EmployeeListing() {
               onChange={(text) => {
                 setSearchTerm(text);
               }}
+              value={searchTerm}
             />
           </div>
           <div className="next-section">
