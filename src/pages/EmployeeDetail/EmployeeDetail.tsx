@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import EmployeeForm from "./components/EmployeeForm";
 import { Employee } from "../../models";
 import { useQuery } from "../../hooks";
-import { Footer, Header } from "../../layout";
 import { StyledEmployeeDetail } from "./EmployeeDetail.style";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { useEffect } from "react";

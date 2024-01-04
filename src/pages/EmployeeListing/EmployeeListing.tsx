@@ -3,13 +3,10 @@ import SearchInput from "./components/SearchInput";
 import { useNavigate } from "react-router-dom";
 import SkillsFilter from "./components/SkillsFilter";
 import EmployeeDeletePopup from "./components/EmployeeDeletePopup";
-import { Footer, Header } from "../../layout";
 import { StyledEmployeeListing } from "./EmployeeListing.style";
 import { EmployeeCardsList } from "./components/EmployeeCardsList/EmployeeCardsList";
 import { useEmployeeList } from "./hooks/useEmployeeList";
 import { useAppSelector } from "../../store/store";
-import useAuth from "../Login/hooks/useAuth";
-import { useCookies } from "react-cookie";
 
 export function EmployeeListing() {
   const navigate = useNavigate();

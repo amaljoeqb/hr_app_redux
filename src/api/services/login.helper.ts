@@ -1,5 +1,3 @@
-import useAuth from "../../pages/Login/hooks/useAuth";
-import { useAppDispatch } from "../../store/store";
 import { ItokenResponse } from "../endpoints/login.api";
 import API from "./api";
 import { jwtDecode } from "jwt-decode";
