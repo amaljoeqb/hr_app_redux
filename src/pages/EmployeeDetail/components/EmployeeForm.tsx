@@ -68,14 +68,10 @@ export default function EmployeeForm(props: EmployeeFormProps) {
         innerRef={formik}
       >
         <Form id="emp-form" noValidate>
-          <section
-            className={"profile-upload " + (props.isView ? "is-view" : "")}
-          >
+          <section className={"profile-upload"}>
             <label htmlFor="imageUpload" tabIndex={0}>
               <img src={profileImg} alt="employee profile" />
-              <div
-                className={"image-edit-icon" + (props.isView ? "is-view" : "")}
-              >
+              <div className={"image-edit-icon"}>
                 <span className="material-symbols-outlined"> edit </span>
               </div>
               <input

@@ -38,21 +38,15 @@ export const StyledEmployeeForm = styled.div`
     align-items: center;
     color: white;
     font-size: 24px;
-    transition: opacity 0.3s ease;
+    transition: transform 0.3s ease-in-out;
     z-index: 1;
     border-radius: 50%;
-  }
-
-  form .profile-upload > label .image-edit-icon.is-view {
-    display: none;
   }
 
   form .profile-upload:hover {
     transform: scale(1.05);
   }
-  form .profile-upload.is-view {
-    pointer-events: none;
-  }
+
   form .profile-upload > label > img {
     display: block;
     width: 100%;
@@ -244,6 +238,14 @@ export const StyledEmployeeForm = styled.div`
   &.view .submit {
     opacity: 0;
     pointer-events: none;
+  }
+
+  &.view .profile-upload {
+    pointer-events: none;
+  }
+
+  &.view .profile-upload > label .image-edit-icon {
+    transform: scale(0);
   }
 
   input,
