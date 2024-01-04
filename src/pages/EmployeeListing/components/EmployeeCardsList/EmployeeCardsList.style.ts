@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const StyledEmployeeCardsList = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 5rem;
+  grid-gap: 24px;
+  margin-top: 24px;
 
   @media (min-width: 600px) {
     grid-template-columns: repeat(2, 1fr);

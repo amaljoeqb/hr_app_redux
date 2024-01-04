@@ -1,13 +1,17 @@
 import styled from "styled-components";
 
 export const StyledHeader = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
   background-color: var(--neutral-light);
   z-index: 2;
   border-bottom: 1px solid var(--light-grey);
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1500px;
+    margin: 0 auto;
+  }
 
   .logo {
     display: flex;
