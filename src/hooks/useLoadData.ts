@@ -4,19 +4,23 @@ import {
   fetchDepartments,
   fetchSkills,
 } from "../store/slices/staticData.slice";
+import useAuth from "../pages/Login/hooks/useAuth";
 
 export default function useLoadData() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
+  const { user } = useAuth();
 
   useEffect(() => {
-    const skills = dispatch(fetchSkills());
-    const departments = dispatch(fetchDepartments());
-    Promise.all([skills, departments]).then(() => {
-      setLoading(false);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (user.isAuth) {
+      setLoading(true);
+      const skills = dispatch(fetchSkills());
+      const departments = dispatch(fetchDepartments());
+      Promise.all([skills, departments]).then(() => {
+        setLoading(false);
+      });
+    }
+  }, [dispatch, user.isAuth]);
 
   return loading;
 }
