@@ -85,6 +85,7 @@ const employeesReducer = (
     case SET_EMPLOYEE: {
       const employee = action.payload as Employee;
       let found = false;
+      let total = state.total;
       const data = state.data.map((e) => {
         if (e.employeeId === employee.employeeId) {
           found = true;
@@ -94,18 +95,25 @@ const employeesReducer = (
       });
       if (!found) {
         data.push(employee);
+        total += 1;
       }
       return {
         ...state,
         data,
+        total,
       };
     }
     case DELETE_EMPLOYEE: {
       const employeeId = action.payload as string;
+      let total = state.total;
       const data = state.data.filter((e) => e.employeeId !== employeeId);
+      if (state.data.length !== data.length) {
+        total -= 1;
+      }
       return {
         ...state,
         data,
+        total,
       };
     }
     case SET_CONFIG: {
@@ -217,8 +225,9 @@ export const fetchMoreData = (): AppThunk => {
   return async (dispatch: Dispatch, getState) => {
     try {
       const { employees } = getState();
-      const { config } = employees;
+      const { config, total } = employees;
       if (!config) return;
+      if (total === employees.data.length) return;
       const fetchDataProps: FetchEmployeesProps = {
         offset: config.offset + employees.data.length,
         limit: config.pageSize,
@@ -299,20 +308,23 @@ export const deleteEmployeeAndFetchMore =
     const currentEmployee = employees.data.find(
       (e: Employee) => e.employeeId === employeeId
     );
+    if (!currentEmployee) return;
     try {
       dispatch(deleteEmployee(employeeId));
-      const { config } = employees;
-      if (!config) return;
-      const fetchDataProps: FetchEmployeesProps = {
-        offset: config.offset + employees.data.length,
-        limit: 1,
-        sortBy: config.sort.columnId,
-        sortDir: config.sort.order,
-        search: config.searchTerm,
-        skills: config.skillsIds ?? [],
-      };
-      const { data } = await API.getEmployees(fetchDataProps);
-      dispatch(addEmployees(data));
+      await API.deleteEmployee(employeeId);
+      const { config, total } = employees;
+      if (config && employees.data.length < total) {
+        const fetchDataProps: FetchEmployeesProps = {
+          offset: config.offset + employees.data.length,
+          limit: 1,
+          sortBy: config.sort.columnId,
+          sortDir: config.sort.order,
+          search: config.searchTerm,
+          skills: config.skillsIds ?? [],
+        };
+        const { data } = await API.getEmployees(fetchDataProps);
+        dispatch(addEmployees(data));
+      }
       dispatch(
         showToast({
           message: successMessages.deleteEmployeeSuccess(
@@ -330,6 +342,7 @@ export const deleteEmployeeAndFetchMore =
           type: "error",
         })
       );
+      dispatch(setEmployee(currentEmployee));
     }
   };
 

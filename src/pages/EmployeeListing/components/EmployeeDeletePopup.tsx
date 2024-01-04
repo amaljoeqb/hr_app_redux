@@ -1,5 +1,7 @@
 import { HoverButton, Popup } from "../../../components";
 import { Employee } from "../../../models";
+import { deleteEmployeeAndFetchMore } from "../../../store/slices/employees.slice";
+import { useAppDispatch } from "../../../store/store";
 
 export interface EmployeeDeletePopupProps {
   employee: Employee;
@@ -10,8 +12,10 @@ export default function EmployeeDeletePopup({
   employee,
   onClose,
 }: EmployeeDeletePopupProps) {
+  const dispatch = useAppDispatch();
 
   function onDelete() {
+    dispatch(deleteEmployeeAndFetchMore(employee.employeeId));
     onClose();
   }
 
