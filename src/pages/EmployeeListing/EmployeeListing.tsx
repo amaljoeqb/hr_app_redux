@@ -6,7 +6,8 @@ import EmployeeDeletePopup from "./components/EmployeeDeletePopup";
 import { StyledEmployeeListing } from "./EmployeeListing.style";
 import { EmployeeCardsList } from "./components/EmployeeCardsList/EmployeeCardsList";
 import { useEmployeeList } from "./hooks/useEmployeeList";
-import { useAppSelector } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { closeDeleteEmployeeDialog } from "../../store/slices/ui.slice";
 
 export function EmployeeListing() {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ export function EmployeeListing() {
   const deleteEmployeeDialog = useAppSelector(
     (state) => state.ui?.deleteEmployeeDialog
   );
+  const dispatch = useAppDispatch();
   return (
     <StyledEmployeeListing>
       <main className="card">
@@ -78,7 +80,7 @@ export function EmployeeListing() {
         <EmployeeDeletePopup
           employee={deleteEmployeeDialog.employee}
           onClose={() => {
-            navigate(-1);
+            dispatch(closeDeleteEmployeeDialog());
           }}
         />
       )}

@@ -3,9 +3,12 @@ import { Employee } from "../../../../models";
 import defaultprofileImg from "../../../../assets/img/profile.png";
 import EmployeeActionMenu from "../EmployeeActionMenu";
 import { useNavigate } from "react-router-dom";
+import { openDeleteEmployeeDialog } from "../../../../store/slices/ui.slice";
+import { useAppDispatch } from "../../../../store/store";
 
 export function EmployeeCard({ employee }: { employee: Employee }) {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   return (
     <StyledEmployeeCard
       onClick={() => {
@@ -16,7 +19,7 @@ export function EmployeeCard({ employee }: { employee: Employee }) {
       <div className="edit-del-button">
         <EmployeeActionMenu
           onDelete={() => {
-            navigate(`/?delete=${employee.employeeId}`);
+            dispatch(openDeleteEmployeeDialog(employee));
           }}
           onEdit={() => {
             navigate(`/employee/${employee.employeeId}?edit=true`);

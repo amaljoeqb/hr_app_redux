@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import EmployeeActionMenu from "./EmployeeActionMenu";
 import SkillsCell from "./SkillsCell";
 import { ColumnKey } from "../../../components/ui/Table/Table";
+import { useAppDispatch } from "../../../store/store";
+import { openDeleteEmployeeDialog } from "../../../store/slices/ui.slice";
 
 export interface EmployeeRowProps {
   employee: Employee;
@@ -22,6 +24,7 @@ export default function EmployeeRow({
 }: EmployeeRowProps) {
   const navigate = useNavigate();
   const modifiedFields = new Set(Object.keys(prevEmployee ?? {}));
+  const dispatch = useAppDispatch();
 
   return (
     <tr key={employee.employeeId} className="emp-row">
@@ -100,7 +103,7 @@ export default function EmployeeRow({
         <td className="overflow">
           <EmployeeActionMenu
             onDelete={() => {
-              navigate(`/?delete=${employee.employeeId}`);
+              dispatch(openDeleteEmployeeDialog(employee));
             }}
             onEdit={() => {
               navigate(`/employee/${employee.employeeId}?edit=true`);
