@@ -27,8 +27,12 @@ export function EmployeeCard({ employee }: { employee: Employee }) {
         />
       </div>
       <img
-        src={employee.profilePic ?? defaultprofileImg}
-        alt="employee profile"
+        src={
+          employee.profilePic && employee.profilePic !== ""
+            ? employee.profilePic
+            : defaultprofileImg
+        }
+        alt=""
       />
       <div>
         <p className="view-emp-id">#{employee.employeeId}</p>
