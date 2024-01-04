@@ -142,23 +142,6 @@ main {
 
 
 
-.logo {
-  display: flex;
-  align-items: center;
-  color: var(--primary-color);
-  padding: 16px 32px;
-  column-gap: 16px;
-}
-
-.logo img {
-  width: 40px;
-  color: var(--primary-color);
-}
-
-.logo h1 {
-  font-weight: 500;
-  margin: 0;
-}
 
 .bold {
   font-weight: 700;
@@ -243,11 +226,6 @@ span.close-toast {
 
   main {
     margin: 16px;
-  }
-
-  h1 {
-    margin: 12px 0;
-    font-size: 26px;
   }
 
   .card {

@@ -16,7 +16,8 @@ export function Header() {
       </Link>
       <div className="logout-button">
         <HoverButton onClick={logOut}>
-          Logout <span className="material-symbols-outlined">logout</span>
+          <span className="text">Logout </span>
+          <span className="material-symbols-outlined">logout</span>
         </HoverButton>
       </div>
     </StyledHeader>
