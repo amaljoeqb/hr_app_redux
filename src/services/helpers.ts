@@ -194,3 +194,32 @@ export const firebaseUploadImage = async (file: any): Promise<string> => {
     return Promise.reject("Error in uploading");
   }
 };
+
+/**
+ * Hashes a string and maps it to a number within a specified range.
+ * @param str - The string to be hashed.
+ * @param max - The maximum value of the mapped number.
+ * @returns The mapped number within the range [0, max].
+ */
+export function hashStringToNumber(str: string, max: number): number {
+  function simpleHash(str: string): number {
+    let hash = 0;
+
+    for (let i = 0; i < str.length; i++) {
+      const charCode = str.charCodeAt(i);
+      hash = (hash << 5) - hash + charCode;
+    }
+
+    return hash;
+  }
+
+  const hash = simpleHash(str);
+
+  // Ensure the hash is non-negative
+  const positiveHash = hash >= 0 ? hash : -hash;
+
+  // Map the positive hash to the range [0, max]
+  const mappedValue = positiveHash % (max + 1);
+
+  return mappedValue;
+}

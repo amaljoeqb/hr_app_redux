@@ -5,10 +5,21 @@ import EmployeeActionMenu from "../EmployeeActionMenu";
 import { useNavigate } from "react-router-dom";
 import { openDeleteEmployeeDialog } from "../../../../store/slices/ui.slice";
 import { useAppDispatch } from "../../../../store/store";
+import { placeholderImages } from "../../../../data/placeholders";
+import { hashStringToNumber } from "../../../../services";
 
 export function EmployeeCard({ employee }: { employee: Employee }) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const placeholderIndex = hashStringToNumber(
+    employee.name,
+    placeholderImages.length - 1
+  );
+  if (employee.employeeId === "93") {
+    console.log(placeholderIndex);
+  }
+
   return (
     <StyledEmployeeCard
       onClick={() => {
@@ -30,7 +41,7 @@ export function EmployeeCard({ employee }: { employee: Employee }) {
         src={
           employee.profilePic && employee.profilePic !== ""
             ? employee.profilePic
-            : defaultprofileImg
+            : placeholderImages[placeholderIndex]
         }
         alt=""
       />
