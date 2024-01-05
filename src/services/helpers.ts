@@ -1,6 +1,7 @@
 import { Employee, Skill } from "../models";
 import { uploadBytes, getDownloadURL, ref as strRef } from "firebase/storage";
 import { storage } from "../config/firebase.config";
+import { Gender } from "../models/gender";
 /**
  * Get data from url
  * @param {string} url url of request
@@ -222,4 +223,15 @@ export function hashStringToNumber(str: string, max: number): number {
   const mappedValue = positiveHash % (max + 1);
 
   return mappedValue;
+}
+
+export function guessGender(name: string) {
+  const firstName = name.split(" ")[0].toLowerCase();
+  const lastChar = firstName[firstName.length - 1];
+
+  if (lastChar === "a" || lastChar === "y" || lastChar === "u") {
+    return Gender.Female;
+  }
+
+  return Gender.Male;
 }

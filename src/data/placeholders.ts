@@ -1,31 +1,18 @@
-import img1 from "../assets/img/placeholders/1.jpg";
-import img2 from "../assets/img/placeholders/2.jpg";
-import img3 from "../assets/img/placeholders/3.jpg";
-import img4 from "../assets/img/placeholders/4.jpg";
-import img5 from "../assets/img/placeholders/5.jpg";
-import img6 from "../assets/img/placeholders/6.jpg";
-import img7 from "../assets/img/placeholders/7.jpg";
-import img8 from "../assets/img/placeholders/8.jpg";
-import img9 from "../assets/img/placeholders/9.jpg";
-import img10 from "../assets/img/placeholders/10.jpg";
-import img11 from "../assets/img/placeholders/11.jpg";
-import img12 from "../assets/img/placeholders/12.jpg";
-import img13 from "../assets/img/placeholders/13.jpg";
-import img14 from "../assets/img/placeholders/14.jpg";
+import male1 from "../assets/img/placeholders/male/1.jpg";
+import male2 from "../assets/img/placeholders/male/2.jpg";
+import male3 from "../assets/img/placeholders/male/3.jpg";
+import male4 from "../assets/img/placeholders/male/4.jpg";
+import male5 from "../assets/img/placeholders/male/5.jpg";
+import male6 from "../assets/img/placeholders/male/6.jpg";
 
-export const placeholderImages = [
-  img1,
-  img2,
-  img3,
-  img4,
-  img5,
-  img6,
-  img7,
-  img8,
-  img9,
-  img10,
-  img11,
-  img12,
-  img13,
-  img14,
-];
+import female1 from "../assets/img/placeholders/female/1.jpg";
+import female2 from "../assets/img/placeholders/female/2.jpg";
+import female3 from "../assets/img/placeholders/female/3.jpg";
+import female4 from "../assets/img/placeholders/female/4.jpg";
+import female5 from "../assets/img/placeholders/female/5.jpg";
+import female6 from "../assets/img/placeholders/female/6.jpg";
+
+export const placeholderImages = {
+  male: [male1, male2, male3, male4, male5, male6],
+  female: [female1, female2, female3, female4, female5, female6],
+};
