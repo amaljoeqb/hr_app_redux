@@ -1,6 +1,5 @@
 import { StyledEmployeeCard } from "./EmployeeCard.style";
 import { Employee } from "../../../../models";
-import defaultprofileImg from "../../../../assets/img/profile.png";
 import EmployeeActionMenu from "../EmployeeActionMenu";
 import { useNavigate } from "react-router-dom";
 import { openDeleteEmployeeDialog } from "../../../../store/slices/ui.slice";
