@@ -76,7 +76,6 @@ export default function EmployeeForm(props: EmployeeFormProps) {
               </div>
               <input
                 id="imageUpload"
-                style={{ display: "none" }}
                 type="file"
                 name="employee profile"
                 onChange={hangeImageChange}

@@ -15,6 +15,7 @@ export const StyledEmployeeForm = styled.div`
     position: relative;
     border-radius: 50%;
     transition: transform 0.3s ease-in-out;
+    transform: scale(1.01);
   }
   form .profile-upload > label {
     display: block;
@@ -44,7 +45,7 @@ export const StyledEmployeeForm = styled.div`
   }
 
   form .profile-upload:hover {
-    transform: scale(1.05);
+    transform: scale(1.06);
   }
 
   form .profile-upload > label > img {
