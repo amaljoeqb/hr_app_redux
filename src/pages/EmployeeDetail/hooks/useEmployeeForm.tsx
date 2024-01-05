@@ -48,6 +48,7 @@ export default function useEmployeeForm({
   }));
 
   async function onSubmit(values: Employee) {
+    onSave();
     const imgUrl = !uploadImg
       ? initialValues.profilePic
       : await firebaseUploadImage(uploadImg);
@@ -60,7 +61,6 @@ export default function useEmployeeForm({
     } else {
       dispatch(createEmployee(values));
     }
-    onSave();
   }
 
   function onClickEdit() {
