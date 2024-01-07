@@ -1,6 +1,7 @@
 import { Employee, Skill } from "../models";
 import { uploadBytes, getDownloadURL, ref as strRef } from "firebase/storage";
 import { storage } from "../config/firebase.config";
+import { Gender } from "../models/gender";
 /**
  * Get data from url
  * @param {string} url url of request
@@ -194,3 +195,43 @@ export const firebaseUploadImage = async (file: any): Promise<string> => {
     return Promise.reject("Error in uploading");
   }
 };
+
+/**
+ * Hashes a string and maps it to a number within a specified range.
+ * @param str - The string to be hashed.
+ * @param max - The maximum value of the mapped number.
+ * @returns The mapped number within the range [0, max].
+ */
+export function hashStringToNumber(str: string, max: number): number {
+  function simpleHash(str: string): number {
+    let hash = 0;
+
+    for (let i = 0; i < str.length; i++) {
+      const charCode = str.charCodeAt(i);
+      hash = (hash << 5) - hash + charCode;
+    }
+
+    return hash;
+  }
+
+  const hash = simpleHash(str);
+
+  // Ensure the hash is non-negative
+  const positiveHash = hash >= 0 ? hash : -hash;
+
+  // Map the positive hash to the range [0, max]
+  const mappedValue = positiveHash % (max + 1);
+
+  return mappedValue;
+}
+
+export function guessGender(name: string) {
+  const firstName = name.split(" ")[0].toLowerCase();
+  const lastChar = firstName[firstName.length - 1];
+
+  if (lastChar === "a" || lastChar === "y" || lastChar === "u") {
+    return Gender.Female;
+  }
+
+  return Gender.Male;
+}

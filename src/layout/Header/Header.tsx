@@ -8,17 +8,19 @@ export function Header() {
   const { logOut } = useAuth();
   return (
     <StyledHeader>
-      <Link to="/" className="logo">
-        <img src={logo} alt="logo" />
-        <h1>
-          <span className="bold">The Q</span> Company
-        </h1>
-      </Link>
-      <div className="logout-button">
-        <HoverButton onClick={logOut}>
-          <span className="text">Logout </span>
-          <span className="material-symbols-outlined">logout</span>
-        </HoverButton>
+      <div className="container">
+        <Link to="/" className="logo">
+          <img src={logo} alt="logo" />
+          <h1>
+            <span className="bold">The Q</span> Company
+          </h1>
+        </Link>
+        <div className="logout-button">
+          <HoverButton onClick={logOut}>
+            <span className="text">Logout </span>
+            <span className="material-symbols-outlined">logout</span>
+          </HoverButton>
+        </div>
       </div>
     </StyledHeader>
   );

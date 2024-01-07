@@ -280,7 +280,11 @@ export const createEmployee = (employee: Employee): AppThunk => {
 };
 
 export const updateEmployee = (employee: Employee): AppThunk => {
-  return async (dispatch: Dispatch) => {
+  return async (dispatch: Dispatch, getState) => {
+    const { employees } = getState();
+    let oldEmployee = employees.data.find(
+      (e: Employee) => e.employeeId === employee.employeeId
+    );
     try {
       dispatch(setEmployee(employee));
       await API.updateEmployee(employee);
@@ -291,6 +295,9 @@ export const updateEmployee = (employee: Employee): AppThunk => {
         })
       );
     } catch (error: any) {
+      if (oldEmployee) {
+        dispatch(setEmployee(oldEmployee));
+      }
       dispatch(
         showToast({
           message: errorMessages.updateEmployeeError(employee.name),

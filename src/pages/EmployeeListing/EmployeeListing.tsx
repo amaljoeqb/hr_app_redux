@@ -28,7 +28,7 @@ export function EmployeeListing() {
   const dispatch = useAppDispatch();
   return (
     <StyledEmployeeListing>
-      <main className="card">
+      <div className="card">
         <h1>Employees</h1>
         <div className="emp-listing-header">
           <div className="start-section">
@@ -75,7 +75,7 @@ export function EmployeeListing() {
             className="listing"
           />
         )}
-      </main>
+      </div>
       {deleteEmployeeDialog.isOpen && (
         <EmployeeDeletePopup
           employee={deleteEmployeeDialog.employee}
