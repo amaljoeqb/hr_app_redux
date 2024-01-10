@@ -6,7 +6,6 @@ import { employeeSchema } from "../../../config";
 import useEmployeeForm from "../hooks/useEmployeeForm";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { StyledEmployeeForm } from "./EmployeeForm.style";
-import defaultAddEmpImg from "../../../assets/img/profile_img_logo.svg";
 import { getProfileImage } from "../../../services";
 
 export interface EmployeeFormProps {
