@@ -7,6 +7,7 @@ export const StyledViewButton = styled.button`
   font-weight: 400;
   font-size: 16px;
   display: flex;
+  column-gap: 2px;
 
   color: var(--text-color);
   align-items: center;
@@ -20,6 +21,10 @@ export const StyledViewButton = styled.button`
     padding: 6px 6px;
     margin: 2px;
     background-color: var(--neutral-light);
+  }
+
+  .half.selected {
+    background-color: var(--grey-bg-color);
   }
 
   .half:hover {
