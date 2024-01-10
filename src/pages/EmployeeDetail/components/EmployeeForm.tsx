@@ -34,7 +34,10 @@ export default function EmployeeForm(props: EmployeeFormProps) {
     ? initialValues.profilePic
     : "";
   const [profileImg, setprofileImg] = useState(
-    initialProfilePic !== "" ? initialProfilePic : defaultAddEmpImg
+    getProfileImage({
+      profileImage: initialProfilePic,
+      name: initialValues.name,
+    })
   );
 
   const formik = useRef<FormikProps<Employee>>(null);
@@ -71,13 +74,7 @@ export default function EmployeeForm(props: EmployeeFormProps) {
         <Form id="emp-form" noValidate>
           <section className={"profile-upload"}>
             <label htmlFor="imageUpload" tabIndex={0}>
-              <img
-                src={getProfileImage({
-                  profileImage: initialValues.profilePic,
-                  name: initialValues.name,
-                })}
-                alt="employee profile"
-              />
+              <img src={profileImg} alt="employee profile" />
               <div className={"image-edit-icon"}>
                 <span className="material-symbols-outlined"> edit </span>
               </div>
