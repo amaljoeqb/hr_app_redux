@@ -26,7 +26,7 @@ export function EmployeeCard({
 
   const placeholderIndex = hashStringToNumber(
     employee.name,
-    placeholders.length
+    placeholders.length - 1
   );
   if (employee.employeeId === "93") {
     console.log(placeholderIndex);
