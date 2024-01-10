@@ -7,7 +7,6 @@ export const StyledViewButton = styled.button`
   font-weight: 400;
   font-size: 16px;
   display: flex;
-  column-gap: 2px;
   position: relative;
   background-color: var(--neutral-light);
 
@@ -19,9 +18,7 @@ export const StyledViewButton = styled.button`
   transition: all 0.1s ease-in-out;
 
   .half {
-    border-radius: 6px;
-    padding: 6px 6px;
-    margin: 2px;
+    padding: 8px 8px;
     z-index: 10;
   }
 
