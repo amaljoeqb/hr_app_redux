@@ -7,8 +7,15 @@ import { useAppDispatch } from "../../../../store/store";
 import { placeholderImages } from "../../../../data/placeholders";
 import { guessGender, hashStringToNumber } from "../../../../services";
 import { Gender } from "../../../../models/gender";
+import { HighlightSpan } from "../../../../components";
 
-export function EmployeeCard({ employee }: { employee: Employee }) {
+export function EmployeeCard({
+  employee,
+  searchTerm,
+}: {
+  employee: Employee;
+  searchTerm: string;
+}) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -52,7 +59,14 @@ export function EmployeeCard({ employee }: { employee: Employee }) {
       />
       <div>
         <p className="view-emp-id">#{employee.employeeId}</p>
-        <p className="view-emp-name">{employee.name}</p>
+        <p className="view-emp-name">
+          <HighlightSpan
+            text={employee.name}
+            searchTerm={searchTerm}
+            modified={false}
+            onModifiedAnimationEnd={() => {}}
+          />
+        </p>
         <p className="view-emp-dept">{employee.department?.department} </p>
       </div>
     </StyledEmployeeCard>

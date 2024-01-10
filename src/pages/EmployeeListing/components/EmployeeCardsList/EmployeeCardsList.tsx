@@ -15,7 +15,13 @@ export function EmployeeCardsList(props: EmployeeCardsListProps) {
   return (
     <StyledEmployeeCardsList>
       {props.employees.map((employee) => {
-        return <EmployeeCard key={employee.employeeId} employee={employee} />;
+        return (
+          <EmployeeCard
+            key={employee.employeeId}
+            employee={employee}
+            searchTerm={props.searchTerm}
+          />
+        );
       })}
     </StyledEmployeeCardsList>
   );
