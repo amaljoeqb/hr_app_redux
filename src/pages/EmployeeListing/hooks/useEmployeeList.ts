@@ -21,7 +21,7 @@ export function useEmployeeList() {
       searchTerm: "",
       sort: {
         columnId: "employeeId",
-        order: "asc",
+        order: "desc",
       },
       skillsIds: [],
     }),
