@@ -17,7 +17,7 @@ export function useEmployeeList() {
   const defaultConfig = useMemo<IEmployeeDataConfig>(
     () => ({
       offset: 0,
-      pageSize: 10,
+      pageSize: 12,
       searchTerm: "",
       sort: {
         columnId: "employeeId",
