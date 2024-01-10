@@ -2,6 +2,8 @@ import { Employee, Skill } from "../models";
 import { uploadBytes, getDownloadURL, ref as strRef } from "firebase/storage";
 import { storage } from "../config/firebase.config";
 import { Gender } from "../models/gender";
+import { placeholderImages } from "../data/placeholders";
+
 /**
  * Get data from url
  * @param {string} url url of request
@@ -234,4 +236,24 @@ export function guessGender(name: string) {
   }
 
   return Gender.Male;
+}
+
+export function getProfileImage({
+  profileImage,
+  name,
+}: {
+  profileImage?: string;
+  name: string;
+}) {
+  if (profileImage && profileImage !== "") {
+    return profileImage;
+  }
+  const placeholders =
+    guessGender(name) === Gender.Male
+      ? placeholderImages.male
+      : placeholderImages.female;
+
+  const placeholderIndex = hashStringToNumber(name, placeholders.length - 1);
+
+  return placeholders[placeholderIndex];
 }

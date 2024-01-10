@@ -4,10 +4,8 @@ import EmployeeActionMenu from "../EmployeeActionMenu";
 import { useNavigate } from "react-router-dom";
 import { openDeleteEmployeeDialog } from "../../../../store/slices/ui.slice";
 import { useAppDispatch } from "../../../../store/store";
-import { placeholderImages } from "../../../../data/placeholders";
-import { guessGender, hashStringToNumber } from "../../../../services";
-import { Gender } from "../../../../models/gender";
 import { HighlightSpan } from "../../../../components";
+import { getProfileImage } from "../../../../services";
 
 export function EmployeeCard({
   employee,
@@ -18,19 +16,6 @@ export function EmployeeCard({
 }) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const placeholders =
-    guessGender(employee.name) === Gender.Male
-      ? placeholderImages.male
-      : placeholderImages.female;
-
-  const placeholderIndex = hashStringToNumber(
-    employee.name,
-    placeholders.length - 1
-  );
-  if (employee.employeeId === "93") {
-    console.log(placeholderIndex);
-  }
 
   return (
     <StyledEmployeeCard
@@ -50,11 +35,10 @@ export function EmployeeCard({
         />
       </div>
       <img
-        src={
-          employee.profilePic && employee.profilePic !== ""
-            ? employee.profilePic
-            : placeholders[placeholderIndex]
-        }
+        src={getProfileImage({
+          profileImage: employee.profilePic,
+          name: employee.name,
+        })}
         alt=""
       />
       <div>

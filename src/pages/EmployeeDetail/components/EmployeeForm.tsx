@@ -7,6 +7,7 @@ import useEmployeeForm from "../hooks/useEmployeeForm";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { StyledEmployeeForm } from "./EmployeeForm.style";
 import defaultAddEmpImg from "../../../assets/img/profile_img_logo.svg";
+import { getProfileImage } from "../../../services";
 
 export interface EmployeeFormProps {
   employee: Employee | undefined;
@@ -70,7 +71,13 @@ export default function EmployeeForm(props: EmployeeFormProps) {
         <Form id="emp-form" noValidate>
           <section className={"profile-upload"}>
             <label htmlFor="imageUpload" tabIndex={0}>
-              <img src={profileImg} alt="employee profile" />
+              <img
+                src={getProfileImage({
+                  profileImage: initialValues.profilePic,
+                  name: initialValues.name,
+                })}
+                alt="employee profile"
+              />
               <div className={"image-edit-icon"}>
                 <span className="material-symbols-outlined"> edit </span>
               </div>
