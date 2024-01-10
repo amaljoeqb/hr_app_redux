@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const StyledHighlightSpan = styled.span`
   transition: all 0.1s ease-in-out;
+  padding: 0 4px;
 
   &.modified {
     animation: modified-anim 1s ease-in-out;

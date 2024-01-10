@@ -103,6 +103,7 @@ export const StyledTable = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 4px;
+    align-items: start;
   }
 
   .name-container .name {
