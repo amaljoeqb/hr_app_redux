@@ -5,11 +5,10 @@ import {
   fetchMoreData,
   setConfigAndFetchData,
 } from "../../../store/slices/employees.slice";
+const TABLE_PAGE_SIZE = 12;
+const LIST_PAGE_SIZE = 12;
 
 export function useEmployeeList() {
-  const TABLE_PAGE_SIZE = 10;
-  const LIST_PAGE_SIZE = 12;
-
   const dispatch = useAppDispatch();
   const employees = useAppSelector((state) => state.employees);
   const skills = useAppSelector((state) => state.staticData.skills);
@@ -28,12 +27,21 @@ export function useEmployeeList() {
       },
       skillsIds: [],
     }),
-    [LIST_PAGE_SIZE]
+    []
   );
 
   const { data, total, loading } = employees;
 
-  const config = employees.config ?? defaultConfig;
+  const config = useMemo<IEmployeeDataConfig>(() => {
+    const config = employees.config
+      ? { ...employees.config }
+      : { ...defaultConfig };
+    if (pageNumber) {
+      config.pageSize = TABLE_PAGE_SIZE;
+      config.offset = (pageNumber - 1) * TABLE_PAGE_SIZE;
+    }
+    return config;
+  }, [employees.config, defaultConfig, pageNumber]);
 
   // hasMore is only set to true for infinite list view
   const hasMore = (data.length < total || loading) && pageNumber === null;
@@ -52,20 +60,8 @@ export function useEmployeeList() {
   }
 
   useEffect(() => {
-    if (!employees.config) {
-      dispatch(setConfigAndFetchData(defaultConfig));
-    }
-  }, [dispatch, employees.config, defaultConfig]);
-
-  useEffect(() => {
-    if (!pageNumber) return;
-    const config = employees.config
-      ? { ...employees.config }
-      : { ...defaultConfig };
-    config.pageSize = TABLE_PAGE_SIZE;
-    config.offset = (pageNumber - 1) * TABLE_PAGE_SIZE;
     dispatch(setConfigAndFetchData(config));
-  }, [pageNumber, dispatch, defaultConfig, employees.config]);
+  }, [config, dispatch]);
 
   useEffect(() => {
     const { current } = loadingIconRef;
