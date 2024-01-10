@@ -1,6 +1,4 @@
-import { useEffect, useRef, useMemo, useState } from "react";
-import { useInfiniteList } from "../../../hooks";
-import { Employee } from "../../../models";
+import { useEffect, useRef, useMemo, useState, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
 import {
   IEmployeeDataConfig,
@@ -30,7 +28,7 @@ export function useEmployeeList() {
       },
       skillsIds: [],
     }),
-    []
+    [LIST_PAGE_SIZE]
   );
 
   const { data, total, loading } = employees;
@@ -40,10 +38,10 @@ export function useEmployeeList() {
   // hasMore is only set to true for infinite list view
   const hasMore = (data.length < total || loading) && pageNumber === null;
 
-  async function loadMoreData() {
+  const loadMoreData = useCallback(async () => {
     if (loading || !hasMore) return;
     dispatch(fetchMoreData());
-  }
+  }, [dispatch, loading, hasMore]);
 
   function setSearchTerm(searchTerm: string) {
     setConfigAndFetchData({ ...config, searchTerm, offset: 0 });
@@ -52,20 +50,6 @@ export function useEmployeeList() {
   function setSort(sort: IEmployeeDataConfig["sort"]) {
     dispatch(setConfigAndFetchData({ ...config, sort, offset: 0 }));
   }
-
-  // const { loadMoreData, ...employeeList } = useInfiniteList<
-  //   Employee,
-  //   IEmployeeDataConfig
-  // >({
-  //   data: employees.data,
-  //   total: employees.total,
-  //   config: employees.config ?? defaultConfig,
-  //   loading: employees.loading,
-  //   setConfigAndFetchData: (config) => dispatch(setConfigAndFetchData(config)),
-  //   fetchMoreData: async () => {
-  //     dispatch(fetchMoreData());
-  //   },
-  // });
 
   useEffect(() => {
     if (!employees.config) {
@@ -81,7 +65,7 @@ export function useEmployeeList() {
     config.pageSize = TABLE_PAGE_SIZE;
     config.offset = (pageNumber - 1) * TABLE_PAGE_SIZE;
     dispatch(setConfigAndFetchData(config));
-  }, [pageNumber]);
+  }, [pageNumber, dispatch, defaultConfig, employees.config]);
 
   useEffect(() => {
     const { current } = loadingIconRef;

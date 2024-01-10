@@ -12,6 +12,7 @@ import SortButton from "./components/SortButton";
 import { Employee } from "../../models";
 import { sortAttributes } from "../../config/sortAttributes.config";
 import EmployeeTable from "./components/EmployeeTable";
+import { ViewButton } from "./components/ViewButton/ViewButton";
 
 export function EmployeeListing() {
   const navigate = useNavigate();
@@ -77,8 +78,18 @@ export function EmployeeListing() {
               />
             </div>
           </div>
+          <ViewButton
+            onChangeView={(view) => {
+              if (view === "grid") {
+                setPageNumber(null);
+              } else if (view === "table") {
+                setPageNumber(1);
+              }
+            }}
+            view={pageNumber ? "table" : "grid"}
+          />
         </div>
-        {pageNumber ? (
+        {pageNumber !== null ? (
           <>
             <EmployeeTable
               employees={displayData}
@@ -101,21 +112,6 @@ export function EmployeeListing() {
                 setPageNumber(page);
               }}
             />
-            <EmployeeCardsList
-              employees={displayData}
-              searchTerm={searchTerm}
-              sort={{
-                key: sort.columnId,
-                order: sort.order,
-              }}
-            />
-            {hasMore && (
-              <Loader
-                key={displayData.length}
-                innerRef={loadingIconRef}
-                className="listing"
-              />
-            )}
           </>
         ) : (
           <>
