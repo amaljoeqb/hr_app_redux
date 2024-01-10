@@ -7,7 +7,7 @@ const employeeSchema = Yup.object({
   salary: Yup.number()
     .typeError("Salary must be a number")
     .min(0, "Salary can't be negative"),
-  designation: Yup.string(),
+  designation: Yup.string().nullable(),
   department: Yup.object(),
   dateOfBirth: Yup.date().required("Required"),
   joiningDate: Yup.date().required("Required"),
