@@ -84,8 +84,14 @@ body {
 .next-section {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
+  gap: 16px;
+  justify-content: space-between;
+
+}
+
+.emp-listing-header .next-section {
+  justify-content: flex-start;
 }
 
 .emp-listing-header h2 {
@@ -200,9 +206,6 @@ span.close-toast {
   line-height: inherit;
 }
 
-.next-section {
-  gap: 16px;
-}
 
 @media screen and (max-width: 600px) {
   .emp-listing-header {
@@ -216,6 +219,11 @@ span.close-toast {
     align-items: stretch;
     width: 100%;
   }
+
+  .emp-listing-header .next-section {
+    justify-content: space-between;
+  }
+  
 
 
   .emp-listing-header h2 {

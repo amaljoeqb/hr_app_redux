@@ -54,6 +54,13 @@ export function EmployeeListing() {
             />
           </div>
           <div className="next-section">
+            <SortButton<Employee>
+              sort={sort}
+              columns={sortAttributes}
+              onChange={(sort) => {
+                setSort(sort);
+              }}
+            />
             <div className="filters-section">
               <SkillsFilter
                 skills={skills}
@@ -64,14 +71,6 @@ export function EmployeeListing() {
                 }}
               />
             </div>
-
-            <SortButton<Employee>
-              sort={sort}
-              columns={sortAttributes}
-              onChange={(sort) => {
-                setSort(sort);
-              }}
-            />
           </div>
         </div>
         <EmployeeCardsList
