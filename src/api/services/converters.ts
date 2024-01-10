@@ -123,7 +123,7 @@ export function getDepartmentFromDepartmentGlobal(
 export function getEmployeeGlobalFetchParams(
   props: FetchEmployeesProps
 ): FetchEmployeesGlobalProps {
-  let sortKey: keyof EmployeeGlobal = "id";
+  let sortKey: string = "id";
   switch (props.sortBy) {
     case "name":
       sortKey = "firstName";
@@ -133,6 +133,9 @@ export function getEmployeeGlobalFetchParams(
       break;
     case "dateOfBirth":
       sortKey = "dob";
+      break;
+    case "department":
+      sortKey = "department.id";
       break;
     case "employeeId":
     case "profilePic":

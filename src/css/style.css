@@ -81,7 +81,7 @@ body {
   column-gap: 12px;
 }
 
-.emp-listing-header .next-section {
+.next-section {
   display: flex;
   align-items: center;
   justify-content: space-between;

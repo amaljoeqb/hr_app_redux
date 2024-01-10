@@ -13,9 +13,13 @@ export interface FetchEmployeesProps extends FetchDataProps<Employee> {
   skills: string[];
 }
 
-export interface FetchEmployeesGlobalProps
-  extends FetchDataProps<EmployeeGlobal> {
+export interface FetchEmployeesGlobalProps {
+  offset: number;
+  limit: number;
+  sortDir: "asc" | "desc";
+  search: string;
   skillIds: string;
+  sortBy: string;
 }
 
 export interface FetchDataReturn<T> {

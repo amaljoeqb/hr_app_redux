@@ -8,6 +8,9 @@ import { EmployeeCardsList } from "./components/EmployeeCardsList/EmployeeCardsL
 import { useEmployeeList } from "./hooks/useEmployeeList";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { closeDeleteEmployeeDialog } from "../../store/slices/ui.slice";
+import SortButton from "./components/SortButton";
+import { Employee } from "../../models";
+import { sortAttributes } from "../../config/sortAttributes.config";
 
 export function EmployeeListing() {
   const navigate = useNavigate();
@@ -18,6 +21,7 @@ export function EmployeeListing() {
     searchTerm,
     setSearchTerm,
     sort,
+    setSort,
     skills,
     hasMore,
     loadingIconRef,
@@ -29,7 +33,17 @@ export function EmployeeListing() {
   return (
     <StyledEmployeeListing>
       <div className="card">
-        <h1>Employees</h1>
+        <div className="next-section">
+          <h1>Employees</h1>
+          <HoverButton
+            onClick={() => {
+              navigate("/employee/?edit=true");
+            }}
+          >
+            <span className="material-symbols-outlined"> add_circle </span>
+            <p>Create</p>
+          </HoverButton>
+        </div>
         <div className="emp-listing-header">
           <div className="start-section">
             <SearchInput
@@ -50,14 +64,14 @@ export function EmployeeListing() {
                 }}
               />
             </div>
-            <HoverButton
-              onClick={() => {
-                navigate("/employee/?edit=true");
+
+            <SortButton<Employee>
+              sort={sort}
+              columns={sortAttributes}
+              onChange={(sort) => {
+                setSort(sort);
               }}
-            >
-              <span className="material-symbols-outlined"> add_circle </span>
-              <p>Create</p>
-            </HoverButton>
+            />
           </div>
         </div>
         <EmployeeCardsList

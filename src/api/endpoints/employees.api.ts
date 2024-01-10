@@ -1,4 +1,8 @@
-import { Employee, FetchDataProps, FetchEmployeesProps } from "../../models";
+import {
+  Employee,
+  FetchEmployeesGlobalProps,
+  FetchEmployeesProps,
+} from "../../models";
 import { API } from "..";
 import {
   getEmployeeFromEmployeeGlobal,
@@ -7,15 +11,13 @@ import {
 } from "../services/converters";
 import {
   EmployeeCreateResponse,
-  EmployeeGlobal,
   EmployeeRequest,
   EmployeeResponse,
   EmployeesResponse,
 } from "../models";
 
 export const getEmployees = async (props: FetchEmployeesProps) => {
-  const params: FetchDataProps<EmployeeGlobal> =
-    getEmployeeGlobalFetchParams(props);
+  const params: FetchEmployeesGlobalProps = getEmployeeGlobalFetchParams(props);
   const response: EmployeesResponse = await API.get("/employee", {
     params,
   });
