@@ -1,12 +1,12 @@
-import { useEffect, useRef, useMemo, useState, useCallback } from "react";
+import { useEffect, useRef, useMemo, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
 import {
   IEmployeeDataConfig,
+  PAGE_SIZE,
   fetchMoreData,
   setConfigAndFetchData,
 } from "../../../store/slices/employees.slice";
-const TABLE_PAGE_SIZE = 12;
-const LIST_PAGE_SIZE = 12;
+
 
 export function useEmployeeList() {
   const dispatch = useAppDispatch();
@@ -14,37 +14,29 @@ export function useEmployeeList() {
   const skills = useAppSelector((state) => state.staticData.skills);
   const prevEmployees = useAppSelector((state) => state.prevEmployees);
   const loadingIconRef = useRef(null);
-  // page number null on infinite list view
-  const [pageNumber, setPageNumber] = useState<number | null>(1);
+
   const defaultConfig = useMemo<IEmployeeDataConfig>(
     () => ({
       offset: 0,
-      pageSize: LIST_PAGE_SIZE,
+      pageSize: PAGE_SIZE,
       searchTerm: "",
       sort: {
         columnId: "employeeId",
         order: "desc",
       },
       skillsIds: [],
+      pageNumber: null,
     }),
     []
   );
 
   const { data, total, loading } = employees;
 
-  const config = useMemo<IEmployeeDataConfig>(() => {
-    const config = employees.config
-      ? { ...employees.config }
-      : { ...defaultConfig };
-    if (pageNumber) {
-      config.pageSize = TABLE_PAGE_SIZE;
-      config.offset = (pageNumber - 1) * TABLE_PAGE_SIZE;
-    }
-    return config;
-  }, [employees.config, defaultConfig, pageNumber]);
+  const config = employees.config ?? defaultConfig;
 
   // hasMore is only set to true for infinite list view
-  const hasMore = (data.length < total || loading) && pageNumber === null;
+  const hasMore =
+    (data.length < total || loading) && config.pageNumber === null;
 
   const loadMoreData = useCallback(async () => {
     if (loading || !hasMore) return;
@@ -52,16 +44,22 @@ export function useEmployeeList() {
   }, [dispatch, loading, hasMore]);
 
   function setSearchTerm(searchTerm: string) {
-    setConfigAndFetchData({ ...config, searchTerm, offset: 0 });
+    dispatch(setConfigAndFetchData({ ...config, searchTerm, offset: 0 }));
   }
 
   function setSort(sort: IEmployeeDataConfig["sort"]) {
     dispatch(setConfigAndFetchData({ ...config, sort, offset: 0 }));
   }
 
+  function setPageNumber(pageNumber: number | null) {
+    dispatch(setConfigAndFetchData({ ...config, pageNumber }));
+  }
+
   useEffect(() => {
-    dispatch(setConfigAndFetchData(config));
-  }, [config, dispatch]);
+    if (!employees.config) {
+      dispatch(setConfigAndFetchData(defaultConfig));
+    }
+  }, [dispatch, employees.config, defaultConfig]);
 
   useEffect(() => {
     const { current } = loadingIconRef;
@@ -117,8 +115,8 @@ export function useEmployeeList() {
     skills,
     prevEmployees,
     loadingIconRef,
-    pageNumber,
+    pageNumber: config.pageNumber,
     setPageNumber,
-    totalPageCount: Math.ceil(employees.total / TABLE_PAGE_SIZE),
+    totalPageCount: Math.ceil(employees.total / PAGE_SIZE),
   };
 }

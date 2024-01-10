@@ -7,6 +7,7 @@ import { IDataConfig } from "../../hooks/";
 
 export interface IEmployeeDataConfig extends IDataConfig<Employee> {
   skillsIds: string[];
+  pageNumber: number | null;
 }
 
 interface EmployeesState {
@@ -16,6 +17,8 @@ interface EmployeesState {
   config?: IEmployeeDataConfig;
   loading: boolean;
 }
+
+export const PAGE_SIZE = 12;
 
 const SET_EMPLOYEES = "SET_EMPLOYEES";
 const ADD_EMPLOYEES = "ADD_EMPLOYEES";
@@ -123,7 +126,7 @@ const employeesReducer = (
         config,
       };
     }
-    case "SET_LOADING": {
+    case SET_LOADING: {
       const loading = action.payload as boolean;
       return {
         ...state,
@@ -179,7 +182,9 @@ export const setConfigAndFetchData = (
       dispatch(setConfig(config));
       dispatch(setLoading(true));
       const fetchDataProps: FetchEmployeesProps = {
-        offset: config.offset,
+        offset: config.pageNumber
+          ? (config.pageNumber - 1) * PAGE_SIZE
+          : config.offset,
         limit: config.pageSize,
         sortBy: config.sort.columnId,
         sortDir: config.sort.order,
