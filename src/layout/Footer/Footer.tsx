@@ -5,7 +5,7 @@ export function Footer() {
     <StyledFooter>
       <p>
         Copyright @ 2023 The Q Company. All Rights Reserved <br />
-        Version 1.10
+        Version 2.00
       </p>
     </StyledFooter>
   );
