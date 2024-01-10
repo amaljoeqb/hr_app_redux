@@ -8,7 +8,7 @@ import {
   searchEmployees,
 } from "../../../services/employee.helpers";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
-import { setPrevEmployee } from "../../../store/slices/prevEmployees.slice";
+import { setAndDeletePrevEmployee } from "../../../store/slices/prevEmployees.slice";
 
 export default function useEmployeeTable() {
   const dispatch = useAppDispatch();
@@ -50,7 +50,7 @@ export default function useEmployeeTable() {
     let prevEmployee = prevEmployees.get(id);
     if (prevEmployee) {
       delete prevEmployee[field];
-      dispatch(setPrevEmployee(id, prevEmployee));
+      dispatch(setAndDeletePrevEmployee(id, prevEmployee));
     }
   }
 

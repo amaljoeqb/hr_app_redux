@@ -6,7 +6,8 @@ import {
   fetchMoreData,
   setConfigAndFetchData,
 } from "../../../store/slices/employees.slice";
-
+import { Employee } from "../../../models";
+import { setAndDeletePrevEmployee } from "../../../store/slices/prevEmployees.slice";
 
 export function useEmployeeList() {
   const dispatch = useAppDispatch();
@@ -101,6 +102,14 @@ export function useEmployeeList() {
     );
   };
 
+  function onShowModifiedField(id: string, field: keyof Employee) {
+    let prevEmployee = prevEmployees.get(id);
+    if (prevEmployee) {
+      delete prevEmployee[field];
+      dispatch(setAndDeletePrevEmployee(id, prevEmployee));
+    }
+  }
+
   return {
     displayData: data,
     total,
@@ -118,5 +127,6 @@ export function useEmployeeList() {
     pageNumber: config.pageNumber,
     setPageNumber,
     totalPageCount: Math.ceil(employees.total / PAGE_SIZE),
+    onShowModifiedField,
   };
 }

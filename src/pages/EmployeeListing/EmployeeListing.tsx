@@ -30,6 +30,8 @@ export function EmployeeListing() {
     pageNumber,
     setPageNumber,
     totalPageCount,
+    prevEmployees, 
+    onShowModifiedField,
   } = useEmployeeList();
   const deleteEmployeeDialog = useAppSelector(
     (state) => state.ui?.deleteEmployeeDialog
@@ -104,6 +106,8 @@ export function EmployeeListing() {
                   order: sort.order,
                 });
               }}
+              prevEmployees={prevEmployees}
+              onShowModifiedField={onShowModifiedField}
             />
             <PaginationControl
               current={pageNumber}

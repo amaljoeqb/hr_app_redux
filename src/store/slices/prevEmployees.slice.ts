@@ -1,7 +1,7 @@
 import { Action, Employee } from "../../models";
 import { Dispatch } from "../store";
 
-export type PrevEmployeesState = Map<String, Partial<Employee>>;
+export type PrevEmployeesState = Map<string, Partial<Employee>>;
 
 const SET_PREV_EMPLOYEE = "SET_PREV_EMPLOYEE";
 const DELETE_PREV_EMPLOYEE = "DELETE_PREV_EMPLOYEE";
@@ -29,7 +29,7 @@ const prevEmployeesReducer = (
   }
 };
 
-export const setPrevEmployee = (id: string, employee: Partial<Employee>) => ({
+const setPrevEmployee = (id: string, employee: Partial<Employee>) => ({
   type: SET_PREV_EMPLOYEE,
   payload: { id, employee },
 });

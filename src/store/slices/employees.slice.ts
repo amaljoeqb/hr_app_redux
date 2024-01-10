@@ -4,6 +4,7 @@ import { showToast } from "./toasts.slice";
 import { errorMessages, successMessages } from "../../services";
 import { AppThunk, Dispatch } from "../store";
 import { IDataConfig } from "../../hooks/";
+import { setAndDeletePrevEmployee } from "./prevEmployees.slice";
 
 export interface IEmployeeDataConfig extends IDataConfig<Employee> {
   skillsIds: string[];
@@ -264,6 +265,9 @@ export const createEmployee = (employee: Employee): AppThunk => {
       const response = await API.createEmployee(employee);
       const receivedId = response.id.toString();
       if (receivedId !== employee.employeeId) {
+        dispatch(
+          setAndDeletePrevEmployee(receivedId, { employeeId: employee.employeeId })
+        );
         dispatch(updateEmployeeId(employee.employeeId, receivedId));
       }
       dispatch(
@@ -291,6 +295,9 @@ export const updateEmployee = (employee: Employee): AppThunk => {
       (e: Employee) => e.employeeId === employee.employeeId
     );
     try {
+      if (oldEmployee) {
+        dispatch(setAndDeletePrevEmployee(employee.employeeId, oldEmployee));
+      }
       dispatch(setEmployee(employee));
       await API.updateEmployee(employee);
       dispatch(
