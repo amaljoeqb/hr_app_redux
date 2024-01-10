@@ -8,6 +8,8 @@ export const StyledViewButton = styled.button`
   font-size: 16px;
   display: flex;
   column-gap: 2px;
+  position: relative;
+  background-color: var(--neutral-light);
 
   color: var(--text-color);
   align-items: center;
@@ -20,15 +22,25 @@ export const StyledViewButton = styled.button`
     border-radius: 6px;
     padding: 6px 6px;
     margin: 2px;
-    background-color: var(--neutral-light);
+    z-index: 10;
   }
 
-  .half.selected {
+  .selected-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
     background-color: var(--grey-bg-color);
+    transition: transform 0.1s ease-in-out;
+  }
+
+  .selected-overlay.right {
+    transform: translateX(100%);
   }
 
   .half:hover {
-    background-color: var(--accent-color);
+    background-color: var(--grey-bg-color);
   }
 
   span {
