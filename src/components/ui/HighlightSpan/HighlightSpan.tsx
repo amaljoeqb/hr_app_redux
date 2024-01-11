@@ -38,7 +38,6 @@ export default function HighlightSpan({
   function getClassName() {
     let className = props.className ?? "";
     className += " highlight-span";
-
     if (modified) {
       className += " modified";
     }
