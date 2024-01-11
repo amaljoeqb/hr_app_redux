@@ -1,7 +1,11 @@
 import { Action, Employee, FetchEmployeesProps } from "../../models";
 import * as API from "../../api";
 import { showToast } from "./toasts.slice";
-import { errorMessages, successMessages } from "../../services";
+import {
+  errorMessages,
+  getEmployeeDiff,
+  successMessages,
+} from "../../services";
 import { AppThunk, Dispatch } from "../store";
 import { IDataConfig } from "../../hooks/";
 import { setAndDeletePrevEmployee } from "./prevEmployees.slice";
@@ -266,7 +270,9 @@ export const createEmployee = (employee: Employee): AppThunk => {
       const receivedId = response.id.toString();
       if (receivedId !== employee.employeeId) {
         dispatch(
-          setAndDeletePrevEmployee(receivedId, { employeeId: employee.employeeId })
+          setAndDeletePrevEmployee(receivedId, {
+            employeeId: employee.employeeId,
+          })
         );
         dispatch(updateEmployeeId(employee.employeeId, receivedId));
       }
@@ -296,7 +302,8 @@ export const updateEmployee = (employee: Employee): AppThunk => {
     );
     try {
       if (oldEmployee) {
-        dispatch(setAndDeletePrevEmployee(employee.employeeId, oldEmployee));
+        const diff = getEmployeeDiff(oldEmployee, employee);
+        dispatch(setAndDeletePrevEmployee(employee.employeeId, diff));
       }
       dispatch(setEmployee(employee));
       await API.updateEmployee(employee);
