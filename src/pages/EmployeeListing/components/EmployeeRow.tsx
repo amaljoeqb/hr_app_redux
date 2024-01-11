@@ -32,7 +32,7 @@ export default function EmployeeRow({
         <td>
           <HighlightSpan
             text={employee.employeeId}
-            searchTerm={searchTerm}
+            searchTerm={""}
             modified={
               prevEmployee !== undefined &&
               prevEmployee.employeeId !== undefined
@@ -64,7 +64,7 @@ export default function EmployeeRow({
             </div>
             <HighlightSpan
               text={employee.email}
-              searchTerm={searchTerm}
+              searchTerm={""}
               modified={modifiedFields.has("email")}
               className="email"
               onModifiedAnimationEnd={() => {
@@ -78,7 +78,7 @@ export default function EmployeeRow({
         <td>
           <HighlightSpan
             text={employee.designation ?? "N/A"}
-            searchTerm={searchTerm}
+            searchTerm={""}
             modified={modifiedFields.has("designation")}
             onModifiedAnimationEnd={() => {
               onShowModifiedField(employee.employeeId, "designation");
@@ -90,7 +90,7 @@ export default function EmployeeRow({
         <td>
           <HighlightSpan
             text={employee.department?.department ?? ""}
-            searchTerm={searchTerm}
+            searchTerm={""}
             modified={modifiedFields.has("department")}
             onModifiedAnimationEnd={() => {
               onShowModifiedField(employee.employeeId, "department");
