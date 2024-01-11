@@ -26,6 +26,8 @@
   --neutral-dark: #000;
   --neutral-mid: #808080;
   --grey-25: #00000080;
+  --shimmer-bg: #EDEBED;
+  --shimmer-overlay: #FBF9FC;
 }
 
 html {

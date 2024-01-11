@@ -242,4 +242,27 @@ export const StyledTable = styled.div`
     padding: 16px;
     text-align: center;
   }
+
+  tbody tr:nth-child(5n + 1) .highlight-span {
+    background: linear-gradient(
+      to right,
+      #f6f7f8 0%,
+      #edeef1 20%,
+      #f6f7f8 40%,
+      #f6f7f8 100%
+    );
+    color: transparent;
+
+    animation: shimmer 1s infinite linear;
+
+    @keyframes shimmer {
+      0% {
+        background-position: -100px 0;
+      }
+
+      100% {
+        background-position: 100px 0;
+      }
+    }
+  }
 `;
