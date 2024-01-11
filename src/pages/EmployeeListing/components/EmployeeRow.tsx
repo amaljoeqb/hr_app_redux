@@ -77,7 +77,7 @@ export default function EmployeeRow({
       {cells.has("designation") && (
         <td>
           <HighlightSpan
-            text={employee.designation ?? "N/A"}
+            text={employee.designation || "N/A"}
             searchTerm={""}
             modified={modifiedFields.has("designation")}
             onModifiedAnimationEnd={() => {
@@ -89,7 +89,7 @@ export default function EmployeeRow({
       {cells.has("department") && (
         <td>
           <HighlightSpan
-            text={employee.department?.department ?? ""}
+            text={employee.department?.department || "N/A"}
             searchTerm={""}
             modified={modifiedFields.has("department")}
             onModifiedAnimationEnd={() => {
