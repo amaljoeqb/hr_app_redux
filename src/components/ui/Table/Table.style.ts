@@ -243,26 +243,42 @@ export const StyledTable = styled.div`
     text-align: center;
   }
 
-  tbody tr:nth-child(5n + 1) .highlight-span {
+  tbody tr:nth-child(n) .highlight-span,
+  tbody tr:nth-child(n) .chip {
+    max-height: 32px;
+    border-radius: 4px;
+    padding: 0 4px;
     background: linear-gradient(
-      to right,
-      #f6f7f8 0%,
-      #edeef1 20%,
-      #f6f7f8 40%,
-      #f6f7f8 100%
+      to bottom,
+      var(--shimmer-bg) 0%,
+      var(--shimmer-bg) 20%,
+      var(--shimmer-overlay) 40%,
+      var(--shimmer-bg) 80%,
+      var(--shimmer-bg) 100%
     );
     color: transparent;
+    background-position: 0 -16px;
 
     animation: shimmer 1s infinite linear;
 
     @keyframes shimmer {
       0% {
-        background-position: -100px 0;
+        background-position: 0 -16px;
       }
 
       100% {
-        background-position: 100px 0;
+        background-position: 0 16px;
       }
     }
+  }
+
+  tbody tr:nth-child(5n + 1) .highlight-span,
+  tbody tr:nth-child(5n + 1) .chip {
+    animation-delay: 1s;
+  }
+
+  tbody tr:nth-child(5n + 2) .highlight-span,
+  tbody tr:nth-child(5n + 2) .chip {
+    animation-delay: 2s;
   }
 `;
