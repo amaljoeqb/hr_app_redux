@@ -243,42 +243,39 @@ export const StyledTable = styled.div`
     text-align: center;
   }
 
-  tbody tr:nth-child(n) .highlight-span,
-  tbody tr:nth-child(n) .chip {
-    max-height: 32px;
-    border-radius: 4px;
-    padding: 0 4px;
+  tbody {
+    position: relative;
+  }
+
+  .shimmer {
     background: linear-gradient(
       to bottom,
       var(--shimmer-bg) 0%,
-      var(--shimmer-bg) 20%,
-      var(--shimmer-overlay) 40%,
-      var(--shimmer-bg) 80%,
+      var(--shimmer-bg) 30%,
+      var(--shimmer-overlay) 50%,
+      var(--shimmer-bg) 70%,
       var(--shimmer-bg) 100%
     );
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+
+  tbody {
+    background-color: white;
+  }
+
+  .highlight-span,
+  .highlight-span.email,
+  .chip {
+    background-color: var(--shimmer-bg);
     color: transparent;
-    background-position: 0 -16px;
-
-    animation: shimmer 1s infinite linear;
-
-    @keyframes shimmer {
-      0% {
-        background-position: 0 -16px;
-      }
-
-      100% {
-        background-position: 0 16px;
-      }
-    }
-  }
-
-  tbody tr:nth-child(5n + 1) .highlight-span,
-  tbody tr:nth-child(5n + 1) .chip {
-    animation-delay: 1s;
-  }
-
-  tbody tr:nth-child(5n + 2) .highlight-span,
-  tbody tr:nth-child(5n + 2) .chip {
-    animation-delay: 2s;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-right: 4px;
   }
 `;

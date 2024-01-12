@@ -89,7 +89,11 @@ export default function Table<T>({
             })}
           </tr>
         </thead>
-        <tbody>{children}</tbody>
+
+        <tbody>
+          {children}
+          <div className="shimmer"></div>
+        </tbody>
       </table>
     </StyledTable>
   );
