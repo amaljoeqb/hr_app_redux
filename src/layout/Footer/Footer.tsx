@@ -4,7 +4,8 @@ export function Footer() {
   return (
     <StyledFooter>
       <p>
-        Copyright @ 2023 The Q Company. All Rights Reserved <br />
+        <span className="copyright">&copy;</span>2023-2024 The Q Company. All
+        Rights Reserved <br />
         Version 2.00
       </p>
     </StyledFooter>

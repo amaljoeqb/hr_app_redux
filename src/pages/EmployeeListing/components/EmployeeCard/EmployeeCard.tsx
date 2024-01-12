@@ -51,7 +51,9 @@ export function EmployeeCard({
             onModifiedAnimationEnd={() => {}}
           />
         </p>
-        <p className="view-emp-dept">{employee.department?.department} </p>
+        <p className="view-emp-dept">
+          {employee.department?.department || "N/A"}
+        </p>
       </div>
     </StyledEmployeeCard>
   );

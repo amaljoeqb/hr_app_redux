@@ -102,7 +102,7 @@ const employeesReducer = (
         return e;
       });
       if (!found) {
-        data.push(employee);
+        data.unshift(employee);
         total += 1;
       }
       return {

@@ -6,4 +6,8 @@ export const StyledFooter = styled.footer`
   flex-direction: column;
   text-align: center;
   font-size: 14px;
+
+  .copyright {
+    font-size: 18px;
+  }
 `;
