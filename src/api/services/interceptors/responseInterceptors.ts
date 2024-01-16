@@ -16,7 +16,10 @@ export async function onResponseError(error: AxiosError): Promise<AxiosError> {
   const { config } = error;
   if (error.response?.status === HTTP_STATUS.SERVER_ERROR) {
     return Promise.reject(error.response.data);
-  } else if (error.response?.status === HTTP_STATUS.UNAUTHORIZED) {
+  } else if (
+    error.response?.status === HTTP_STATUS.UNAUTHORIZED &&
+    config?.url !== "auth/renew-tokens"
+  ) {
     const refreshResponse = await renewRefreshToken();
     if (refreshResponse) {
       setCookie("accessToken", refreshResponse.access_token);

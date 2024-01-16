@@ -48,6 +48,9 @@ const useAuth = () => {
   };
 
   const logOut = useCallback(() => {
+    document.cookie = `accessToken=''; path=/`;
+    document.cookie = `refreshToken=''; path=/`;
+
     deleteCookie("accessToken");
     deleteCookie("refreshToken");
     dispatch(logoutUser());
